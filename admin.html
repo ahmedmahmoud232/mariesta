@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوحة التحكم — كاسبر</title>
+  <title>لوحة التحكم — ماريستا</title>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -864,12 +864,12 @@
                     </div>
                   </div>
 
-                  {/* Image URL, File Upload & Preview */}
+                  {/* Image File Upload & Preview */}
                   <div>
-                    <div class="flex items-center justify-between mb-1">
-                      <label class="block text-sm font-bold text-slate-700">صورة المنتج الأساسية</label>
-                      <label class="text-xs font-bold text-accent cursor-pointer hover:underline flex items-center gap-1">
-                        <span>📂 رفع صورة جديدة من جهازك</span>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">صورة المنتج الأساسية</label>
+                    <div class="flex items-center gap-4">
+                      <label class="btn-ghost" style={{ cursor: 'pointer', height: '42px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', border: '1.5px solid #d1d5db', padding: '10px 20px', borderRadius: '12px' }}>
+                        <span>➕ اضافة صورة المنتج</span>
                         <input
                           type="file"
                           accept="image/*"
@@ -888,36 +888,8 @@
                           }}
                         />
                       </label>
-                    </div>
-                    <div class="flex gap-3">
-                      <input
-                        type="text"
-                        required
-                        value={formImage}
-                        onChange={(e) => setFormImage(e.target.value)}
-                        class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-accent outline-none text-slate-800 text-left text-xs"
-                        placeholder="رابط الصورة أو كود الصورة الثنائي"
-                        dir="ltr"
-                      />
-                      <div class="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden flex items-center justify-center flex-shrink-0">
+                      <div class="w-16 h-16 rounded-2xl bg-slate-100 border border-slate-200 overflow-hidden flex items-center justify-center flex-shrink-0">
                         <img src={formImage} alt="Preview" class="max-w-full max-h-full object-contain" onError={(e) => e.target.src = 'images/22.png'} />
-                      </div>
-                    </div>
-                    {/* Quick Selection Images */}
-                    <div class="mt-2.5">
-                      <span class="block text-xs text-slate-400 mb-1.5">اختيار سريع لصورة افتراضية:</span>
-                      <div class="flex gap-2 overflow-x-auto pb-1.5 scrollbar-thin">
-                        {imagePresets.map((img) => (
-                          <button
-                            key={img}
-                            type="button"
-                            onClick={() => setFormImage(img)}
-                            class={`w-10 h-10 border rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center transition-all ${formImage === img ? "border-accent ring-2 ring-rose-200" : "border-slate-200 hover:border-slate-300"
-                              }`}
-                          >
-                            <img src={img} alt="preset" class="max-h-full max-w-full object-contain" />
-                          </button>
-                        ))}
                       </div>
                     </div>
 

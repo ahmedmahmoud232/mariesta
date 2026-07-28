@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>كاسبر — أخصائي العلامة التجارية الشخصية</title>
-  <meta name="description" content="كاسبر، أخصائي علامات تجارية شخصية يصمم تجارب رقمية متميزة.">
+  <title>ماريستا — باقات ورد طبيعي وهدايا استثنائية</title>
+  <meta name="description" content="ماريستا، باقات وتنسيقات ورد وهدايا متميزة تُصنع وتُقدم بكل حب.">
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
@@ -4602,7 +4602,7 @@
         if (!selectedService || !formData.email) return;
         const subject = encodeURIComponent(`New ${selectedService.title} Project`);
         const body = encodeURIComponent(`Email: ${formData.email}\n\nProject Description:\n${formData.desc}`);
-        window.location.href = `mailto:Kacper@creatorsflow.org?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:mariesta@creatorsflow.org?subject=${subject}&body=${body}`;
 
         setShowSuccess(true);
         setTimeout(() => {
@@ -4838,7 +4838,7 @@
         const selectedServiceLabel = service === 'another' ? customService : (selectedOption ? selectedOption.label : '');
         const subject = encodeURIComponent(`New Project Inquiry from ${name}`);
         const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nService: ${selectedServiceLabel}\n\nDescription:\n${desc}`);
-        window.location.href = `mailto:Kacper@creatorsflow.org?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:mariesta@creatorsflow.org?subject=${subject}&body=${body}`;
 
         setShowSuccess(true);
         setTimeout(() => {
