@@ -5703,7 +5703,7 @@
 
     ReactDOM.createRoot(document.getElementById('root')).render(<App />);
   </script>
-  <script type="text/babel">
+  <script>
     // Lightweight prefetch script for instant navigation
     document.addEventListener("DOMContentLoaded", () => {
       document.querySelectorAll('a').forEach(link => {
@@ -5711,11 +5711,13 @@
           link.addEventListener('mouseenter', () => {
             const conn = navigator.connection;
             if (conn && (conn.saveData || /2g|slow-2g/.test(conn.effectiveType))) return;
-            let prefetchLink = document.querySelector(`link[href="${link.getAttribute('href')}"]`);
+            const href = link.getAttribute('href');
+            if (!href || href.startsWith('#')) return;
+            let prefetchLink = document.querySelector(`link[href="${href}"]`);
             if (!prefetchLink) {
               prefetchLink = document.createElement('link');
               prefetchLink.rel = 'prefetch';
-              prefetchLink.href = link.getAttribute('href');
+              prefetchLink.href = href;
               document.head.appendChild(prefetchLink);
             }
           }, { once: true });
