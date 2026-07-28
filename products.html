@@ -542,7 +542,7 @@
       position: relative;
       width: 100%;
       max-width: 1250px;
-      margin: 0 auto 36px auto;
+      margin: 0 auto 16px auto;
       padding: 0 40px;
     }
 
@@ -854,9 +854,13 @@
       padding: clamp(20px, 4vw, 36px);
       max-height: 90vh;
       overflow-y: auto;
+      scrollbar-width: none;
       position: relative;
       box-shadow: 0 30px 70px rgba(10, 10, 15, 0.15);
       animation: modalSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .modal-container::-webkit-scrollbar {
+      display: none;
     }
 
     .modal-container.closing {
@@ -1112,7 +1116,7 @@
               {/* CTA */}
               <div className="nav-cta" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                 <a href="index.html#services" className="btn-primary" style={{ textDecoration: 'none' }}>اختار البوكيه</a>
-                <a href="index.html#services" className="btn-ghost" style={{ textDecoration: 'none', height: '42px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>عرض الخدمات</a>
+                <a href="index.html#contact" className="btn-ghost" style={{ textDecoration: 'none', height: '42px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>تواصل معنا</a>
               </div>
 
               {/* Mobile Toggle with 2-line transition animation */}
@@ -1159,14 +1163,14 @@
             ].map(l => (
               <a key={l.id} href={l.url} className={`m-link ${l.id === 'products' ? 'active-nav' : ''}`} onClick={() => setIsMenuOpen(false)} style={{ color: '#0a0a0f' }}>{l.label}</a>
             ))}
-            <div className="mobile-menu-cta" style={{ width: '100%', padding: '0 24px', display: 'flex', gap: '8px' }}>
-              <a href="index.html#services" className="btn-primary" style={{ textDecoration: 'none', flex: 1, justifyContent: 'center' }} onClick={() => setIsMenuOpen(false)}>اختار البوكيه</a>
-              <a href="index.html#services" className="btn-ghost" style={{ textDecoration: 'none', flex: 1, justifyContent: 'center', height: '42px', display: 'inline-flex', alignItems: 'center' }} onClick={() => setIsMenuOpen(false)}>عرض الخدمات</a>
+            <div className="mobile-menu-cta" style={{ width: '100%', padding: '0 24px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <a href="index.html#services" className="btn-primary" style={{ textDecoration: 'none', width: '100%', justifyContent: 'center' }} onClick={() => setIsMenuOpen(false)}>اختار البوكيه</a>
+              <a href="index.html#contact" className="btn-ghost" style={{ textDecoration: 'none', width: '100%', justifyContent: 'center', height: '42px', display: 'inline-flex', alignItems: 'center' }} onClick={() => setIsMenuOpen(false)}>تواصل معنا</a>
             </div>
           </div>
 
           {/* Hero Section */}
-          <section id="products-hero" style={{ background: 'linear-gradient(to bottom, #ffe4e6 0%, #fff1f2 60%, #fff 100%)', position: 'relative', overflow: 'hidden', padding: '140px 24px 60px' }}>
+          <section id="products-hero" style={{ background: 'linear-gradient(to bottom, #ffe4e6 0%, #fff1f2 60%, #fff 100%)', position: 'relative', overflow: 'hidden', padding: '120px 24px 40px' }}>
             <div className="hero-bg">
               <div className="hero-line-grid" style={{ backgroundImage: 'radial-gradient(rgba(244, 63, 94, 0.15) 1.5px, transparent 1.5px)' }} />
             </div>
@@ -1235,7 +1239,7 @@
             </div>
           </section>
 
-          <main className="flex-grow max-w-7xl mx-auto px-4 w-full pt-6">
+          <main className="flex-grow max-w-7xl mx-auto px-4 w-full pt-2">
             {filteredProducts.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-20 px-6 text-center animate-in fade-in zoom-in duration-200">
                 <div className="w-24 h-24 bg-indigo-50 border border-indigo-100 rounded-full flex items-center justify-center text-4xl mb-5 animate-pulse">
@@ -1272,7 +1276,7 @@
                         <h3 className="product-name-custom text-slate-900">{prod.name}</h3>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                           <span style={{ fontSize: '13px', color: '#6b7280', fontWeight: '500' }}>السعر</span>
-                          <span className="product-price-custom">{prod.price}</span>
+                          <span className="product-price-custom">{prod.price ? (prod.price.toString().includes('ج.م') || prod.price.toString().includes('جنيه') ? prod.price : `${prod.price} ج.م`) : ""}</span>
                         </div>
                         <button className="product-order-btn mt-3" onClick={(e) => { e.stopPropagation(); handleOpenModal(prod); }}>
                           اطلب
@@ -1329,7 +1333,7 @@
                   const discountedPriceVal = isNaN(priceNum) ? selectedProduct.price : `${Math.round(priceNum * 0.9)} ج.م`;
 
                   const whatsappText = encodeURIComponent(
-                    `مرحباً، أود طلب: ${selectedProduct.name}\nالسعر الأصلي: ${selectedProduct.price}\nالسعر بعد الخصم (10%): ${discountedPriceVal}\nكود الخصم: SATIN10\nطريقة الاستلام: ${deliveryMethod === 'delivery' ? 'توصيل 🚗' : 'استلام من الفرع 🏪'}`
+                    `مرحباً، أود طلب: ${selectedProduct.name}\nالسعر الأصلي: ${selectedProduct.price ? (selectedProduct.price.toString().includes('ج.م') || selectedProduct.price.toString().includes('جنيه') ? selectedProduct.price : `${selectedProduct.price} ج.م`) : ""}\nالسعر بعد الخصم (10%): ${discountedPriceVal}\nكود الخصم: SATIN10\nطريقة الاستلام: ${deliveryMethod === 'delivery' ? 'توصيل' : 'استلام'}`
                   );
                   const whatsappUrl = `https://wa.me/201062973138?text=${whatsappText}`;
 
@@ -1460,7 +1464,7 @@
                     </div>
 
                     <div style={{ fontSize: '26px', fontWeight: '900', color: '#e11d48', fontFamily: "'Thmanyah Sans', 'Inter', sans-serif" }}>
-                      {selectedProduct.price}
+                      {selectedProduct.price ? (selectedProduct.price.toString().includes('ج.م') || selectedProduct.price.toString().includes('جنيه') ? selectedProduct.price : `${selectedProduct.price} ج.م`) : ""}
                     </div>
 
                     <div style={{ height: '1px', background: 'rgba(0,0,0,0.06)', width: '100%' }} />
@@ -1469,11 +1473,7 @@
                       {selectedProduct.description || "تنسيق مميز ومنسق بأعلى درجات الفخامة والأناقة، يحتوي على أزهار طبيعية قطفت بعناية فائقة لتناسب مناسبتكم وتضفي لمسة ساحرة من الجمال والبهجة."}
                     </p>
 
-                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '4px' }}>
-                      <span style={{ fontSize: '12px', background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: '8px', padding: '6px 10px', color: '#4b5563', fontWeight: '600' }}>🚗 توصيل سريع خلال اليوم</span>
-                      <span style={{ fontSize: '12px', background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: '8px', padding: '6px 10px', color: '#4b5563', fontWeight: '600' }}>🌸 ورد طبيعي قطف طازج</span>
-                      <span style={{ fontSize: '12px', background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: '8px', padding: '6px 10px', color: '#4b5563', fontWeight: '600' }}>🎁 تغليف مميز مجاناً</span>
-                    </div>
+                    {/* Features badges removed */}
 
                     {/* Delivery choice */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px' }}>
@@ -1494,7 +1494,7 @@
                             transition: 'all 0.2s'
                           }}
                         >
-                          توصيل 🚗
+                          توصيل
                         </button>
                         <button
                           onClick={() => setDeliveryMethod("pickup")}
@@ -1511,7 +1511,7 @@
                             transition: 'all 0.2s'
                           }}
                         >
-                          استلام من الفرع 🏪
+                          استلام
                         </button>
                       </div>
                     </div>

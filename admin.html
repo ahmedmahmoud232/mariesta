@@ -35,20 +35,234 @@
       src: url('woff2/thmanyahsans-Regular.woff2') format('woff2');
       font-weight: 400;
     }
+
     @font-face {
       font-family: 'Thmanyah Sans';
       src: url('woff2/thmanyahsans-Bold.woff2') format('woff2');
       font-weight: 700;
     }
+
     body {
       font-family: 'Thmanyah Sans', 'Inter', sans-serif;
       background: #fcfcfc;
       color: #0f172a;
     }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 16px 48px;
+      pointer-events: none;
+      transition: all .4s ease;
+    }
+
+    nav.scrolled {
+      padding: 12px 48px
+    }
+
+    /* The actual pill container */
+    .nav-pill {
+      width: 100%;
+      max-width: 1104px;
+      margin: 0 auto;
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: 1px solid transparent;
+      border-radius: 16px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px 0 8px;
+      position: relative;
+      pointer-events: all;
+      box-shadow: none;
+      transition: all .3s ease;
+    }
+
+    nav.scrolled .nav-pill {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .nav-logo-img {
+      height: 30px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: -.03em;
+      color: #0a0a0f;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .nav-cta {
+      display: flex;
+      flex-direction: row !important;
+      gap: 8px;
+      align-items: center;
+      flex-shrink: 0
+    }
+
+    .btn-primary {
+      background: #e11d48;
+      color: #ffffff;
+      padding: 10px 22px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1.5px solid #e11d48;
+      transition: all .25s;
+      letter-spacing: .01em;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 42px;
+      white-space: nowrap;
+      box-shadow: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: #be123c;
+      color: #ffffff;
+      border-color: #be123c;
+      box-shadow: 0 8px 24px rgba(225, 29, 72, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: #ffffff;
+      color: #374151;
+      padding: 10px 22px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1.5px solid #d1d5db;
+      transition: all .25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 42px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .btn-ghost:hover {
+      background: #f3f4f6;
+      color: #0a0a0f;
+      border-color: #9ca3af;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transform: translateY(-1px);
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #0a0a0f;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 90;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(-20px);
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    .mobile-menu-cta {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+      margin-top: 24px;
+    }
+
+    @media(max-width:960px) {
+      .nav-cta {
+        display: none !important;
+      }
+
+      .nav-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .nav-pill {
+        max-width: calc(100% - 32px);
+        padding: 0 12px 0 16px
+      }
+
+      nav {
+        padding: 12px 16px
+      }
+    }
+
+    @media(max-width:540px) {
+      .nav-pill {
+        padding: 0 8px 0 8px;
+        height: 52px
+      }
+
+      .btn-primary {
+        padding: 8px 16px;
+        font-size: 12px
+      }
+
+      .btn-ghost {
+        padding: 8px 14px;
+        font-size: 12px
+      }
+    }
+
+    @media(max-width:420px) {
+      .nav-pill {
+        max-width: calc(100% - 20px)
+      }
+    }
   </style>
 </head>
 
-<body class="bg-slate-50/50 min-h-screen">
+<body class="bg-slate-50/50 min-h-screen pt-24">
   <div id="admin-root"></div>
 
   <script type="text/babel">
@@ -85,6 +299,18 @@
 
       // Toast Notifications
       const [toast, setToast] = useState({ show: false, message: "", type: "success" });
+
+      const [isMenuOpen, setIsMenuOpen] = useState(false);
+      const [scrolled, setScrolled] = useState(false);
+
+      useEffect(() => {
+        const handleScroll = () => {
+          if (window.scrollY > 50) setScrolled(true);
+          else setScrolled(false);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, []);
 
       const showToast = (message, type = "success") => {
         setToast({ show: true, message, type });
@@ -247,8 +473,8 @@
       // Filter products list
       const filteredProducts = useMemo(() => {
         return products.filter((prod) => {
-          const matchSearch = prod.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                              prod.description?.toLowerCase().includes(searchQuery.toLowerCase());
+          const matchSearch = prod.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            prod.description?.toLowerCase().includes(searchQuery.toLowerCase());
           const matchCat = selectedCategoryFilter === "all" || parseInt(prod.category) === parseInt(selectedCategoryFilter);
           return matchSearch && matchCat;
         });
@@ -314,49 +540,150 @@
           {/* Toast Notification */}
           {toast.show && (
             <div class="fixed top-6 left-6 z-50 animate-bounce">
-              <div class={`px-6 py-3.5 rounded-2xl text-white font-bold text-sm shadow-xl flex items-center gap-2 ${
-                toast.type === "success" ? "bg-emerald-600 shadow-emerald-600/10" : 
-                toast.type === "error" ? "bg-rose-600 shadow-rose-600/10" : "bg-blue-600 shadow-blue-600/10"
-              }`}>
+              <div class={`px-6 py-3.5 rounded-2xl text-white font-bold text-sm shadow-xl flex items-center gap-2 ${toast.type === "success" ? "bg-emerald-600 shadow-emerald-600/10" :
+                  toast.type === "error" ? "bg-rose-600 shadow-rose-600/10" : "bg-blue-600 shadow-blue-600/10"
+                }`}>
                 <span>{toast.message}</span>
               </div>
             </div>
           )}
 
           {/* Header */}
-          <header class="bg-white border-b border-slate-200/80 sticky top-0 z-40 shadow-sm/50">
-            <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-              <div class="flex items-center gap-4">
-                <img src="images/شعار.png" alt="Logo" class="h-10 w-auto" />
-                <h1 class="text-xl font-black text-slate-900 border-r pr-4 border-slate-200">لوحة تحكم المنتجات</h1>
+          <nav className={scrolled ? 'scrolled' : ''}>
+            <div className="nav-pill" style={{ zIndex: 100 }}>
+              {/* Logo */}
+              <div className="logo" style={{ zIndex: 101, alignItems: 'center', gap: '8px' }}>
+                <img src="images/شعار.png" alt="Logo" className="nav-logo-img" style={{ height: '35px', width: 'auto' }} />
+                <h1 className="text-sm sm:text-base font-black text-slate-900 border-r pr-3 border-slate-200" style={{ margin: 0, paddingRight: '12px' }}>لوحة التحكم</h1>
               </div>
 
-              <div class="flex items-center gap-3.5 flex-wrap justify-center">
+              {/* Desktop CTA Links */}
+              <div className="nav-cta" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                 {dbStatus === "firebase" ? (
-                  <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-100">
-                    <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-100">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500"></span>
                     متصل بـ Firebase
                   </span>
                 ) : (
-                  <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-100">
-                    <span class="h-2.5 w-2.5 rounded-full bg-amber-500 animate-pulse"></span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-100">
+                    <span className="h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span>
                     وضع المحاكاة المحلي
                   </span>
                 )}
 
-                <a href="index.html" target="_blank" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-all">
+                <button
+                  onClick={openAddForm}
+                  className="btn-primary"
+                  style={{
+                    height: '42px',
+                    fontSize: '12px',
+                    fontWeight: '700',
+                    background: '#e11d48',
+                    borderColor: '#e11d48',
+                    color: '#ffffff'
+                  }}
+                >
+                  إضافة منتج جديد
+                </button>
+
+                <a href="index.html" target="_blank" className="btn-ghost" style={{ textDecoration: 'none', height: '42px', display: 'inline-flex', alignItems: 'center', fontSize: '12px' }}>
                   معاينة الموقع ↗
                 </a>
 
                 <button
                   onClick={handleLogout}
-                  class="px-4 py-2 text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-600 hover:text-white rounded-xl transition-all border border-rose-100"
+                  className="btn-ghost text-rose-600 hover:text-white hover:bg-rose-600"
+                  style={{ height: '42px', fontSize: '12px', border: '1.5px solid rgba(225, 29, 72, 0.2)' }}
                 >
                   تسجيل الخروج
                 </button>
               </div>
+
+              {/* Mobile Toggle with 2-line transition animation */}
+              <button
+                className={`nav-toggle ${isMenuOpen ? 'open' : ''}`}
+                style={{
+                  zIndex: 101,
+                  width: '32px',
+                  height: '32px',
+                  position: 'relative'
+                }}
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                <span style={{
+                  width: '20px',
+                  height: '2px',
+                  background: 'currentColor',
+                  position: 'absolute',
+                  transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), top 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  top: isMenuOpen ? '15px' : '11px',
+                  transform: isMenuOpen ? 'rotate(45deg)' : 'none'
+                }} />
+                <span style={{
+                  width: '20px',
+                  height: '2px',
+                  background: 'currentColor',
+                  position: 'absolute',
+                  transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), top 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  top: isMenuOpen ? '15px' : '19px',
+                  transform: isMenuOpen ? 'rotate(-45deg)' : 'none'
+                }} />
+              </button>
+
             </div>
-          </header>
+          </nav>
+
+          {/* Mobile Menu for Dashboard */}
+          <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`} style={{ background: 'rgba(255, 255, 255, 0.98)', gap: '20px', padding: '24px' }}>
+            <div className="mobile-menu-info" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', width: '100%' }}>
+              <img src="images/شعار.png" alt="Logo" style={{ height: '45px', width: 'auto' }} />
+              <h2 className="font-black text-lg text-slate-900">لوحة تحكم كاسبر</h2>
+
+              {/* شارة الاتصال */}
+              {dbStatus === "firebase" ? (
+                <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-100">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500"></span>
+                  متصل بـ Firebase
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-100">
+                  <span className="h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span>
+                  وضع المحاكاة المحلي
+                </span>
+              )}
+            </div>
+
+            <div className="mobile-menu-cta" style={{ width: '100%', padding: '0 24px', display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '20px' }}>
+              {/* زر اضافة منتج جديد */}
+              <button
+                onClick={() => { openAddForm(); setIsMenuOpen(false); }}
+                className="btn-primary"
+                style={{ width: '100%', justifyContent: 'center', height: '46px', background: '#e11d48', borderColor: '#e11d48', color: '#ffffff' }}
+              >
+                إضافة منتج جديد
+              </button>
+
+              {/* معاينة الموقع */}
+              <a
+                href="index.html"
+                target="_blank"
+                className="btn-ghost"
+                style={{ textDecoration: 'none', width: '100%', justifyContent: 'center', height: '46px', display: 'inline-flex', alignItems: 'center' }}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                معاينة الموقع ↗
+              </a>
+
+              {/* زر تسجيل الخروج */}
+              <button
+                onClick={() => { handleLogout(); setIsMenuOpen(false); }}
+                className="btn-ghost text-rose-600"
+                style={{ width: '100%', justifyContent: 'center', height: '46px', border: '1.5px solid rgba(225, 29, 72, 0.2)' }}
+              >
+                تسجيل الخروج
+              </button>
+            </div>
+          </div>
 
           {/* Main Area */}
           <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 flex-1 w-full">
@@ -435,7 +762,7 @@
                       <div class="flex justify-between items-center border-t border-slate-100 pt-4 mt-2">
                         <div>
                           <span class="text-xs text-slate-400 block">السعر</span>
-                          <span class="text-base font-black text-accent">{prod.price}</span>
+                          <span class="text-base font-black text-accent">{prod.price ? (prod.price.toString().includes('ج.م') || prod.price.toString().includes('جنيه') ? prod.price : `${prod.price} ج.م`) : ""}</span>
                         </div>
                         <div class="flex gap-2">
                           <button
@@ -564,9 +891,8 @@
                             key={img}
                             type="button"
                             onClick={() => setFormImage(img)}
-                            class={`w-10 h-10 border rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center transition-all ${
-                              formImage === img ? "border-accent ring-2 ring-rose-200" : "border-slate-200 hover:border-slate-300"
-                            }`}
+                            class={`w-10 h-10 border rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center transition-all ${formImage === img ? "border-accent ring-2 ring-rose-200" : "border-slate-200 hover:border-slate-300"
+                              }`}
                           >
                             <img src={img} alt="preset" class="max-h-full max-w-full object-contain" />
                           </button>
