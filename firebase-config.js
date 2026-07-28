@@ -1,0 +1,183 @@
+// Firebase Configuration
+// Replace this placeholder configuration with your actual Firebase config keys
+const firebaseConfig = {
+  apiKey: "AIzaSyBRY7M7Ap4Pp-b3q-Bqb-hKocP6sgfNq14",
+  authDomain: "mariesta-559df.firebaseapp.com",
+  projectId: "mariesta-559df",
+  storageBucket: "mariesta-559df.firebasestorage.app",
+  messagingSenderId: "605497534664",
+  appId: "1:605497534664:web:9e5e8239b2dbd794af1dfd",
+  measurementId: "G-EE7D0C85TB"
+};
+
+// Default Credentials for Admin login in Fallback / Mock Mode
+const fallbackAdminCredentials = {
+  username: "admin",
+  password: "admin123"
+};
+
+// Check if Firebase configuration is customized
+const isFirebaseConfigured = () => {
+  return firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY";
+};
+
+// Default list of products to seed the database
+const seedProducts = [
+  // 0: بوكيه زفاف
+  { name: "بوكيه العروسة الملكي", price: "250 ج.م", image: "images/22.png", category: 0, description: "بوكيه عروس ملكي مميز وجذاب ومناسب لجميع الأذواق." },
+  { name: "بوكيه التوليب الأبيض", price: "180 ج.م", image: "images/22.png", category: 0, description: "بوكيه توليب أبيض ناعم وكلاسيكي." },
+  { name: "بوكيه كلاسيك روز", price: "220 ج.م", image: "images/22.png", category: 0, description: "بوكيه كلاسيكي من الورد الجوري الأحمر الفاخر." },
+  { name: "بوكيه الفاوانيا الفاخر", price: "320 ج.م", image: "images/22.png", category: 0, description: "بوكيه فاوانيا فاخر وجميل للمناسبات الكبرى." },
+  { name: "بوكيه الياسمين الأنيق", price: "190 ج.م", image: "images/22.png", category: 0, description: "بوكيه ياسمين فواح وأنيق." },
+  { name: "بوكيه زفاف ملكي", price: "400 ج.م", image: "images/22.png", category: 0, description: "بوكيه زفاف ملكي كبير وجذاب للغاية." },
+  { name: "بوكيه ورد جوري أحمر", price: "150 ج.م", image: "images/22.png", category: 0, description: "بوكيه كلاسيكي من الورد الجوري الأحمر." },
+  { name: "بوكيه لافندر ناعم", price: "130 ج.م", image: "images/22.png", category: 0, description: "بوكيه لافندر طبيعي مجفف ناعم ورائحة جذابة." },
+  
+  // 1: بوكيه تخرج
+  { name: "بوكيه نجاح وتفوق", price: "140 ج.م", image: "images/22.png", category: 1, description: "بوكيه للتعبير عن الفرحة بالنجاح والتفوق الدراسي." },
+  { name: "بوكيه التخرج الكلاسيكي", price: "160 ج.م", image: "images/22.png", category: 1, description: "بوكيه تخرج كلاسيكي أنيق." },
+  { name: "بوكيه شريط ذهبي", price: "180 ج.م", image: "images/22.png", category: 1, description: "بوكيه تخرج مزين بشريط ذهبي فاخر." },
+  { name: "بوكيه جوري أصفر", price: "120 ج.م", image: "images/22.png", category: 1, description: "بوكيه ورد جوري أصفر يعبر عن البهجة والتخرج." },
+  { name: "بوكيه فرحة النجاح", price: "200 ج.م", image: "images/22.png", category: 1, description: "بوكيه كبير ومبهج بمناسبة النجاح." },
+  { name: "بوكيه التخرج الفاخر", price: "250 ج.م", image: "images/22.png", category: 1, description: "بوكيه تخرج فاخر مع شوكولاتة وورد مجفف." },
+  { name: "بوكيه تخرج مبهج", price: "110 ج.م", image: "images/22.png", category: 1, description: "بوكيه بسيط ومبهج مناسب لحفلات التخرج." },
+
+  // 2: بوكيه احتفال
+  { name: "بوكيه البهجة والسرور", price: "150 ج.م", image: "images/22.png", category: 2 },
+  { name: "بوكيه ورد مشكل", price: "170 ج.م", image: "images/22.png", category: 2 },
+  { name: "بوكيه الأوركيد الساحر", price: "280 ج.م", image: "images/22.png", category: 2 },
+  
+  // 5: ورد ستان
+  { name: "بوكيه ورد ستان أحمر", price: "120 ج.م", image: "images/22.png", category: 5 },
+  { name: "وردة ستان فردية فاخرة", price: "25 ج.م", image: "images/22.png", category: 5 },
+  
+  // 6: فراشات
+  { name: "تنسيق بوكيه الفراشات المضيء", price: "190 ج.م", image: "images/22.png", category: 6 }
+];
+
+// Initialize Local Mock DB if needed
+const getMockProducts = () => {
+  const local = localStorage.getItem("mock_products");
+  if (!local) {
+    localStorage.setItem("mock_products", JSON.stringify(seedProducts));
+    return seedProducts;
+  }
+  return JSON.parse(local);
+};
+
+const saveMockProducts = (products) => {
+  localStorage.setItem("mock_products", JSON.stringify(products));
+};
+
+// Initialize Firebase App
+let db = null;
+let auth = null;
+let useFirebase = false;
+let firebaseFailed = false;
+
+if (typeof firebase !== "undefined" && isFirebaseConfigured()) {
+  try {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    db = firebase.firestore();
+    auth = firebase.auth();
+    useFirebase = true;
+    console.log("Firebase initialized successfully.");
+  } catch (err) {
+    console.warn("Failed to initialize Firebase. Falling back to Mock DB mode.", err);
+  }
+} else {
+  console.log("Running in Mock Mode. Connect Firebase via firebase-config.js.");
+}
+
+// Global API Helper for Database Operations
+window.AppDB = {
+  isFirebase: () => useFirebase && !firebaseFailed,
+  
+  getProducts: (callback) => {
+    if (useFirebase && db && !firebaseFailed) {
+      return db.collection("products").onSnapshot((snapshot) => {
+        const prods = [];
+        snapshot.forEach((doc) => {
+          prods.push({ id: doc.id, ...doc.data() });
+        });
+        callback(prods);
+      }, (error) => {
+        console.error("Firestore read error, falling back to LocalStorage: ", error);
+        firebaseFailed = true;
+        callback(getMockProducts());
+      });
+    } else {
+      callback(getMockProducts());
+      return () => {};
+    }
+  },
+
+  addProduct: async (product) => {
+    if (useFirebase && db && !firebaseFailed) {
+      try {
+        return await db.collection("products").add(product);
+      } catch (err) {
+        console.error("Firestore add failed, falling back to LocalStorage: ", err);
+        firebaseFailed = true;
+      }
+    }
+    const prods = getMockProducts();
+    const newProduct = { id: "mock_" + Date.now(), ...product };
+    prods.push(newProduct);
+    saveMockProducts(prods);
+    return newProduct;
+  },
+
+  updateProduct: async (id, product) => {
+    if (useFirebase && db && !firebaseFailed) {
+      try {
+        return await db.collection("products").doc(id).update(product);
+      } catch (err) {
+        console.error("Firestore update failed, falling back to LocalStorage: ", err);
+        firebaseFailed = true;
+      }
+    }
+    const prods = getMockProducts();
+    const idx = prods.findIndex(p => p.id === id || (p.name === product.name && p.category === product.category));
+    if (idx !== -1) {
+      prods[idx] = { ...prods[idx], ...product };
+      saveMockProducts(prods);
+    }
+    return true;
+  },
+
+  deleteProduct: async (id, productKey) => {
+    if (useFirebase && db && !firebaseFailed) {
+      try {
+        return await db.collection("products").doc(id).delete();
+      } catch (err) {
+        console.error("Firestore delete failed, falling back to LocalStorage: ", err);
+        firebaseFailed = true;
+      }
+    }
+    let prods = getMockProducts();
+    prods = prods.filter(p => p.id !== id && !(p.name === productKey.name && p.category === productKey.category));
+    saveMockProducts(prods);
+    return true;
+  },
+
+  seedDatabase: async () => {
+    if (useFirebase && db && !firebaseFailed) {
+      try {
+        const batch = db.batch();
+        seedProducts.forEach((prod) => {
+          const ref = db.collection("products").doc();
+          batch.set(ref, prod);
+        });
+        return await batch.commit();
+      } catch (err) {
+        console.error("Firestore seeding failed, falling back to LocalStorage: ", err);
+        firebaseFailed = true;
+      }
+    }
+    saveMockProducts(seedProducts);
+    return Promise.resolve();
+  }
+};
