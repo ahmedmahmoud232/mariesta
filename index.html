@@ -6,17 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ماريستا — باقات ورد طبيعي وهدايا استثنائية</title>
   <meta name="description" content="ماريستا، باقات وتنسيقات ورد وهدايا متميزة تُصنع وتُقدم بكل حب.">
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
-  <script defer crossorigin src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
-  <script defer crossorigin src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Firebase SDKs & Custom Configurations -->
-  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-  <script defer src="firebase-config.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="firebase-config.js"></script>
 
   <script>
     tailwind.config = {
@@ -2478,6 +2478,38 @@
       transform: translateY(-2px);
     }
 
+    /* ─── FOOTER LINKS ─── */
+    .footer-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 1;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: #6b7280;
+      text-decoration: none;
+      transition: color .2s, background .2s;
+      letter-spacing: .01em;
+      padding: 6px 14px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-links a:hover,
+    .footer-links a.active-nav {
+      color: #0a0a0f;
+      background: rgba(0, 0, 0, 0.05);
+    }
+
     /* ─── SCHEDULE MEETING SECTION ─── */
     #schedule {
       background: transparent;
@@ -2797,7 +2829,7 @@
 
           const scrollPos = window.scrollY + window.innerHeight * 0.5;
           let currentId = 'home';
-          const ids = ['home', 'about', 'projects', 'services', 'contact', 'booking'];
+          const ids = ['home', 'about', 'projects', 'services', 'contact', 'testimonials'];
           for (let i = ids.length - 1; i >= 0; i--) {
             const section = document.getElementById(ids[i]);
             if (section && section.offsetTop <= scrollPos) {
@@ -2837,7 +2869,7 @@
                 {[
                   { label: 'الرئيسية', url: '#home', id: 'home' },
                   { label: 'المنتجات', url: 'products.html', id: 'products' },
-                  { label: 'من نحن', url: '#about', id: 'about' },
+                  { label: 'من نحن', url: 'about.html', id: 'about' },
                   { label: 'تواصل معنا', url: '#contact', id: 'contact' }
                 ].map(l => (
                   <a key={l.id} href={l.url} className={activeId === l.id ? 'active-nav' : ''}>{l.label}</a>
@@ -2889,7 +2921,7 @@
             {[
               { label: 'الرئيسية', url: '#home', id: 'home' },
               { label: 'المنتجات', url: 'products.html', id: 'products' },
-              { label: 'من نحن', url: '#about', id: 'about' },
+              { label: 'من نحن', url: 'about.html', id: 'about' },
               { label: 'تواصل معنا', url: '#contact', id: 'contact' }
             ].map(l => (
               <a key={l.id} href={l.url} className={`m-link ${activeId === l.id ? 'active-nav' : ''}`} onClick={() => setIsOpen(false)} style={{ color: '#0a0a0f' }}>{l.label}</a>
@@ -3549,6 +3581,34 @@
             .skeleton-pulse {
               animation: skeleton-loading 1.5s infinite ease-in-out;
             }
+            @media (max-width: 640px) {
+              .popup-content {
+                padding: 16px !important;
+                border-radius: 20px !important;
+                max-height: 95vh !important;
+                width: 95% !important;
+              }
+              .modal-nav-arrow-left,
+              .modal-nav-arrow-right {
+                display: none !important;
+              }
+              .modal-image-wrapper {
+                height: 220px !important;
+                border-radius: 16px !important;
+                padding: 10px !important;
+              }
+              .modal-product-name {
+                font-size: 18px !important;
+              }
+              .modal-product-price {
+                font-size: 20px !important;
+              }
+              .modal-thumbnails button {
+                width: 44px !important;
+                height: 44px !important;
+                border-radius: 8px !important;
+              }
+            }
             @keyframes fadeInUp {
               from {
                 opacity: 0;
@@ -3561,6 +3621,20 @@
             }
             .product-card-animate {
               animation: fadeInUp 0.4s ease-out forwards;
+            }
+
+            /* Responsive modal adjustments for mobile version */
+            .modal-image-wrapper {
+              background: linear-gradient(to bottom, #fff5f6, #ffffff);
+              border-radius: 20px;
+              border: 1px solid rgba(244, 63, 94, 0.05);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 320px;
+              padding: 16px;
+              overflow: hidden;
+              box-shadow: inset 0 2px 10px rgba(0,0,0,0.01);
             }
           `}} />
 
@@ -3846,11 +3920,11 @@
                   <div className="product-details-modal-grid">
                     {/* Column 1: Images area */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                      <div style={{ background: 'linear-gradient(to bottom, #fff5f6, #ffffff)', borderRadius: '20px', border: '1px solid rgba(244, 63, 94, 0.05)', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '320px', padding: '16px', overflow: 'hidden', boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.01)' }}>
+                      <div className="modal-image-wrapper">
                         <img src={selectedProduct.images[activeImageIdx]} alt={selectedProduct.name} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain', transition: 'all 0.3s ease' }} />
                       </div>
                       {/* Thumbnails row */}
-                      <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+                      <div className="modal-thumbnails flex gap-2.5 justify-center overflow-x-auto pb-1.5" style={{ gap: '10px' }}>
                         {selectedProduct.images.map((img, i) => (
                           <button
                             key={i}
@@ -3884,20 +3958,21 @@
                           <span style={{ display: 'inline-flex', alignItems: 'center', background: '#fff1f2', color: '#e11d48', borderRadius: '8px', padding: '4px 10px', fontSize: '11px', fontWeight: '800', width: 'fit-content', border: '1px solid rgba(225, 29, 72, 0.1)' }}>
                             {tabs.find(t => String(t.id) === String(selectedProduct.category))?.title || activeCategoryName || "معرض ماريستا"}
                           </span>
-                          <h3 style={{ fontSize: '24px', fontWeight: '800', color: '#0a0a0f', fontFamily: "'Thmanyah Serif Text', 'Thmanyah Serif Display', Georgia, serif", margin: 0, lineHeight: '1.3' }}>{selectedProduct.name}</h3>
+                          <h3 className="modal-product-name" style={{ fontWeight: '800', color: '#0a0a0f', fontFamily: "'Thmanyah Serif Text', 'Thmanyah Serif Display', Georgia, serif", margin: 0, lineHeight: '1.3' }}>{selectedProduct.name}</h3>
                         </div>
                         <button onClick={handleCloseModal} style={{ background: 'rgba(0, 0, 0, 0.04)', border: 'none', borderRadius: '50%', width: '30px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#4b5563', fontWeight: 'bold', transition: 'all 0.2s' }} onMouseEnter={e => e.currentTarget.style.background = 'rgba(225, 29, 72, 0.1)'}>✕</button>
                       </div>
 
-                      <div style={{ fontSize: '26px', fontWeight: '900', color: '#e11d48', fontFamily: "'Thmanyah Sans', 'Inter', sans-serif" }}>
-                        {displayPrice ? (displayPrice.toString().includes('ج.م') || displayPrice.toString().includes('جنيه') ? displayPrice : `${displayPrice} ج.م`) : ""}
+                      <div className="modal-product-price" style={{ display: 'flex', alignItems: 'baseline', gap: '8px', flexWrap: 'wrap', fontWeight: '900', color: '#e11d48', fontFamily: "'Thmanyah Sans', 'Inter', sans-serif" }}>
+                        <span>
+                          {displayPrice ? (displayPrice.toString().includes('ج.م') || displayPrice.toString().includes('جنيه') ? displayPrice : `${displayPrice} ج.م`) : ""}
+                        </span>
+                        {[0, 1, 2, 3, 4, 5].includes(parseInt(selectedProduct.category)) && (
+                          <span style={{ fontSize: '14px', color: '#e11d48', fontWeight: '700', opacity: 0.85 }}>
+                            (سعر الوردة: {selectedProduct.price ? (selectedProduct.price.toString().includes('ج.م') || selectedProduct.price.toString().includes('جنيه') ? selectedProduct.price : `${selectedProduct.price} ج.م`) : ""})
+                          </span>
+                        )}
                       </div>
-
-                      {[0, 1, 2, 3, 4, 5].includes(parseInt(selectedProduct.category)) && (
-                        <div style={{ fontSize: '14px', color: '#e11d48', fontWeight: '700', marginTop: '-10px' }}>
-                          سعر الوردة الواحدة: {selectedProduct.price ? (selectedProduct.price.toString().includes('ج.م') || selectedProduct.price.toString().includes('جنيه') ? selectedProduct.price : `${selectedProduct.price} ج.م`) : ""}
-                        </div>
-                      )}
 
                       <div style={{ height: '1px', background: 'rgba(0,0,0,0.06)', width: '100%' }} />
 
@@ -4050,65 +4125,9 @@
       );
     };
 
-    /* ─── ABOUT ─── */
     const About = () => {
-      const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-      const [messages, setMessages] = useState([
-        { sender: 'ahmed', text: "مرحباً! أنا كاسبر. كيف يمكنني مساعدتك في بناء علامتك التجارية الشخصية اليوم؟ اسألني أي شيء عن خدماتي في الأسفل!" }
-      ]);
-      const [typing, setTyping] = useState(false);
-      const chatEndRef = useRef(null);
-
-      const [availableQuestions, setAvailableQuestions] = useState([
-        {
-          id: 1,
-          q: "ما هي الخدمات التي تقدمها؟",
-          a: "أقدم استراتيجيات بناء العلامات التجارية وتحديد التخصص، كتابة النصوص والسيناريوهات الجاذبة، والمونتاج وما بعد الإنتاج لتعزيز حضورك الرقمي."
-        },
-        {
-          id: 2,
-          q: "كيف نبدأ العمل معاً؟",
-          a: "ببساطة انتقل للأسفل إلى التقويم المتاح واحجز جلسة استشارية، أو اضغط على زر 'تحدث معي' لإرسال طلبك."
-        },
-        {
-          id: 3,
-          q: "هل تقدم باقات مخصصة؟",
-          a: "نعم بالطبع! كل علامة تجارية شخصية فريدة من نوعها. يمكننا تفصيل باقة نصوص وتصاميم مخصصة لتلبي احتياجاتك بدقة."
-        }
-      ]);
-
-      useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth <= 768);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-      }, []);
-
-      useEffect(() => {
-        if (isMobile) {
-          const chatBody = document.querySelector('.chat-body');
-          if (chatBody) {
-            chatBody.scrollTo({
-              top: chatBody.scrollHeight,
-              behavior: 'smooth'
-            });
-          }
-        }
-      }, [messages, typing, isMobile]);
-
-      const handleQuestionClick = (item) => {
-        if (typing) return;
-        setMessages(prev => [...prev, { sender: 'user', text: item.q }]);
-        setAvailableQuestions(prev => prev.filter(q => q.id !== item.id));
-        setTyping(true);
-
-        setTimeout(() => {
-          setMessages(prev => [...prev, { sender: 'ahmed', text: item.a }]);
-          setTyping(false);
-        }, 1000);
-      };
-
       return (
-        <section id="about" style={{ position: 'relative', overflow: 'hidden' }}>
+        <section id="about" style={{ position: 'relative', overflow: 'hidden', padding: '80px 24px' }}>
           {/* Dot grid background */}
           <div className="about-grid-bg" style={{
             position: 'absolute',
@@ -4120,121 +4139,25 @@
             pointerEvents: 'none'
           }} />
 
-
-
-          <div className="about-wrap" style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px 24px', position: 'relative', zIndex: 1 }}>
-            {isMobile ? (
-              <div style={{ padding: '10px 0' }}>
-                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(0, 0, 0, 0.12)', borderRadius: '100px', padding: '6px 16px', fontSize: '13px', fontWeight: '500', color: '#0a0a0f', background: 'transparent' }}>
-                    من أنا
-                  </span>
-                </div>
-                <h2 className="section-h2" style={{ fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: '700', marginTop: '0', marginBottom: '12px', color: '#0a0a0f', letterSpacing: '-0.02em', textAlign: 'center' }}>العقل المدبر خلف الشاشة</h2>
-                <p style={{ fontSize: '14px', color: '#4b5563', marginBottom: '48px', fontWeight: '500', letterSpacing: '-0.01em', textAlign: 'center' }}>نحول الأفكار المعقدة إلى علامات تجارية عالية التحويل</p>
-
-                <div className="chat-window" style={{ maxWidth: '100%', margin: '0 auto', textAlign: 'right', overflow: 'hidden' }}>
-                  <div className="chat-header">
-                    <div className="chat-header-left">
-                      <div className="chat-avatar-wrap" style={{ background: '#e5e7eb', padding: '1px', boxShadow: 'none', width: '68px', height: '68px', overflow: 'hidden' }}>
-                        <img src="images/IMG-20260720-WA0013.jpg" className="chat-avatar" alt="كاسبر" style={{ border: 'none', width: '100%', height: '100%', objectFit: 'cover', transform: 'scale(2.1) translateY(5px)', transformOrigin: 'center 18%' }} />
-                      </div>
-                      <div className="chat-header-info">
-                        <div className="chat-name">كاسبر <div className="online-dot" /></div>
-                        <div className="chat-title">العلامات التجارية الشخصية والمزيد</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="chat-body" style={{ minHeight: '260px', maxHeight: '340px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '16px', padding: '16px' }}>
-                    {messages.map((msg, idx) => (
-                      <div key={idx} className={`msg-row ${msg.sender === 'user' ? 'msg-user' : 'msg-ahmed'}`} style={{ animation: 'fadeInUp 0.3s ease-out' }}>
-                        <div className={`msg-bubble ${msg.sender === 'user' ? 'msg-to-ahmed' : 'msg-from-ahmed'}`}>
-                          {msg.text}
-                        </div>
-                      </div>
-                    ))}
-                    {typing && (
-                      <div className="msg-row msg-ahmed" style={{ animation: 'fadeInUp 0.2s ease-out' }}>
-                        <div className="typing-indicator" style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-                          <span /><span /><span />
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Inline Recommended Questions placed directly after the response */}
-                    {!typing && availableQuestions.length > 0 && (
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '4px', width: '100%', animation: 'fadeInUp 0.3s ease-out' }}>
-                        {availableQuestions.map((item) => (
-                          <button
-                            key={item.id}
-                            className="chat-option-btn"
-                            onClick={() => handleQuestionClick(item)}
-                            style={{
-                              width: '100%',
-                              fontSize: '13px',
-                              textAlign: 'right',
-                              background: '#ffffff',
-                              border: '1px solid rgba(0, 0, 0, 0.03)',
-                              borderRadius: '24px 24px 4px 24px',
-                              padding: '12px 18px',
-                              color: '#0a0a0f',
-                              fontWeight: '600',
-                              cursor: 'pointer',
-                              transition: 'all 0.2s ease',
-                              outline: 'none',
-                              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.02)'
-                            }}
-                            onMouseEnter={e => {
-                              e.currentTarget.style.background = '#f43f5e';
-                              e.currentTarget.style.color = '#ffffff';
-                              e.currentTarget.style.borderColor = '#f43f5e';
-                            }}
-                            onMouseLeave={e => {
-                              e.currentTarget.style.background = '#ffffff';
-                              e.currentTarget.style.color = '#0a0a0f';
-                              e.currentTarget.style.borderColor = 'rgba(0, 0, 0, 0.03)';
-                            }}
-                          >
-                            {item.q}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                    <div ref={chatEndRef} />
-                  </div>
-                </div>
+          <div className="about-wrap" style={{ maxWidth: '1000px', margin: '0 auto', position: 'relative', zIndex: 1, textAlign: 'center' }}>
+            <R>
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(0, 0, 0, 0.12)', borderRadius: '100px', padding: '6px 16px', fontSize: '13px', fontWeight: '500', color: '#0a0a0f', background: 'transparent' }}>
+                  من أنا
+                </span>
               </div>
-            ) : (
-              <>
-                <R>
-                  <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(0, 0, 0, 0.12)', borderRadius: '100px', padding: '6px 16px', fontSize: '13px', fontWeight: '500', color: '#0a0a0f', background: 'transparent' }}>
-                      من أنا
-                    </span>
-                  </div>
-                </R>
-                <R d={50}>
-                  <h2 className="section-h2" style={{ fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: '700', marginTop: '0', marginBottom: '12px', color: '#0a0a0f', letterSpacing: '-0.02em', textAlign: 'center' }}>العقل المدبر خلف الشاشة</h2>
-                </R>
-                <R d={75}>
-                  <p style={{ fontSize: '14px', color: '#4b5563', marginBottom: '48px', fontWeight: '500', letterSpacing: '-0.01em', textAlign: 'center' }}>نحول الأفكار المعقدة إلى علامات تجارية عالية التحويل</p>
-                </R>
-                <R d={100}>
-                  <div className="about-paragraph-container" style={{ fontSize: 'clamp(20px, 2.5vw, 28px)', fontWeight: '500', color: '#0a0a0f', lineHeight: '2.0', letterSpacing: '-0.015em', maxWidth: '1000px', margin: '0 auto', textAlign: 'center', transition: 'all 0.4s ease' }}>
-                    "نحن نصمم سيناريوهات عالية التأثير <span className="about-badge">
-                      <img src="images/3dicons-notebook-dynamic-color.png" alt="دفتر" style={{ width: '48px', height: '48px', objectFit: 'contain', display: 'block' }} />
-                    </span> تأسر <span className="about-badge">
-                      <img src="images/3dicons-target-front-color.png" alt="هدف" style={{ width: '48px', height: '48px', objectFit: 'contain', display: 'block' }} />
-                    </span> الانتباه في أول ٣ ثوانٍ، لنحوّل المشاهدين <span className="about-badge">
-                      <img src="images/3dicons-boy-front-color.png" alt="مشاهد" style={{ width: '48px', height: '48px', objectFit: 'contain', display: 'block' }} />
-                    </span> العاديين إلى عملاء مميزين بميزانيات عالية <span className="about-badge">
-                      <img src="images/3dicons-wallet-iso-color.png" alt="محفظة" style={{ width: '48px', height: '48px', objectFit: 'contain', display: 'block' }} />
-                    </span> لنمو وتطوير عملك."
-                  </div>
-                </R>
-              </>
-            )}
+            </R>
+            <R d={50}>
+              <h2 className="section-h2" style={{ fontSize: 'clamp(24px, 3.5vw, 42px)', fontWeight: '800', marginTop: '0', marginBottom: '16px', color: '#0a0a0f', letterSpacing: '-0.02em' }}>شغف يروي تفاصيل مشاعركم</h2>
+            </R>
+            <R d={75}>
+              <p style={{ fontSize: '15px', color: '#4b5563', marginBottom: '48px', fontWeight: '500', letterSpacing: '-0.01em' }}>نصنع من الستان تحفاً فنية تنبض بالجمال وتدوم للأبد</p>
+            </R>
+            <R d={100}>
+              <div className="about-paragraph-container" style={{ fontSize: 'clamp(18px, 2.2vw, 24px)', fontWeight: '500', color: '#0a0a0f', lineHeight: '2.0', letterSpacing: '-0.015em', maxWidth: '850px', margin: '0 auto', textAlign: 'center' }}>
+                "في <span style={{ color: '#e11d48', fontWeight: '800' }}>ماريستا</span>، نؤمن أن الورد ليس مجرد هدية عابرة، بل هو رسالة حب مغلفة بالأناقة. نتخصص في ابتكار وتصميم بوكيهات ورد الستان المصنوعة يدوياً بكل دقة لتظل ذكرى خالدة لا تذبل، إلى جانب تشكيلة مميزة من الهدايا الاستثنائية المنسقة خصيصاً لتناسب لحظاتكم السعيدة وتضفي عليها لمسة لا تُنسى."
+              </div>
+            </R>
           </div>
         </section>
       );
@@ -4888,7 +4811,6 @@
       );
     };
 
-    /* ─── CONTACT ─── */
     const Contact = () => {
       const [name, setName] = useState('');
       const [email, setEmail] = useState('');
@@ -4897,12 +4819,33 @@
       const [customService, setCustomService] = useState('');
       const [isDropdownOpen, setIsDropdownOpen] = useState(false);
       const [showSuccess, setShowSuccess] = useState(false);
+      const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
       const serviceOptions = [
-        { value: 'youtube', label: 'صناعة هوية اليوتيوب' },
-        { value: 'carousels', label: 'منشورات شرائح لينكد إن وإكس' },
-        { value: 'identity', label: 'حقائب الهوية الشخصية المتكاملة' },
-        { value: 'another', label: 'خدمة أخرى' }
+        { value: 'bouquets', label: 'بوكيهات ورد ستان مخصصة' },
+        { value: 'natural_flowers', label: 'تنسيق ورد طبيعي فاخر' },
+        { value: 'events', label: 'تنسيق وديكور مناسبات وحفلات' },
+        { value: 'gifts', label: 'تغليف وتنسيق هدايا استثنائية' },
+        { value: 'another', label: 'طلب أو خدمة أخرى' }
+      ];
+
+      const faqs = [
+        {
+          q: 'هل الورد طبيعي أم صناعي؟',
+          a: 'نحن نتخصص في ابتكار وتصميم بوكيهات ورد الستان الفاخرة المصنوعة يدوياً بكل دقة لتظل ذكرى خالدة لا تذبل، كما نوفر خيارات تنسيق الورد الطبيعي الفاخر وتغليف الهدايا الاستثنائية حسب الطلب.'
+        },
+        {
+          q: 'كم يستغرق تجهيز الطلبات الخاصة؟',
+          a: 'يستغرق تجهيز البوكيه اليدوي المصنوع من الستان من يومين إلى 5 أيام عمل لضمان خروجه بأعلى مستويات الدقة والجمال. نوصي دائماً بالطلب المسبق للمناسبات الهامة.'
+        },
+        {
+          q: 'هل تتوفر خدمة توصيل البوكيهات والهدايا؟',
+          a: 'نعم، نوفر خدمة التوصيل السريع لجميع المناطق مع التغليف الآمن والفاخر لضمان وصول البوكيه والهدايا وتنسيقها بأفضل حالة ممكنة لتفاجئ من تحب.'
+        },
+        {
+          q: 'هل يمكنني اختيار ألوان مخصصة لبوكيه الستان؟',
+          a: 'بكل تأكيد! نوفر لك حرية اختيار وتخصيص الألوان وعدد الورد وطريقة التغليف لتناسب تفضيلاتك ومناسباتك الخاصة. فقط تواصل معنا وحدد طلبك.'
+        }
       ];
 
       const selectedOption = serviceOptions.find(o => o.value === service);
@@ -4925,6 +4868,10 @@
         }, 3000);
       };
 
+      const toggleFaq = (index) => {
+        setOpenFaqIndex(openFaqIndex === index ? null : index);
+      };
+
       return (
         <section id="contact" style={{ position: 'relative', overflow: 'hidden', padding: '60px 24px' }}>
           <div className="contact-grid-bg"></div>
@@ -4943,7 +4890,87 @@
               <p style={{ fontSize: '14px', color: '#4b5563', marginBottom: '48px', fontWeight: '500', letterSpacing: '-0.01em', textAlign: 'center' }}>هل ترغب في العمل معنا أو لديك أي استفسار؟ سأرد عليك خلال ٢٤ ساعة</p>
             </R>
 
-            <div>
+            <div className="contact-grid-container">
+              <style dangerouslySetInnerHTML={{
+                __html: `
+                .contact-grid-container {
+                  display: grid;
+                  grid-template-columns: 1fr;
+                  gap: 32px;
+                  max-width: 1104px;
+                  margin: 0 auto;
+                  width: 100%;
+                  text-align: right;
+                }
+                @media (min-width: 1024px) {
+                  .contact-grid-container {
+                    grid-template-columns: 1fr 1fr;
+                  }
+                }
+                .faq-card {
+                  background: linear-gradient(to bottom, rgba(244, 63, 94, 0.06) 0%, #ffffff 100%);
+                  border: 1px solid rgba(0, 0, 0, 0.05);
+                  border-radius: 32px;
+                  padding: 40px 32px;
+                  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
+                  color: #0a0a0f;
+                  display: flex;
+                  flex-direction: column;
+                }
+                .faq-title {
+                  font-size: 22px;
+                  font-weight: 800;
+                  margin-bottom: 24px;
+                  color: #0a0a0f;
+                }
+                .faq-list {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 16px;
+                }
+                .faq-item {
+                  background: #ffffff;
+                  border: 1px solid rgba(0, 0, 0, 0.05);
+                  border-radius: 16px;
+                  padding: 16px 20px;
+                  cursor: pointer;
+                  transition: all 0.3s ease;
+                }
+                .faq-item:hover {
+                  border-color: rgba(244, 63, 94, 0.2);
+                  box-shadow: 0 4px 20px rgba(244, 63, 94, 0.03);
+                }
+                .faq-question {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  font-weight: 700;
+                  color: #0a0a0f;
+                  font-size: 15px;
+                }
+                .faq-answer {
+                  max-height: 0;
+                  overflow: hidden;
+                  transition: max-height 0.3s ease, margin-top 0.3s ease;
+                  font-size: 13.5px;
+                  color: #4b5563;
+                  line-height: 1.6;
+                }
+                .faq-answer.open {
+                  max-height: 200px;
+                  margin-top: 12px;
+                }
+                .faq-arrow {
+                  transition: transform 0.3s ease;
+                  color: #6b7280;
+                }
+                .faq-arrow.open {
+                  transform: rotate(180deg);
+                  color: #e11d48;
+                }
+              `}} />
+
+              {/* Form Column */}
               <div
                 className="contact-form-card"
                 style={{
@@ -4954,8 +4981,6 @@
                   padding: '40px 32px',
                   boxShadow: '0 20px 40px rgba(0, 0, 0, 0.02)',
                   color: '#0a0a0f',
-                  maxWidth: '1104px',
-                  margin: '0 auto',
                   width: '100%',
                   textAlign: 'right'
                 }}
@@ -5028,13 +5053,33 @@
                     )}
 
                     <div style={{ marginBottom: '24px' }}>
-                      <label className="dark-label" style={{ fontSize: '14px', fontWeight: '400', textTransform: 'none', color: '#374151', marginBottom: '8px', display: 'block', letterSpacing: 'normal' }}>ما الذي تعمل عليه حالياً؟</label>
-                      <textarea className="dark-input" rows="5" required placeholder="صف مشروعك أو فكرتك بالتفصيل..." value={desc} onChange={e => setDesc(e.target.value)} style={{ border: '1px solid #e5e7eb', background: '#ffffff', borderRadius: '10px', padding: '12px', fontSize: '14px', color: '#0a0a0f', width: '100%', resize: 'none', textAlign: 'right' }} />
+                      <label className="dark-label" style={{ fontSize: '14px', fontWeight: '400', textTransform: 'none', color: '#374151', marginBottom: '8px', display: 'block', letterSpacing: 'normal' }}>تفاصيل الطلب</label>
+                      <textarea className="dark-input" rows="5" required placeholder="صف طلبك أو فكرتك بالتفصيل (مثل الألوان المفضلة، الحجم، أو المناسبة)..." value={desc} onChange={e => setDesc(e.target.value)} style={{ border: '1px solid #e5e7eb', background: '#ffffff', borderRadius: '10px', padding: '12px', fontSize: '14px', color: '#0a0a0f', width: '100%', resize: 'none', textAlign: 'right' }} />
                     </div>
 
                     <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center', height: '46px', fontSize: '14px' }}>إرسال الرسالة</button>
                   </form>
                 )}
+              </div>
+
+              {/* FAQ Column */}
+              <div className="faq-card">
+                <h3 className="faq-title">الأسئلة الشائعة</h3>
+                <div className="faq-list">
+                  {faqs.map((faq, index) => (
+                    <div key={index} className="faq-item" onClick={() => toggleFaq(index)}>
+                      <div className="faq-question">
+                        <span>{faq.q}</span>
+                        <svg className={`faq-arrow ${openFaqIndex === index ? 'open' : ''}`} width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                          <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                      </div>
+                      <div className={`faq-answer ${openFaqIndex === index ? 'open' : ''}`}>
+                        {faq.a}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -5073,13 +5118,13 @@
         </div>
 
         {/* Footer Navigation Links */}
-        <div className="footer-links" style={{ display: 'flex', justifyContent: 'center', gap: '24px', marginBottom: '32px', position: 'relative', zIndex: 1, flexWrap: 'wrap' }}>
-          <a href="#home" style={{ color: '#4b5563', fontSize: '16px', fontWeight: '600', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color = '#f43f5e'} onMouseLeave={e => e.target.style.color = '#4b5563'}>الرئيسية</a>
-          <a href="#about" style={{ color: '#4b5563', fontSize: '16px', fontWeight: '600', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color = '#f43f5e'} onMouseLeave={e => e.target.style.color = '#4b5563'}>من أنا</a>
-          <a href="#projects" style={{ color: '#4b5563', fontSize: '16px', fontWeight: '600', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color = '#f43f5e'} onMouseLeave={e => e.target.style.color = '#4b5563'}>آلية العمل</a>
-          <a href="#services" style={{ color: '#4b5563', fontSize: '16px', fontWeight: '600', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color = '#f43f5e'} onMouseLeave={e => e.target.style.color = '#4b5563'}>الخدمات</a>
-          <a href="#contact" style={{ color: '#4b5563', fontSize: '16px', fontWeight: '600', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color = '#f43f5e'} onMouseLeave={e => e.target.style.color = '#4b5563'}>اتصل بنا</a>
-          <a href="#booking" style={{ color: '#4b5563', fontSize: '16px', fontWeight: '600', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color = '#f43f5e'} onMouseLeave={e => e.target.style.color = '#4b5563'}>الحجز</a>
+        <div className="footer-links">
+          <a href="#home" className="active-nav">الرئيسية</a>
+          <a href="about.html">من أنا</a>
+          <a href="about.html#projects">آلية العمل</a>
+          <a href="#services">الخدمات</a>
+          <a href="#contact">اتصل بنا</a>
+          <a href="#testimonials">آراء عملائنا</a>
         </div>
 
         {/* MARIESTA Large Outline text design positioned at the bottom of the footer */}
@@ -5087,18 +5132,15 @@
           position: 'relative',
           marginBottom: '24px',
           zIndex: 1,
-          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+          fontFamily: '"Thmanyah Serif Text", "Thmanyah Serif Display", Georgia, serif',
           fontWeight: '900',
           fontSize: 'clamp(60px, 12vw, 150px)',
-          color: 'transparent',
-          WebkitTextStroke: '1.5px rgba(10, 10, 15, 0.18)',
-          letterSpacing: '0.15em',
-          textTransform: 'uppercase',
+          color: '#000000',
           whiteSpace: 'nowrap',
           userSelect: 'none',
           lineHeight: '1'
         }}>
-          MARIESTA
+          مــاريــستا
         </div>
 
         {/* Reserved rights sentence on bottom of footer */}
@@ -5421,91 +5463,21 @@
       );
     };
 
-    /* ─── MEETING ─── */
+    /* ─── TESTIMONIALS ─── */
     const Meeting = () => {
-      const useCalCom = true; // Toggle to true to connect and display Cal.com embed instead of local calendar!
-      const calContainerRef = useRef(null);
+      const reviews = [
+        "حرفياً أشطر واحدة تعمل بوكيهات فى الدنيا كفاية ذوقك والله وطريقتك فى التعامل وصاحبتي فرحت بيه اوي اوي ومفيش حد شافه ومعلقش عليه والله مبسوطة اوي اني اتعرفت على حد زيك وان شاء الله مش اخر تعامل بينا ❤️❤️❤️❤️❤️❤️❤️",
+        "البوكيه طلع يجنن بجد والتفاصيل والورد الستان شكله طبيعي جداً وراقي والتقفيل نضيف وممتاز تسلم ايدك وإن شاء الله هطلب منك علطول ❤️❤️❤️❤️❤️",
+        "بجد ذوقك يجنن والتعامل راقي جداً، البوكيه كان مفاجأة حلوة أوي لصحبتي وعجب كل الناس في الحفلة. شكراً ليكي ولسرعة التوصيل والخدمة الممتازة ❤️❤️❤️❤️❤️❤️❤️",
+        "شغل احترافي ومتقن جداً، الورد الستان لونه تحفة وحجم البوكيه مناسب جداً. بجد فخورة إن عندنا حد بيعمل الجمال ده بالدقة دي ❤️❤️❤️❤️❤️",
+        "حرفياً البوكيه تحفة فنية وكل اللي شافوه سألوني عليه، الذوق والتعامل والتغليف بجد فوق الممتاز. مش هيكون آخر تعامل أكيد ❤️❤️❤️❤️❤️❤️❤️"
+      ];
 
-      const [bookingDetails, setBookingDetails] = useState(null);
-      const [formActive, setFormActive] = useState(false);
-      const [name, setName] = useState('');
-      const [email, setEmail] = useState('');
-      const [desc, setDesc] = useState('');
-      const [success, setSuccess] = useState(false);
-      const [loading, setLoading] = useState(false);
-
-      const handleSelectSlot = (slot) => {
-        setBookingDetails(slot);
-        setFormActive(true);
-      };
-
-      const handleConfirmBooking = (e) => {
-        e.preventDefault();
-        if (!name || !email) return;
-        setLoading(true);
-
-        const formattedDate = bookingDetails.date.toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-        const mailBody = `مرحباً كاسبر،\n\nأود تأكيد موعد اجتماعنا في يوم ${formattedDate} خلال الفترة ${bookingDetails.time}.\n\nبياناتي الشخصية:\nالاسم: ${name}\nالبريد الإلكتروني: ${email}\nوصف المشروع: ${desc}\n\nأتطلع للحديث معك قريباً!`;
-        const mailtoUrl = `mailto:Kacper@creatorsflow.org?subject=Meeting Confirmation: ${formattedDate}&body=${encodeURIComponent(mailBody)}`;
-
-        setTimeout(() => {
-          setLoading(false);
-          setSuccess(true);
-          // Open default mail client silently without refreshing current window context
-          const link = document.createElement('a');
-          link.href = mailtoUrl;
-          link.click();
-        }, 1200);
-      };
-
-      useEffect(() => {
-        if (useCalCom) {
-          // Official Cal.com inline embed loader initialization
-          (function (C, A, L) {
-            let p = function (a, ar) { a.q.push(ar); };
-            let d = C.document;
-            C.Cal = C.Cal || function () {
-              let cal = C.Cal;
-              let ar = arguments;
-              if (!cal.loaded) {
-                cal.ns = {};
-                cal.q = cal.q || [];
-                d.head.appendChild(d.createElement("script")).src = A;
-                cal.loaded = true;
-              }
-              if (ar[0] === L) {
-                const api = function () { p(api, arguments); };
-                const namespace = ar[1];
-                api.q = api.q || [];
-                if (typeof namespace === "string") {
-                  cal.ns[namespace] = cal.ns[namespace] || api;
-                  p(cal.ns[namespace], ar);
-                  p(cal, ["initNamespace", namespace]);
-                } else p(cal, ar);
-                return;
-              }
-              p(cal, ar);
-            };
-          })(window, "https://app.cal.com/embed/embed.js", "init");
-
-          window.Cal("init", "15min", { origin: "https://app.cal.com" });
-          window.Cal.config = window.Cal.config || {};
-          window.Cal.config.forwardQueryParams = true;
-
-          window.Cal.ns["15min"]("inline", {
-            elementOrSelector: "#my-cal-inline-15min",
-            config: { "layout": "month_view", "useSlotsViewOnSmallScreen": "true", "theme": "light" },
-            calLink: "emailcontact-3b9mhk/15min",
-          });
-
-          window.Cal.ns["15min"]("ui", { "theme": "light", "cssVarsPerTheme": { "light": { "cal-brand": "#000000" } }, "hideEventTypeDetails": true, "layout": "month_view" });
-        }
-      }, [useCalCom]);
-
-      const formattedDateStr = bookingDetails?.date.toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      // Double the list for infinite scrolling effect
+      const doubledReviews = [...reviews, ...reviews];
 
       return (
-        <section id="booking" style={{ position: 'relative', overflow: 'hidden', padding: '80px 24px' }}>
+        <section id="testimonials" style={{ position: 'relative', overflow: 'hidden', padding: '100px 24px 80px' }}>
           {/* Dot grid points background */}
           <div className="booking-grid-bg" style={{
             position: 'absolute',
@@ -5517,134 +5489,98 @@
             pointerEvents: 'none'
           }} />
 
-          <div className="schedule-wrap projects-inner" style={{ position: 'relative', zIndex: 1, padding: 0 }}>
-            {/* Centered Capsule Header */}
+          <div className="schedule-wrap projects-inner" style={{ position: 'relative', zIndex: 1, padding: 0, maxWidth: '100%', overflow: 'hidden' }}>
             <R>
               <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
                 <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(0, 0, 0, 0.12)', borderRadius: '100px', padding: '6px 16px', fontSize: '13px', fontWeight: '500', color: '#0a0a0f', background: 'transparent' }}>
-                  الحجز
+                  آراء عملائنا
                 </span>
               </div>
             </R>
             <R d={50}>
-              <h2 className="section-h2" style={{ fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: '700', marginTop: '0', marginBottom: '12px', color: '#0a0a0f', letterSpacing: '-0.02em', textAlign: 'center' }}>احجز جلسة استشارية</h2>
+              <h2 className="section-h2" style={{ fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: '700', marginTop: '0', marginBottom: '12px', color: '#0a0a0f', letterSpacing: '-0.02em', textAlign: 'center' }}>قالوا عن ماريستا</h2>
             </R>
             <R d={75}>
-              <p style={{ fontSize: '14px', color: '#4b5563', marginBottom: '48px', fontWeight: '500', letterSpacing: '-0.01em', textAlign: 'center' }}>احجز جلسة استشارية مجانية مباشرة في تقويمي أدناه.</p>
+              <p style={{ fontSize: '14px', color: '#4b5563', marginBottom: '48px', fontWeight: '500', letterSpacing: '-0.01em', textAlign: 'center' }}>شغفنا ينعكس في رضا وسعادة عملائنا بمشاركتهم أجمل لحظاتهم.</p>
             </R>
 
-            {useCalCom ? (
-              /* Cal.com Inline Embed Container sitting directly on section background */
-              <div id="my-cal-inline-15min" style={{ width: '100%', minHeight: '650px', overflow: 'scroll', background: 'transparent', marginTop: '-24px' }} />
-            ) : (
-              /* Beautiful Local Calendar Fallback inside card */
-              <div
-                className="contact-form-card"
-                style={{
-                  position: 'relative',
-                  background: 'linear-gradient(to bottom, rgba(244, 63, 94, 0.06) 0%, #ffffff 100%)',
-                  border: '1px solid rgba(0, 0, 0, 0.05)',
-                  borderRadius: '32px',
-                  padding: 'clamp(20px, 4vw, 40px)',
-                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.02)',
-                  color: '#0a0a0f',
-                  maxWidth: '650px',
-                  margin: '0 auto',
-                  width: '100%'
-                }}
-              >
-                <Calendar onSelectSlot={handleSelectSlot} />
-              </div>
-            )}
-          </div>
-
-          {formActive && !useCalCom && (
-            <div className="booking-modal-overlay" onClick={() => setFormActive(false)}>
-              <div className="popup-content" onClick={e => e.stopPropagation()} style={{ background: 'linear-gradient(to bottom, rgba(244, 63, 94, 0.06) 0%, #ffffff 100%)', border: '1px solid rgba(0, 0, 0, 0.08)', borderRadius: '24px', padding: '36px', maxWidth: '480px', width: '100%', boxShadow: '0 20px 60px rgba(0,0,0,0.15)', textAlign: 'right' }}>
-                {loading ? (
-                  /* Rotating Loader state card */
-                  <div style={{ textAlign: 'center', padding: '32px 0', animation: 'fadeIn 0.3s' }}>
-                    <div className="spinner" style={{
-                      width: '48px',
-                      height: '48px',
-                      border: '4px solid rgba(244, 63, 94, 0.1)',
-                      borderTop: '4px solid #f43f5e',
-                      borderRadius: '50%',
-                      margin: '0 auto 24px',
-                      animation: 'spin 1s linear infinite'
-                    }} />
-                    <h3 style={{ fontSize: '20px', fontWeight: 800, marginBottom: '8px', color: '#0a0a0f', letterSpacing: '-0.02em' }}>جاري معالجة الحجز...</h3>
-                    <p style={{ color: '#6b7280', fontSize: '14px' }}>جاري تأمين موعد جلستك الاستشارية...</p>
+            {/* Testimonials Horizontal Scroll Track */}
+            <div className="testimonials-marquee" style={{ width: '100%', overflow: 'hidden', position: 'relative', padding: '20px 0' }}>
+              <style dangerouslySetInnerHTML={{
+                __html: `
+                .testimonials-track {
+                  display: flex;
+                  gap: 24px;
+                  width: max-content;
+                  animation: marquee-scroll 35s linear infinite;
+                }
+                .testimonials-track:hover {
+                  animation-play-state: paused;
+                }
+                .testimonial-card {
+                  background: linear-gradient(135deg, #fff5f6 0%, #ffffff 100%);
+                  border: 1px solid rgba(244, 63, 94, 0.15);
+                  border-radius: 32px;
+                  padding: 44px 32px 32px;
+                  width: 380px;
+                  max-width: 90vw;
+                  white-space: normal;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: space-between;
+                  box-shadow: 0 10px 30px rgba(244, 63, 94, 0.03);
+                  direction: rtl;
+                  position: relative;
+                  margin-top: 28px;
+                }
+                .testimonial-logo {
+                  position: absolute;
+                  top: -28px;
+                  right: 32px;
+                  width: 56px;
+                  height: 56px;
+                  border-radius: 50%;
+                  border: 3px solid #ffffff;
+                  box-shadow: 0 4px 12px rgba(244, 63, 94, 0.15);
+                  background: #ffffff;
+                  object-fit: cover;
+                }
+                .testimonial-text {
+                  font-size: 14.5px;
+                  color: #374151;
+                  line-height: 1.8;
+                  font-weight: 500;
+                  text-align: right;
+                  margin-bottom: 16px;
+                }
+                .testimonial-hearts {
+                  display: flex;
+                  justify-content: center;
+                  font-size: 18px;
+                  color: #e11d48;
+                }
+                @keyframes marquee-scroll {
+                  0% {
+                    transform: translate3d(0, 0, 0);
+                  }
+                  100% {
+                    transform: translate3d(calc(-50% - 12px), 0, 0);
+                  }
+                }
+              `}} />
+              <div className="testimonials-track" style={{ direction: 'ltr' }}>
+                {doubledReviews.map((text, idx) => (
+                  <div key={idx} className="testimonial-card">
+                    <img src="images/cropped_circle_image.png" className="testimonial-logo" alt="Logo" />
+                    <p className="testimonial-text">{text.replace(/❤️+/g, '')}</p>
+                    <div className="testimonial-hearts">
+                      {"❤️".repeat(7)}
+                    </div>
                   </div>
-                ) : success ? (
-                  /* Successful booking confirmation card with details */
-                  <div style={{ textAlign: 'center', padding: '24px 0', animation: 'fadeIn 0.3s' }}>
-                    <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: '#22c55e20', color: '#22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-                      <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg>
-                    </div>
-                    <h3 style={{ fontSize: '22px', fontWeight: 800, marginBottom: '8px', color: '#0a0a0f', letterSpacing: '-0.02em' }}>تم تأكيد الحجز بنجاح!</h3>
-                    <p style={{ color: '#6b7280', fontSize: '14px', marginBottom: '24px' }}>تم التحقق من تفاصيل جلستك الاستشارية:</p>
-
-                    {/* Booking details card simplified */}
-                    <div style={{ background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: '16px', padding: '20px', textAlign: 'right', marginBottom: '28px' }}>
-                      <div style={{ fontSize: '13px', color: '#6b7280', marginBottom: '4px' }}>اليوم</div>
-                      <div style={{ fontSize: '15px', fontWeight: '700', color: '#0a0a0f', marginBottom: '12px' }}>{formattedDateStr}</div>
-
-                      <div style={{ fontSize: '13px', color: '#6b7280', marginBottom: '4px' }}>الوقت</div>
-                      <div style={{ fontSize: '15px', fontWeight: '700', color: '#0a0a0f', marginBottom: '12px' }}>{bookingDetails?.time}</div>
-
-                      <div style={{ fontSize: '13px', color: '#6b7280', marginBottom: '4px' }}>البريد الإلكتروني</div>
-                      <div style={{ fontSize: '15px', fontWeight: '700', color: '#0a0a0f' }}>{email}</div>
-                    </div>
-
-                    <button
-                      type="button"
-                      className="btn-primary"
-                      onClick={() => {
-                        setFormActive(false);
-                        setSuccess(false);
-                        setName('');
-                        setEmail('');
-                        setDesc('');
-                      }}
-                      style={{ width: '100%', justifyContent: 'center' }}
-                    >
-                      تم
-                    </button>
-                  </div>
-                ) : (
-                  <form onSubmit={handleConfirmBooking}>
-                    <h3 style={{ fontSize: '22px', fontWeight: 800, marginBottom: '8px', color: '#0a0a0f', letterSpacing: '-0.02em' }}>أكد حجز جلستك</h3>
-                    <p style={{ fontSize: '13.5px', color: '#6b7280', marginBottom: '24px' }}>
-                      الموعد المختار: <strong>{formattedDateStr}</strong> في تمام الساعة <strong>{bookingDetails?.time}</strong>
-                    </p>
-
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                      <div>
-                        <label className="dark-label" style={{ marginBottom: '6px' }}>الاسم الكريم</label>
-                        <input className="dark-input" type="text" required placeholder="اسمك هنا" value={name} onChange={e => setName(e.target.value)} style={{ border: '1px solid #e5e7eb', textAlign: 'right' }} />
-                      </div>
-
-                      <div>
-                        <label className="dark-label" style={{ marginBottom: '6px' }}>البريد الإلكتروني</label>
-                        <input className="dark-input" type="email" required placeholder="example@example.com" value={email} onChange={e => setEmail(e.target.value)} style={{ border: '1px solid #e5e7eb', textAlign: 'right' }} />
-                      </div>
-
-                      <div>
-                        <label className="dark-label" style={{ marginBottom: '6px' }}>تفاصيل المشروع</label>
-                        <textarea className="dark-input" rows="3" placeholder="أخبرني بلمحة عن مشروعك..." value={desc} onChange={e => setDesc(e.target.value)} style={{ border: '1px solid #e5e7eb', resize: 'none', textAlign: 'right' }} />
-                      </div>
-
-                      <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
-                        <button type="submit" className="btn-primary" style={{ flex: 1, justifyContent: 'center' }}>تأكيد الحجز</button>
-                        <button type="button" className="btn-ghost" onClick={() => setFormActive(false)} style={{ padding: '0 24px' }}>إلغاء</button>
-                      </div>
-                    </div>
-                  </form>
-                )}
+                ))}
               </div>
             </div>
-          )}
+          </div>
         </section>
       );
     };
@@ -5760,8 +5696,6 @@
           <Navbar />
           <Hero />
           <Marquee />
-          <About />
-          <Projects />
           <Services />
           <Contact />
           <Meeting />

@@ -32,7 +32,7 @@ const seedProducts = [
   { name: "بوكيه زفاف ملكي", price: "400 ج.م", image: "images/22.png", category: 0, description: "بوكيه زفاف ملكي كبير وجذاب للغاية." },
   { name: "بوكيه ورد جوري أحمر", price: "150 ج.م", image: "images/22.png", category: 0, description: "بوكيه كلاسيكي من الورد الجوري الأحمر." },
   { name: "بوكيه لافندر ناعم", price: "130 ج.م", image: "images/22.png", category: 0, description: "بوكيه لافندر طبيعي مجفف ناعم ورائحة جذابة." },
-  
+
   // 1: بوكيه تخرج
   { name: "بوكيه نجاح وتفوق", price: "140 ج.م", image: "images/22.png", category: 1, description: "بوكيه للتعبير عن الفرحة بالنجاح والتفوق الدراسي." },
   { name: "بوكيه التخرج الكلاسيكي", price: "160 ج.م", image: "images/22.png", category: 1, description: "بوكيه تخرج كلاسيكي أنيق." },
@@ -46,11 +46,11 @@ const seedProducts = [
   { name: "بوكيه البهجة والسرور", price: "150 ج.م", image: "images/22.png", category: 2 },
   { name: "بوكيه ورد مشكل", price: "170 ج.م", image: "images/22.png", category: 2 },
   { name: "بوكيه الأوركيد الساحر", price: "280 ج.م", image: "images/22.png", category: 2 },
-  
+
   // 5: ورد ستان
   { name: "بوكيه ورد ستان أحمر", price: "120 ج.م", image: "images/22.png", category: 5 },
   { name: "وردة ستان فردية فاخرة", price: "25 ج.م", image: "images/22.png", category: 5 },
-  
+
   // 6: فراشات
   { name: "تنسيق بوكيه الفراشات المضيء", price: "190 ج.م", image: "images/22.png", category: 6 }
 ];
@@ -91,10 +91,39 @@ if (typeof firebase !== "undefined" && isFirebaseConfigured()) {
   console.log("Running in Mock Mode. Connect Firebase via firebase-config.js.");
 }
 
+// Seed Data for Portfolio Gallery (معرض الأعمال)
+const seedGallery = [];
+
+const getMockGallery = () => {
+  let local = localStorage.getItem("mock_gallery");
+  if (local) {
+    try {
+      const items = JSON.parse(local);
+      const oldTitles = ["بوكيه الورد الأحمر الانيق", "تنسيق ورد الستان الفاخر", "باقة الورد الزهري المميزة", "تنسيق الهدايا الفخم"];
+      const filtered = items.filter(item => !oldTitles.includes(item.title));
+      if (filtered.length !== items.length) {
+        localStorage.setItem("mock_gallery", JSON.stringify(filtered));
+        local = JSON.stringify(filtered);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  if (!local) {
+    localStorage.setItem("mock_gallery", JSON.stringify(seedGallery));
+    return seedGallery;
+  }
+  return JSON.parse(local);
+};
+
+const saveMockGallery = (items) => {
+  localStorage.setItem("mock_gallery", JSON.stringify(items));
+};
+
 // Global API Helper for Database Operations
 window.AppDB = {
   isFirebase: () => useFirebase && !firebaseFailed,
-  
+
   getProducts: (callback) => {
     const sortProds = (prods) => {
       return [...prods].sort((a, b) => {
@@ -121,7 +150,7 @@ window.AppDB = {
       });
     } else {
       callback(sortProds(getMockProducts()));
-      return () => {};
+      return () => { };
     }
   },
 
@@ -194,5 +223,86 @@ window.AppDB = {
     }
     saveMockProducts(seedProducts);
     return Promise.resolve();
+  },
+
+  // Gallery CRUD Operations
+  getGalleryItems: (callback) => {
+    const sortGallery = (items) => {
+      return [...items].sort((a, b) => {
+        const timeA = a.createdAt !== undefined ? Number(a.createdAt) : 0;
+        const timeB = b.createdAt !== undefined ? Number(b.createdAt) : 0;
+        return timeB - timeA;
+      });
+    };
+
+    if (useFirebase && db && !firebaseFailed) {
+      return db.collection("gallery").onSnapshot((snapshot) => {
+        const items = [];
+        snapshot.forEach((doc) => {
+          items.push({ id: doc.id, ...doc.data() });
+        });
+        callback(sortGallery(items));
+      }, (error) => {
+        console.error("Firestore read gallery error, falling back to LocalStorage: ", error);
+        firebaseFailed = true;
+        callback(sortGallery(getMockGallery()));
+      });
+    } else {
+      callback(sortGallery(getMockGallery()));
+      return () => { };
+    }
+  },
+
+  addGalleryItem: async (item) => {
+    const itemWithTimestamp = {
+      ...item,
+      createdAt: item.createdAt || Date.now()
+    };
+    if (useFirebase && db && !firebaseFailed) {
+      try {
+        return await db.collection("gallery").add(itemWithTimestamp);
+      } catch (err) {
+        console.error("Firestore add gallery failed, falling back to LocalStorage: ", err);
+        firebaseFailed = true;
+      }
+    }
+    const items = getMockGallery();
+    const newItem = { id: "mock_g_" + Date.now(), ...itemWithTimestamp };
+    items.push(newItem);
+    saveMockGallery(items);
+    return newItem;
+  },
+
+  updateGalleryItem: async (id, item) => {
+    if (useFirebase && db && !firebaseFailed) {
+      try {
+        return await db.collection("gallery").doc(id).update(item);
+      } catch (err) {
+        console.error("Firestore update gallery failed, falling back to LocalStorage: ", err);
+        firebaseFailed = true;
+      }
+    }
+    const items = getMockGallery();
+    const idx = items.findIndex(i => i.id === id || i.title === item.title);
+    if (idx !== -1) {
+      items[idx] = { ...items[idx], ...item };
+      saveMockGallery(items);
+    }
+    return true;
+  },
+
+  deleteGalleryItem: async (id, itemKey) => {
+    if (useFirebase && db && !firebaseFailed) {
+      try {
+        return await db.collection("gallery").doc(id).delete();
+      } catch (err) {
+        console.error("Firestore delete gallery failed, falling back to LocalStorage: ", err);
+        firebaseFailed = true;
+      }
+    }
+    let items = getMockGallery();
+    items = items.filter(i => i.id !== id && i.title !== itemKey.title);
+    saveMockGallery(items);
+    return true;
   }
 };
