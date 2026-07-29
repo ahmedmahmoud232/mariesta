@@ -5,18 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>المعروضات — ماريستا</title>
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
-
+  <script defer crossorigin src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
+  <script defer crossorigin src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <!-- Firebase SDKs & Custom Configurations -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-  <script src="firebase-config.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script defer src="firebase-config.js"></script>
 
   <script>
     tailwind.config = {
@@ -37,6 +36,7 @@
       src: url('woff2/thmanyahsans-Regular.woff2') format('woff2');
       font-weight: 400;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -44,6 +44,7 @@
       src: url('woff2/thmanyahsans-Medium.woff2') format('woff2');
       font-weight: 500;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -51,6 +52,7 @@
       src: url('woff2/thmanyahsans-Bold.woff2') format('woff2');
       font-weight: 700;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -58,6 +60,7 @@
       src: url('woff2/thmanyahsans-Black.woff2') format('woff2');
       font-weight: 900;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -65,6 +68,7 @@
       src: url('woff2/thmanyahserifdisplay-Regular.woff2') format('woff2');
       font-weight: 400;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -72,6 +76,7 @@
       src: url('woff2/thmanyahserifdisplay-Medium.woff2') format('woff2');
       font-weight: 500;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -79,6 +84,7 @@
       src: url('woff2/thmanyahserifdisplay-Bold.woff2') format('woff2');
       font-weight: 700;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -86,6 +92,7 @@
       src: url('woff2/thmanyahserifdisplay-Black.woff2') format('woff2');
       font-weight: 900;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -93,6 +100,7 @@
       src: url('thmanyahseriftext/otf/thmanyahseriftext-Light.otf') format('opentype');
       font-weight: 300;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -100,6 +108,7 @@
       src: url('thmanyahseriftext/otf/thmanyahseriftext-Regular.otf') format('opentype');
       font-weight: 400;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -107,6 +116,7 @@
       src: url('thmanyahseriftext/otf/thmanyahseriftext-Medium.otf') format('opentype');
       font-weight: 500;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -114,6 +124,7 @@
       src: url('thmanyahseriftext/otf/thmanyahseriftext-Bold.otf') format('opentype');
       font-weight: 700;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -121,6 +132,7 @@
       src: url('thmanyahseriftext/otf/thmanyahseriftext-Black.otf') format('opentype');
       font-weight: 900;
       font-style: normal;
+      font-display: swap;
     }
 
     h1,
@@ -480,6 +492,7 @@
     }
 
     @media(max-width:960px) {
+
       .nav-links,
       .nav-cta {
         display: none !important;
@@ -639,7 +652,7 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 30px;
       max-width: 1104px;
-      margin: 40px auto;
+      margin: 15px auto 40px auto;
       width: 100%;
     }
 
@@ -712,8 +725,8 @@
 
     .product-img-wrapper img {
       height: 100%;
-      width: auto;
-      object-fit: contain;
+      width: 100%;
+      object-fit: cover;
       transition: transform 0.5s ease;
     }
 
@@ -783,7 +796,8 @@
       }
     }
 
-    .modal-nav-arrow-left, .modal-nav-arrow-right {
+    .modal-nav-arrow-left,
+    .modal-nav-arrow-right {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
@@ -830,7 +844,10 @@
     /* Modal Animation */
     .modal-overlay {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: rgba(10, 10, 15, 0.65);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
@@ -859,6 +876,7 @@
       box-shadow: 0 30px 70px rgba(10, 10, 15, 0.15);
       animation: modalSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
+
     .modal-container::-webkit-scrollbar {
       display: none;
     }
@@ -868,30 +886,56 @@
     }
 
     @keyframes modalFadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
 
     @keyframes modalFadeOut {
-      from { opacity: 1; }
-      to { opacity: 0; }
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
     }
 
     @keyframes modalSlideUp {
-      from { transform: translateY(20px) scale(0.98); opacity: 0; }
-      to { transform: translateY(0) scale(1); opacity: 1; }
+      from {
+        transform: translateY(20px) scale(0.98);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
     }
 
     @keyframes modalSlideDown {
-      from { transform: translateY(0) scale(1); opacity: 1; }
-      to { transform: translateY(20px) scale(0.98); opacity: 0; }
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+
+      to {
+        transform: translateY(20px) scale(0.98);
+        opacity: 0;
+      }
     }
+
     /* ===== HERO SECTION ===== */
     .hero-bg {
       position: absolute;
       inset: 0;
       z-index: 0;
     }
+
     .hero-line-grid {
       position: absolute;
       inset: 0;
@@ -899,6 +943,7 @@
       z-index: 0;
       opacity: 0.8;
     }
+
     .hero-tag {
       display: inline-flex;
       align-items: center;
@@ -909,6 +954,7 @@
       box-shadow: none;
       flex-shrink: 0;
     }
+
     .hero-tag-dot {
       width: 8px;
       height: 8px;
@@ -918,13 +964,51 @@
       justify-content: center;
       animation: pulse-rose 2s ease-in-out infinite;
     }
+
     @keyframes pulse-rose {
-      0%, 100% {
+
+      0%,
+      100% {
         box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.4);
       }
+
       50% {
         box-shadow: 0 0 0 6px rgba(225, 29, 72, 0);
       }
+    }
+
+    @keyframes skeleton-loading {
+      0% {
+        background-color: #f3f4f6;
+      }
+
+      50% {
+        background-color: #e5e7eb;
+      }
+
+      100% {
+        background-color: #f3f4f6;
+      }
+    }
+
+    .skeleton-pulse {
+      animation: skeleton-loading 1.5s infinite ease-in-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .product-card-animate {
+      animation: fadeInUp 0.4s ease-out forwards;
     }
   </style>
 </head>
@@ -936,10 +1020,10 @@
     const { useState, useEffect, useRef, useMemo } = React;
 
     const Svg = {
-      home: <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>,
-      user: <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>,
-      briefcase: <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>,
-      mail: <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      home: <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" /></svg>,
+      user: <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" /></svg>,
+      briefcase: <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" /></svg>,
+      mail: <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" /></svg>
     };
 
     const tabs = [
@@ -959,8 +1043,7 @@
     ];
 
     const roseOptions = [
-      { count: "1 وردة", price: "40 جنيه" },
-      { count: "3 وردات", price: "100 جنيه" },
+      { count: "5 وردات", price: "140 جنيه" },
       { count: "7 وردات", price: "180 جنيه" },
       { count: "11 وردة", price: "250 جنيه" },
       { count: "15 وردات", price: "300 جنيه" },
@@ -975,12 +1058,13 @@
 
     const ProductsCatalogApp = () => {
       const [dbProducts, setDbProducts] = useState([]);
+      const [isLoading, setIsLoading] = useState(true);
       const [searchQuery, setSearchQuery] = useState("");
       const [activeTab, setActiveTab] = useState("all");
       const [selectedProduct, setSelectedProduct] = useState(null);
       const [activeImageIdx, setActiveImageIdx] = useState(0);
       const [deliveryMethod, setDeliveryMethod] = useState("delivery");
-      const [selectedRoseCount, setSelectedRoseCount] = useState("11 وردة");
+      const [selectedRoseCount, setSelectedRoseCount] = useState(5);
       const [showPromoModal, setShowPromoModal] = useState(false);
       const [isMenuOpen, setIsMenuOpen] = useState(false);
       const [isClosing, setIsClosing] = useState(false);
@@ -1004,7 +1088,8 @@
 
       useEffect(() => {
         const unsubscribe = window.AppDB.getProducts((prods) => {
-          setDbProducts([...prods].reverse());
+          setDbProducts(prods);
+          setIsLoading(false);
         });
         return () => unsubscribe();
       }, []);
@@ -1038,7 +1123,7 @@
         });
         setActiveImageIdx(0);
         setDeliveryMethod('delivery');
-        setSelectedRoseCount("11 وردة");
+        setSelectedRoseCount(prod.minFlowers !== undefined && prod.minFlowers !== null ? parseInt(prod.minFlowers) : 5);
         setShowPromoModal(false);
       };
 
@@ -1053,8 +1138,8 @@
 
       const filteredProducts = useMemo(() => {
         return dbProducts.filter((p) => {
-          const matchesSearch = p.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                                p.description?.toLowerCase().includes(searchQuery.toLowerCase());
+          const matchesSearch = p.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            p.description?.toLowerCase().includes(searchQuery.toLowerCase());
           const matchesTab = activeTab === "all" || parseInt(p.category) === parseInt(activeTab);
           return matchesSearch && matchesTab;
         });
@@ -1087,7 +1172,12 @@
       };
 
       const displayPrice = selectedProduct
-        ? (roseOptions.find(opt => opt.count === selectedRoseCount)?.price || selectedProduct.price)
+        ? (() => {
+          const priceNum = parseFloat(selectedProduct.price.toString().replace(/[^\d.]/g, ''));
+          return [0, 1, 2, 3, 4, 5].includes(parseInt(selectedProduct.category)) && !isNaN(priceNum)
+            ? `${Math.round(priceNum * selectedRoseCount)} ج.م`
+            : selectedProduct.price;
+        })()
         : "";
 
       return (
@@ -1170,18 +1260,18 @@
           </div>
 
           {/* Hero Section */}
-          <section id="products-hero" style={{ background: 'linear-gradient(to bottom, #ffe4e6 0%, #fff1f2 60%, #fff 100%)', position: 'relative', overflow: 'hidden', padding: '120px 24px 40px' }}>
+          <section id="products-hero" style={{ background: 'linear-gradient(to bottom, #ffe4e6 0%, #fff1f2 60%, #fff 100%)', position: 'relative', overflow: 'hidden', padding: '120px 24px 15px' }}>
             <div className="hero-bg">
               <div className="hero-line-grid" style={{ backgroundImage: 'radial-gradient(rgba(244, 63, 94, 0.15) 1.5px, transparent 1.5px)' }} />
             </div>
             <div className="hero-inner" style={{ position: 'relative', zIndex: 1, maxWidth: '1200px', margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-              
+
               <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(0, 0, 0, 0.12)', borderRadius: '100px', padding: '6px 16px', fontSize: '13px', fontWeight: '500', color: '#0a0a0f', background: 'transparent', marginBottom: '20px' }}>
                 المعروضات الفاخرة
               </span>
 
               <h2 style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: '900', color: '#0a0a0f', fontFamily: "'Thmanyah Serif Text', 'Thmanyah Serif Display', Georgia, serif", margin: '0 auto 12px auto', lineHeight: '1.2', maxWidth: '600px' }}>
-                باقات ورد وهدايا استثنائية تُصمم وتُصنع بكل حب
+                باقات ورد وهدايا استثنائية
               </h2>
 
               <div className="max-w-[1104px] mx-auto mb-5 px-2 w-full" style={{ position: 'relative', zIndex: 10, marginTop: '20px' }}>
@@ -1236,7 +1326,23 @@
           </section>
 
           <main className="flex-grow max-w-7xl mx-auto px-4 w-full pt-2">
-            {filteredProducts.length === 0 ? (
+            {isLoading ? (
+              <div className="products-grid-catalog animate-in fade-in duration-300">
+                {Array.from({ length: 6 }).map((_, idx) => (
+                  <div key={`skeleton-${idx}`} className="product-card-custom" style={{ cursor: 'default', pointerEvents: 'none' }}>
+                    <div className="product-img-wrapper skeleton-pulse" style={{ backgroundColor: '#f3f4f6', height: '100%', width: '100%' }}></div>
+                    <div className="product-info-custom" style={{ gap: '12px', padding: '20px' }}>
+                      <div className="skeleton-pulse" style={{ height: '20px', width: '70%', backgroundColor: '#e5e7eb', borderRadius: '6px' }}></div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div className="skeleton-pulse" style={{ height: '16px', width: '30%', backgroundColor: '#e5e7eb', borderRadius: '4px' }}></div>
+                        <div className="skeleton-pulse" style={{ height: '16px', width: '40%', backgroundColor: '#e5e7eb', borderRadius: '4px' }}></div>
+                      </div>
+                      <div className="skeleton-pulse" style={{ height: '38px', width: '100%', backgroundColor: '#e5e7eb', borderRadius: '12px', marginTop: '4px' }}></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : filteredProducts.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-20 px-6 text-center animate-in fade-in zoom-in duration-200">
                 <div className="w-24 h-24 bg-indigo-50 border border-indigo-100 rounded-full flex items-center justify-center text-4xl mb-5 animate-pulse">
                   🌸
@@ -1264,15 +1370,46 @@
               <>
                 <div className="products-grid-catalog">
                   {displayedProducts.map((prod, idx) => (
-                    <div key={prod.id || idx} className="product-card-custom" onClick={() => handleOpenModal(prod)}>
+                    <div key={prod.id || idx} className="product-card-custom product-card-animate" onClick={() => handleOpenModal(prod)} style={{ animationDelay: `${idx * 0.05}s`, opacity: 0 }}>
                       <div className="product-img-wrapper">
-                        <img src={prod.image} alt={prod.name} />
+                        <img src={prod.image} alt={prod.name} loading="lazy" />
+                        <span style={{
+                          position: 'absolute',
+                          top: '12px',
+                          right: '12px',
+                          background: 'rgba(255, 255, 255, 0.65)',
+                          backdropFilter: 'blur(12px)',
+                          WebkitBackdropFilter: 'blur(12px)',
+                          border: '1px solid rgba(255, 255, 255, 0.4)',
+                          color: '#0a0a0f',
+                          fontSize: '11px',
+                          padding: '4px 10px',
+                          borderRadius: '100px',
+                          fontWeight: '700',
+                          pointerEvents: 'none',
+                          zIndex: 5,
+                          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+                        }}>
+                          {tabs.find(t => String(t.id) === String(prod.category))?.title || "غير محدد"}
+                        </span>
                       </div>
                       <div className="product-info-custom">
                         <h3 className="product-name-custom text-slate-900">{prod.name}</h3>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontSize: '13px', color: '#6b7280', fontWeight: '500' }}>السعر</span>
-                          <span className="product-price-custom">{prod.price ? (prod.price.toString().includes('ج.م') || prod.price.toString().includes('جنيه') ? prod.price : `${prod.price} ج.م`) : ""}</span>
+                          {[0, 1, 2, 3, 4, 5].includes(parseInt(prod.category)) ? (
+                            <span className="product-price-custom" style={{ fontSize: '14px', fontWeight: '700', color: '#e11d48' }}>
+                              {(() => {
+                                const priceNum = parseFloat(prod.price.toString().replace(/[^\d.]/g, ''));
+                                const min = prod.minFlowers !== undefined && prod.minFlowers !== null ? parseInt(prod.minFlowers) : 5;
+                                return isNaN(priceNum) ? prod.price : `يبدأ من ${Math.round(priceNum * min)} ج.م`;
+                              })()}
+                            </span>
+                          ) : (
+                            <>
+                              <span style={{ fontSize: '13px', color: '#6b7280', fontWeight: '500' }}>السعر</span>
+                              <span className="product-price-custom">{prod.price ? (prod.price.toString().includes('ج.م') || prod.price.toString().includes('جنيه') ? prod.price : `${prod.price} ج.م`) : ""}</span>
+                            </>
+                          )}
                         </div>
                         <button className="product-order-btn mt-3" onClick={(e) => { e.stopPropagation(); handleOpenModal(prod); }}>
                           اطلب
@@ -1325,11 +1462,16 @@
               <div className={`modal-container text-right ${isClosing ? 'closing' : ''}`} onClick={(e) => e.stopPropagation()} style={{ opacity: isNavigating ? 0.4 : 1, transition: 'opacity 0.15s ease-in-out' }}>
                 {/* Promo Coupon Overlay */}
                 {showPromoModal && (() => {
-                  const priceNum = parseInt(selectedProduct.price.replace(/[^\d]/g, ''), 10);
-                  const discountedPriceVal = isNaN(priceNum) ? selectedProduct.price : `${Math.round(priceNum * 0.9)} ج.م`;
+                  const basePriceStr = [0, 1, 2, 3, 4, 5].includes(parseInt(selectedProduct.category)) ? displayPrice : selectedProduct.price;
+                  const priceNum = parseInt(basePriceStr.replace(/[^\d]/g, ''), 10);
+                  const discountedPriceVal = isNaN(priceNum) ? basePriceStr : `${Math.round(priceNum * 0.9)} ج.م`;
+
+                  const flowerText = [0, 1, 2, 3, 4, 5].includes(parseInt(selectedProduct.category))
+                    ? `\nالعدد: ${selectedRoseCount}`
+                    : '';
 
                   const whatsappText = encodeURIComponent(
-                    `مرحباً، أود طلب: ${selectedProduct.name}\nالسعر الأصلي: ${selectedProduct.price ? (selectedProduct.price.toString().includes('ج.م') || selectedProduct.price.toString().includes('جنيه') ? selectedProduct.price : `${selectedProduct.price} ج.م`) : ""}\nالسعر بعد الخصم (10%): ${discountedPriceVal}\nكود الخصم: SATIN10\nطريقة الاستلام: ${deliveryMethod === 'delivery' ? 'توصيل' : 'استلام'}`
+                    `مرحباً، أود طلب: ${selectedProduct.name}${flowerText}\nالسعر الأصلي: ${basePriceStr ? (basePriceStr.toString().includes('ج.م') || basePriceStr.toString().includes('جنيه') ? basePriceStr : `${basePriceStr} ج.م`) : ""}\nالسعر بعد الخصم (10%): ${discountedPriceVal}\nكود الخصم: SATIN10\nطريقة الاستلام: ${deliveryMethod === 'delivery' ? 'توصيل' : 'استلام'}`
                   );
                   const whatsappUrl = `https://wa.me/201062973138?text=${whatsappText}`;
 
@@ -1460,14 +1602,91 @@
                     </div>
 
                     <div style={{ fontSize: '26px', fontWeight: '900', color: '#e11d48', fontFamily: "'Thmanyah Sans', 'Inter', sans-serif" }}>
-                      {selectedProduct.price ? (selectedProduct.price.toString().includes('ج.م') || selectedProduct.price.toString().includes('جنيه') ? selectedProduct.price : `${selectedProduct.price} ج.م`) : ""}
+                      {displayPrice ? (displayPrice.toString().includes('ج.م') || displayPrice.toString().includes('جنيه') ? displayPrice : `${displayPrice} ج.م`) : ""}
                     </div>
+
+                    {[0, 1, 2, 3, 4, 5].includes(parseInt(selectedProduct.category)) && (
+                      <div style={{ fontSize: '14px', color: '#e11d48', fontWeight: '700', marginTop: '-10px' }}>
+                        سعر الوردة الواحدة: {selectedProduct.price ? (selectedProduct.price.toString().includes('ج.م') || selectedProduct.price.toString().includes('جنيه') ? selectedProduct.price : `${selectedProduct.price} ج.م`) : ""}
+                      </div>
+                    )}
 
                     <div style={{ height: '1px', background: 'rgba(0,0,0,0.06)', width: '100%' }} />
 
                     <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: '1.8', margin: '0' }}>
                       {selectedProduct.description || "تنسيق مميز ومنسق بأعلى درجات الفخامة والأناقة، يحتوي على أزهار طبيعية قطفت بعناية فائقة لتناسب مناسبتكم وتضفي لمسة ساحرة من الجمال والبهجة."}
                     </p>
+
+                    {/* Selector for flower counts with +/- buttons */}
+                    {[0, 1, 2, 3, 4, 5].includes(parseInt(selectedProduct.category)) && (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px' }}>
+                        <span style={{ fontWeight: '800', color: '#0a0a0f', fontSize: '14px' }}>
+                          عدد الورد (من {selectedProduct.minFlowers || 5} إلى {selectedProduct.maxFlowers || 100} وردة):
+                        </span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <button
+                            type="button"
+                            onClick={() => setSelectedRoseCount(prev => Math.max(selectedProduct.minFlowers || 5, prev - 1))}
+                            style={{
+                              width: '36px',
+                              height: '36px',
+                              borderRadius: '50%',
+                              border: '1.5px solid #d1d5db',
+                              background: '#ffffff',
+                              color: '#0a0a0f',
+                              fontSize: '18px',
+                              fontWeight: 'bold',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            -
+                          </button>
+                          <input
+                            type="number"
+                            value={selectedRoseCount}
+                            onChange={(e) => {
+                              const val = parseInt(e.target.value) || 0;
+                              const min = selectedProduct.minFlowers || 5;
+                              const max = selectedProduct.maxFlowers || 100;
+                              setSelectedRoseCount(Math.min(max, Math.max(min, val)));
+                            }}
+                            style={{
+                              width: '60px',
+                              height: '36px',
+                              textAlign: 'center',
+                              border: '1.5px solid #d1d5db',
+                              borderRadius: '8px',
+                              fontSize: '15px',
+                              fontWeight: '700',
+                              outline: 'none'
+                            }}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setSelectedRoseCount(prev => Math.min(selectedProduct.maxFlowers || 100, prev + 1))}
+                            style={{
+                              width: '36px',
+                              height: '36px',
+                              borderRadius: '50%',
+                              border: '1.5px solid #d1d5db',
+                              background: '#ffffff',
+                              color: '#0a0a0f',
+                              fontSize: '18px',
+                              fontWeight: 'bold',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                    )}
 
                     {/* Features badges removed */}
 

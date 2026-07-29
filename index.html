@@ -6,17 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ماريستا — باقات ورد طبيعي وهدايا استثنائية</title>
   <meta name="description" content="ماريستا، باقات وتنسيقات ورد وهدايا متميزة تُصنع وتُقدم بكل حب.">
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script defer crossorigin src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
+  <script defer crossorigin src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Firebase SDKs & Custom Configurations -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-  <script src="firebase-config.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script defer src="firebase-config.js"></script>
 
   <script>
     tailwind.config = {
@@ -38,6 +38,7 @@
       src: url('woff2/thmanyahsans-Regular.woff2') format('woff2');
       font-weight: 400;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -45,6 +46,7 @@
       src: url('woff2/thmanyahsans-Medium.woff2') format('woff2');
       font-weight: 500;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -52,6 +54,7 @@
       src: url('woff2/thmanyahsans-Bold.woff2') format('woff2');
       font-weight: 700;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -59,6 +62,7 @@
       src: url('woff2/thmanyahsans-Black.woff2') format('woff2');
       font-weight: 900;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -66,6 +70,7 @@
       src: url('woff2/thmanyahserifdisplay-Regular.woff2') format('woff2');
       font-weight: 400;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -73,6 +78,7 @@
       src: url('woff2/thmanyahserifdisplay-Medium.woff2') format('woff2');
       font-weight: 500;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -80,6 +86,7 @@
       src: url('woff2/thmanyahserifdisplay-Bold.woff2') format('woff2');
       font-weight: 700;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -87,6 +94,7 @@
       src: url('woff2/thmanyahserifdisplay-Black.woff2') format('woff2');
       font-weight: 900;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -94,6 +102,7 @@
       src: url('thmanyahseriftext/otf/thmanyahseriftext-Light.otf') format('opentype');
       font-weight: 300;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -101,6 +110,7 @@
       src: url('thmanyahseriftext/otf/thmanyahseriftext-Regular.otf') format('opentype');
       font-weight: 400;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -108,6 +118,7 @@
       src: url('thmanyahseriftext/otf/thmanyahseriftext-Medium.otf') format('opentype');
       font-weight: 500;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -115,6 +126,7 @@
       src: url('thmanyahseriftext/otf/thmanyahseriftext-Bold.otf') format('opentype');
       font-weight: 700;
       font-style: normal;
+      font-display: swap;
     }
 
     @font-face {
@@ -122,6 +134,7 @@
       src: url('thmanyahseriftext/otf/thmanyahseriftext-Black.otf') format('opentype');
       font-weight: 900;
       font-style: normal;
+      font-display: swap;
     }
 
     h1,
@@ -3070,136 +3083,34 @@
         { id: 11, src: "images/3dicons-notebook-dynamic-color.png", title: "بصمات كتب كتاب" }
       ];
 
-      const productData = {
-        0: [
-          { name: "بوكيه العروسة الملكي", price: "250 ج.م", image: "images/22.png" },
-          { name: "بوكيه التوليب الأبيض", price: "180 ج.م", image: "images/22.png" },
-          { name: "بوكيه كلاسيك روز", price: "220 ج.م", image: "images/22.png" },
-          { name: "بوكيه الفاوانيا الفاخر", price: "320 ج.م", image: "images/22.png" },
-          { name: "بوكيه الياسمين الأنيق", price: "190 ج.م", image: "images/22.png" },
-          { name: "بوكيه زفاف ملكي", price: "400 ج.م", image: "images/22.png" },
-          { name: "بوكيه ورد جوري أحمر", price: "150 ج.م", image: "images/22.png" },
-          { name: "بوكيه لافندر ناعم", price: "130 ج.م", image: "images/22.png" }
-        ],
-        1: [
-          { name: "بوكيه نجاح وتفوق", price: "140 ج.م", image: "images/22.png" },
-          { name: "بوكيه التخرج الكلاسيكي", price: "160 ج.م", image: "images/22.png" },
-          { name: "بوكيه شريط ذهبي", price: "180 ج.م", image: "images/22.png" },
-          { name: "بوكيه جوري أصفر", price: "120 ج.م", image: "images/22.png" },
-          { name: "بوكيه فرحة النجاح", price: "200 ج.م", image: "images/22.png" },
-          { name: "بوكيه التخرج الفاخر", price: "250 ج.م", image: "images/22.png" },
-          { name: "بوكيه تخرج مبهج", price: "110 ج.م", image: "images/22.png" }
-        ],
-        2: [
-          { name: "بوكيه البهجة والسرور", price: "150 ج.م", image: "images/22.png" },
-          { name: "بوكيه ورد مشكل", price: "170 ج.م", image: "images/22.png" },
-          { name: "بوكيه الأوركيد الساحر", price: "280 ج.م", image: "images/22.png" },
-          { name: "بوكيه ألوان الربيع", price: "190 ج.م", image: "images/22.png" },
-          { name: "بوكيه ورد جوري أحمر", price: "160 ج.م", image: "images/22.png" },
-          { name: "بوكيه الحب والوفاء", price: "210 ج.م", image: "images/22.png" },
-          { name: "بوكيه رومانسي أنيق", price: "230 ج.م", image: "images/22.png" }
-        ],
-        3: [
-          { name: "بوكيه المولود السعيد (أزرق)", price: "130 ج.م", image: "images/22.png" },
-          { name: "بوكيه المولودة الجميلة (وردي)", price: "130 ج.م", image: "images/22.png" },
-          { name: "بوكيه زهور برية ناعمة", price: "110 ج.م", image: "images/22.png" },
-          { name: "بوكيه استقبال مولود فاخر", price: "220 ج.م", image: "images/22.png" },
-          { name: "بوكيه بيبي روز أبيض", price: "150 ج.م", image: "images/22.png" },
-          { name: "بوكيه الفرحة بمولود", price: "180 ج.م", image: "images/22.png" },
-          { name: "بوكيه ناعم جداً", price: "100 ج.م", image: "images/22.png" }
-        ],
-        4: [
-          { name: "بوكيه الهيبة والأناقة", price: "350 ج.م", image: "images/22.png" },
-          { name: "بوكيه السعادة المالي", price: "450 ج.م", image: "images/22.png" },
-          { name: "بوكيه ورد جوري مع فلوس", price: "290 ج.م", image: "images/22.png" },
-          { name: "بوكيه المناسبات الكبرى", price: "500 ج.م", image: "images/22.png" },
-          { name: "بوكيه هدية مميزة", price: "400 ج.م", image: "images/22.png" },
-          { name: "بوكيه الفخامة الفضي", price: "600 ج.م", image: "images/22.png" },
-          { name: "بوكيه كاش جوري", price: "320 ج.م", image: "images/22.png" }
-        ],
-        5: [
-          { name: "بوكيه ورد ستان أحمر", price: "120 ج.م", image: "images/22.png" },
-          { name: "وردة ستان فردية فاخرة", price: "25  ج.م", image: "images/22.png" },
-          { name: "صندوق ورد ستان ملكي", price: "200 ج.م", image: "images/22.png" },
-          { name: "بوكيه ستان أبيض وفضي", price: "150 ج.م", image: "images/22.png" },
-          { name: "تنسيق ورد ستان للمكتب", price: "80  ج.م", image: "images/22.png" },
-          { name: "بوكيه ورد ستان موف", price: "130 ج.م", image: "images/22.png" }
-        ],
-        6: [
-          { name: "تنسيق بوكيه الفراشات المضيء", price: "190 ج.م", image: "images/22.png" },
-          { name: "بوكيه الفراشات الوردية", price: "140 ج.م", image: "images/22.png" },
-          { name: "علبة زهور مع فراشات ثلاثية الأبعاد", price: "170 ج.م", image: "images/22.png" },
-          { name: "بوكيه الفراشات الذهبية الفاخر", price: "220 ج.م", image: "images/22.png" },
-          { name: "تنسيق فراشات زرقاء مضيئة", price: "180 ج.م", image: "images/22.png" },
-          { name: "بوكيه الفراشات الليلية الساحر", price: "250 ج.م", image: "images/22.png" }
-        ],
-        7: [
-          { name: "توبر أكريليك مبروك التخرج", price: "30  ج.م", image: "images/22.png" },
-          { name: "توبر خشب خطوبة سعيد", price: "35  ج.م", image: "images/22.png" },
-          { name: "توبر ذهبي عيد ميلاد سعيد", price: "25  ج.م", image: "images/22.png" },
-          { name: "توبر مولود جديد أنيق", price: "30  ج.م", image: "images/22.png" },
-          { name: "طقم توبرز أشكال منوعة", price: "50  ج.م", image: "images/22.png" },
-          { name: "توبرعروسين كلاسيك", price: "40  ج.م", image: "images/22.png" }
-        ],
-        8: [
-          { name: "كارت معايدة جوري مجسم", price: "15  ج.م", image: "images/22.png" },
-          { name: "كارت تهنئة تخرج فاخر", price: "20  ج.م", image: "images/22.png" },
-          { name: "كارت خطوبة مطبوع بحروف ذهبية", price: "25  ج.م", image: "images/22.png" },
-          { name: "كارت مولود جديد ناعم", price: "15  ج.م", image: "images/22.png" },
-          { name: "مجموعة كروت مناسبات منوعة", price: "60  ج.م", image: "images/22.png" },
-          { name: "كارت تهنئة نجاح مبهج", price: "18  ج.م", image: "images/22.png" }
-        ],
-        9: [
-          { name: "علبة هدايا مخملية فاخرة", price: "45  ج.م", image: "images/22.png" },
-          { name: "تغليف هدايا كلاسيكي بالورد", price: "35  ج.م", image: "images/22.png" },
-          { name: "صندوق هدايا خشبي منسق", price: "70  ج.م", image: "images/22.png" },
-          { name: "شريط ستان فاخر للتغليف", price: "15  ج.م", image: "images/22.png" },
-          { name: "ورق تغليف كرافت بالورد المجفف", price: "20  ج.م", image: "images/22.png" }
-        ],
-        10: [
-          { name: "صينية خطوبة أكريليك بالورد الطبيعي", price: "350 ج.م", image: "images/22.png" },
-          { name: "صينية شبكة خشبية كلاسيكية", price: "280 ج.م", image: "images/22.png" },
-          { name: "صينية تقديم دبل ذهبية فاخرة", price: "400 ج.م", image: "images/22.png" },
-          { name: "صينية خطوبة مخملية بالورد واللؤلؤ", price: "450 ج.م", image: "images/22.png" },
-          { name: "صينية تقديم شبكة عصرية", price: "300 ج.م", image: "images/22.png" },
-          { name: "صينية خطوبة ملكية بالورد الأبيض", price: "550 ج.م", image: "images/22.png" }
-        ],
-        11: [
-          { name: "لوحة بصمة كتب كتاب أكريليك", price: "180 ج.م", image: "images/22.png" },
-          { name: "إطار بصمة كتب كتاب خشبي راقي", price: "150 ج.م", image: "images/22.png" },
-          { name: "لوحة بصمة شجرة العروسين", price: "130 ج.م", image: "images/22.png" },
-          { name: "لوحة بصمة كتب كتاب ذهبية", price: "200 ج.م", image: "images/22.png" },
-          { name: "طقم حبر بصمات ملون مع اللوحة", price: "90  ج.م", image: "images/22.png" },
-          { name: "لوحة بصمة كتب كتاب مودرن بالورد", price: "220 ج.م", image: "images/22.png" }
-        ]
-      };
-
       const [activeTab, setActiveTab] = React.useState('all');
       const [visibleCount, setVisibleCount] = React.useState(6);
       const [selectedProduct, setSelectedProduct] = React.useState(null);
       const [showPromoModal, setShowPromoModal] = React.useState(false);
       const [activeImageIdx, setActiveImageIdx] = React.useState(0);
       const [deliveryMethod, setDeliveryMethod] = React.useState('delivery'); // 'delivery' or 'pickup'
-      const [selectedRoseCount, setSelectedRoseCount] = React.useState("11 وردة");
+      const [selectedRoseCount, setSelectedRoseCount] = React.useState(5);
       const [isNavigating, setIsNavigating] = React.useState(false);
       const [isClosing, setIsClosing] = React.useState(false);
       const tabsRef = React.useRef(null);
 
       const [dbProducts, setDbProducts] = React.useState([]);
+      const [isLoading, setIsLoading] = React.useState(true);
 
       React.useEffect(() => {
         const unsubscribe = window.AppDB.getProducts((prods) => {
           setDbProducts(prods);
+          setIsLoading(false);
         });
         return () => unsubscribe();
       }, []);
 
       const dynamicProductData = React.useMemo(() => {
-        if (!dbProducts || dbProducts.length === 0) return productData;
         const grouped = {};
         for (let i = 0; i <= 11; i++) {
           grouped[i] = [];
         }
+        if (!dbProducts) return grouped;
         dbProducts.forEach(p => {
           const cat = p.category !== undefined ? parseInt(p.category) : 0;
           if (!grouped[cat]) grouped[cat] = [];
@@ -3209,8 +3120,7 @@
       }, [dbProducts]);
 
       const roseOptions = [
-        { count: "1 وردة", price: "40 جنيه" },
-        { count: "3 وردات", price: "100 جنيه" },
+        { count: "5 وردات", price: "140 جنيه" },
         { count: "7 وردات", price: "180 جنيه" },
         { count: "11 وردة", price: "250 جنيه" },
         { count: "15 وردة", price: "300 جنيه" },
@@ -3252,7 +3162,7 @@
         });
         setActiveImageIdx(0);
         setDeliveryMethod('delivery');
-        setSelectedRoseCount("11 وردة");
+        setSelectedRoseCount(prod.minFlowers !== undefined && prod.minFlowers !== null ? parseInt(prod.minFlowers) : 5);
         setShowPromoModal(false);
       };
 
@@ -3296,7 +3206,12 @@
       };
 
       const displayPrice = selectedProduct
-        ? (roseOptions.find(opt => opt.count === selectedRoseCount)?.price || selectedProduct.price)
+        ? (() => {
+          const priceNum = parseFloat(selectedProduct.price.toString().replace(/[^\d.]/g, ''));
+          return [0, 1, 2, 3, 4, 5].includes(parseInt(selectedProduct.category)) && !isNaN(priceNum)
+            ? `${Math.round(priceNum * selectedRoseCount)} ج.م`
+            : selectedProduct.price;
+        })()
         : "";
 
       return (
@@ -3469,8 +3384,8 @@
             }
             .product-img-wrapper img {
               height: 100%;
-              width: auto;
-              object-fit: contain;
+              width: 100%;
+              object-fit: cover;
               transition: transform 0.5s ease;
             }
             .product-card-custom:hover .product-img-wrapper img {
@@ -3599,6 +3514,20 @@
               from { transform: translateY(0) scale(1); opacity: 1; }
               to { transform: translateY(20px) scale(0.98); opacity: 0; }
             }
+             .booking-modal-overlay {
+              position: fixed;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background: rgba(10, 10, 15, 0.65);
+              backdrop-filter: blur(10px);
+              -webkit-backdrop-filter: blur(10px);
+              z-index: 2000;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
             .modal-overlay-animate {
               animation: modalFadeIn 0.2s ease-out forwards;
             }
@@ -3611,6 +3540,27 @@
             }
             .modal-content-animate.closing {
               animation: modalSlideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            }
+            @keyframes skeleton-loading {
+              0% { background-color: #f3f4f6; }
+              50% { background-color: #e5e7eb; }
+              100% { background-color: #f3f4f6; }
+            }
+            .skeleton-pulse {
+              animation: skeleton-loading 1.5s infinite ease-in-out;
+            }
+            @keyframes fadeInUp {
+              from {
+                opacity: 0;
+                transform: translateY(12px);
+              }
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+            .product-card-animate {
+              animation: fadeInUp 0.4s ease-out forwards;
             }
           `}} />
 
@@ -3650,24 +3600,71 @@
 
           {/* Products Grid */}
           <div className="products-grid-catalog">
-            {displayedProducts.map((prod, idx) => (
-              <div key={idx} className="product-card-custom" onClick={() => handleOpenModal(prod)}>
-                {/* Image wrapper with 0 padding */}
-                <div className="product-img-wrapper">
-                  <img src={prod.image} alt={prod.name} />
-                </div>
-                {/* Content */}
-                <div className="product-info-custom">
-                  <h3 className="product-name-custom">{prod.name}</h3>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontSize: '13px', color: '#6b7280', fontWeight: '500' }}>السعر</span>
-                    <span className="product-price-custom">{prod.price ? (prod.price.toString().includes('ج.م') || prod.price.toString().includes('جنيه') ? prod.price : `${prod.price} ج.م`) : ""}</span>
+            {isLoading ? (
+              Array.from({ length: 6 }).map((_, idx) => (
+                <div key={`skeleton-${idx}`} className="product-card-custom" style={{ cursor: 'default', pointerEvents: 'none' }}>
+                  <div className="product-img-wrapper skeleton-pulse" style={{ backgroundColor: '#f3f4f6', height: '100%', width: '100%' }}></div>
+                  <div className="product-info-custom" style={{ gap: '12px', padding: '20px' }}>
+                    <div className="skeleton-pulse" style={{ height: '20px', width: '70%', backgroundColor: '#e5e7eb', borderRadius: '6px' }}></div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div className="skeleton-pulse" style={{ height: '16px', width: '30%', backgroundColor: '#e5e7eb', borderRadius: '4px' }}></div>
+                      <div className="skeleton-pulse" style={{ height: '16px', width: '40%', backgroundColor: '#e5e7eb', borderRadius: '4px' }}></div>
+                    </div>
+                    <div className="skeleton-pulse" style={{ height: '38px', width: '100%', backgroundColor: '#e5e7eb', borderRadius: '12px', marginTop: '4px' }}></div>
                   </div>
-                  {/* Order Button - secondary style, turns primary on hover */}
-                  <button className="product-order-btn" onClick={(e) => { e.stopPropagation(); handleOpenModal(prod); }}>اطلب</button>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              displayedProducts.map((prod, idx) => (
+                <div key={prod.id || idx} className="product-card-custom product-card-animate" onClick={() => handleOpenModal(prod)} style={{ animationDelay: `${idx * 0.05}s`, opacity: 0 }}>
+                  {/* Image wrapper with 0 padding */}
+                  <div className="product-img-wrapper">
+                    <img src={prod.image} alt={prod.name} loading="lazy" />
+                    <span style={{
+                      position: 'absolute',
+                      top: '12px',
+                      right: '12px',
+                      background: 'rgba(255, 255, 255, 0.65)',
+                      backdropFilter: 'blur(12px)',
+                      WebkitBackdropFilter: 'blur(12px)',
+                      border: '1px solid rgba(255, 255, 255, 0.4)',
+                      color: '#0a0a0f',
+                      fontSize: '11px',
+                      padding: '4px 10px',
+                      borderRadius: '100px',
+                      fontWeight: '700',
+                      pointerEvents: 'none',
+                      zIndex: 5,
+                      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+                    }}>
+                      {tabs.find(t => String(t.id) === String(prod.category))?.title || "غير محدد"}
+                    </span>
+                  </div>
+                  {/* Content */}
+                  <div className="product-info-custom">
+                    <h3 className="product-name-custom text-slate-900">{prod.name}</h3>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      {[0, 1, 2, 3, 4, 5].includes(parseInt(prod.category)) ? (
+                        <span className="product-price-custom" style={{ fontSize: '14px', fontWeight: '700', color: '#e11d48' }}>
+                          {(() => {
+                            const priceNum = parseFloat(prod.price.toString().replace(/[^\d.]/g, ''));
+                            const min = prod.minFlowers !== undefined && prod.minFlowers !== null ? parseInt(prod.minFlowers) : 5;
+                            return isNaN(priceNum) ? prod.price : `يبدأ من ${Math.round(priceNum * min)} ج.م`;
+                          })()}
+                        </span>
+                      ) : (
+                        <>
+                          <span style={{ fontSize: '13px', color: '#6b7280', fontWeight: '500' }}>السعر</span>
+                          <span className="product-price-custom">{prod.price ? (prod.price.toString().includes('ج.م') || prod.price.toString().includes('جنيه') ? prod.price : `${prod.price} ج.م`) : ""}</span>
+                        </>
+                      )}
+                    </div>
+                    {/* Order Button - secondary style, turns primary on hover */}
+                    <button className="product-order-btn mt-3" onClick={(e) => { e.stopPropagation(); handleOpenModal(prod); }}>اطلب</button>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
 
           {/* Show More Button linking to products page */}
@@ -3714,11 +3711,16 @@
 
                   {/* Celebration Promo Popup (Zeenat Ihtifalat) */}
                   {showPromoModal && (() => {
-                    const priceNum = parseInt(selectedProduct.price.replace(/[^\d]/g, ''), 10);
-                    const discountedPriceVal = isNaN(priceNum) ? selectedProduct.price : `${Math.round(priceNum * 0.9)} ج.م`;
+                    const basePriceStr = [0, 1, 2, 3, 4, 5].includes(parseInt(selectedProduct.category)) ? displayPrice : selectedProduct.price;
+                    const priceNum = parseInt(basePriceStr.replace(/[^\d]/g, ''), 10);
+                    const discountedPriceVal = isNaN(priceNum) ? basePriceStr : `${Math.round(priceNum * 0.9)} ج.م`;
+
+                    const flowerText = [0, 1, 2, 3, 4, 5].includes(parseInt(selectedProduct.category))
+                      ? `\nالعدد: ${selectedRoseCount}`
+                      : '';
 
                     const whatsappText = encodeURIComponent(
-                      `مرحباً، أود طلب: ${selectedProduct.name}\nالسعر الأصلي: ${selectedProduct.price ? (selectedProduct.price.toString().includes('ج.م') || selectedProduct.price.toString().includes('جنيه') ? selectedProduct.price : `${selectedProduct.price} ج.م`) : ""}\nالسعر بعد الخصم (10%): ${discountedPriceVal}\nكود الخصم: SATIN10\nطريقة الاستلام: ${deliveryMethod === 'delivery' ? 'توصيل' : 'استلام'}`
+                      `مرحباً، أود طلب: ${selectedProduct.name}${flowerText}\nالسعر الأصلي: ${basePriceStr ? (basePriceStr.toString().includes('ج.م') || basePriceStr.toString().includes('جنيه') ? basePriceStr : `${basePriceStr} ج.م`) : ""}\nالسعر بعد الخصم (10%): ${discountedPriceVal}\nكود الخصم: SATIN10\nطريقة الاستلام: ${deliveryMethod === 'delivery' ? 'توصيل' : 'استلام'}`
                     );
                     const whatsappUrl = `https://wa.me/201062973138?text=${whatsappText}`;
 
@@ -3880,12 +3882,7 @@
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                           {/* Category Badge */}
                           <span style={{ display: 'inline-flex', alignItems: 'center', background: '#fff1f2', color: '#e11d48', borderRadius: '8px', padding: '4px 10px', fontSize: '11px', fontWeight: '800', width: 'fit-content', border: '1px solid rgba(225, 29, 72, 0.1)' }}>
-                            {(() => {
-                              const actualCategoryKey = Object.keys(productData).find(key =>
-                                productData[key].some(p => p.name === selectedProduct.name)
-                              );
-                              return tabs.find(t => String(t.id) === String(actualCategoryKey))?.title || activeCategoryName;
-                            })()}
+                            {tabs.find(t => String(t.id) === String(selectedProduct.category))?.title || activeCategoryName || "معرض ماريستا"}
                           </span>
                           <h3 style={{ fontSize: '24px', fontWeight: '800', color: '#0a0a0f', fontFamily: "'Thmanyah Serif Text', 'Thmanyah Serif Display', Georgia, serif", margin: 0, lineHeight: '1.3' }}>{selectedProduct.name}</h3>
                         </div>
@@ -3893,14 +3890,91 @@
                       </div>
 
                       <div style={{ fontSize: '26px', fontWeight: '900', color: '#e11d48', fontFamily: "'Thmanyah Sans', 'Inter', sans-serif" }}>
-                        {selectedProduct.price ? (selectedProduct.price.toString().includes('ج.م') || selectedProduct.price.toString().includes('جنيه') ? selectedProduct.price : `${selectedProduct.price} ج.م`) : ""}
+                        {displayPrice ? (displayPrice.toString().includes('ج.م') || displayPrice.toString().includes('جنيه') ? displayPrice : `${displayPrice} ج.م`) : ""}
                       </div>
+
+                      {[0, 1, 2, 3, 4, 5].includes(parseInt(selectedProduct.category)) && (
+                        <div style={{ fontSize: '14px', color: '#e11d48', fontWeight: '700', marginTop: '-10px' }}>
+                          سعر الوردة الواحدة: {selectedProduct.price ? (selectedProduct.price.toString().includes('ج.م') || selectedProduct.price.toString().includes('جنيه') ? selectedProduct.price : `${selectedProduct.price} ج.م`) : ""}
+                        </div>
+                      )}
 
                       <div style={{ height: '1px', background: 'rgba(0,0,0,0.06)', width: '100%' }} />
 
                       <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: '1.8', margin: '0' }}>
                         تنسيق مميز ومنسق بأعلى درجات الفخامة والأناقة، يحتوي على أزهار طبيعية قطفت بعناية فائقة لتناسب مناسبتكم وتضفي لمسة ساحرة من الجمال والبهجة.
                       </p>
+
+                      {/* Selector for flower counts with +/- buttons */}
+                      {[0, 1, 2, 3, 4, 5].includes(parseInt(selectedProduct.category)) && (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px' }}>
+                          <span style={{ fontWeight: '800', color: '#0a0a0f', fontSize: '14px' }}>
+                            عدد الورد (من {selectedProduct.minFlowers || 5} إلى {selectedProduct.maxFlowers || 100} وردة):
+                          </span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <button
+                              type="button"
+                              onClick={() => setSelectedRoseCount(prev => Math.max(selectedProduct.minFlowers || 5, prev - 1))}
+                              style={{
+                                width: '36px',
+                                height: '36px',
+                                borderRadius: '50%',
+                                border: '1.5px solid #d1d5db',
+                                background: '#ffffff',
+                                color: '#0a0a0f',
+                                fontSize: '18px',
+                                fontWeight: 'bold',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer'
+                              }}
+                            >
+                              -
+                            </button>
+                            <input
+                              type="number"
+                              value={selectedRoseCount}
+                              onChange={(e) => {
+                                const val = parseInt(e.target.value) || 0;
+                                const min = selectedProduct.minFlowers || 5;
+                                const max = selectedProduct.maxFlowers || 100;
+                                setSelectedRoseCount(Math.min(max, Math.max(min, val)));
+                              }}
+                              style={{
+                                width: '60px',
+                                height: '36px',
+                                textAlign: 'center',
+                                border: '1.5px solid #d1d5db',
+                                borderRadius: '8px',
+                                fontSize: '15px',
+                                fontWeight: '700',
+                                outline: 'none'
+                              }}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setSelectedRoseCount(prev => Math.min(selectedProduct.maxFlowers || 100, prev + 1))}
+                              style={{
+                                width: '36px',
+                                height: '36px',
+                                borderRadius: '50%',
+                                border: '1.5px solid #d1d5db',
+                                background: '#ffffff',
+                                color: '#0a0a0f',
+                                fontSize: '18px',
+                                fontWeight: 'bold',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer'
+                              }}
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                      )}
 
                       {/* Selling Points Badges Removed */}
 

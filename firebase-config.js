@@ -96,35 +96,50 @@ window.AppDB = {
   isFirebase: () => useFirebase && !firebaseFailed,
   
   getProducts: (callback) => {
+    const sortProds = (prods) => {
+      return [...prods].sort((a, b) => {
+        const timeA = a.createdAt !== undefined ? Number(a.createdAt) : 0;
+        const timeB = b.createdAt !== undefined ? Number(b.createdAt) : 0;
+        if (timeA !== timeB) {
+          return timeB - timeA;
+        }
+        return (b.id || "").localeCompare(a.id || "");
+      });
+    };
+
     if (useFirebase && db && !firebaseFailed) {
       return db.collection("products").onSnapshot((snapshot) => {
         const prods = [];
         snapshot.forEach((doc) => {
           prods.push({ id: doc.id, ...doc.data() });
         });
-        callback(prods);
+        callback(sortProds(prods));
       }, (error) => {
         console.error("Firestore read error, falling back to LocalStorage: ", error);
         firebaseFailed = true;
-        callback(getMockProducts());
+        callback(sortProds(getMockProducts()));
       });
     } else {
-      callback(getMockProducts());
+      callback(sortProds(getMockProducts()));
       return () => {};
     }
   },
 
   addProduct: async (product) => {
+    const productWithTimestamp = {
+      ...product,
+      createdAt: product.createdAt || Date.now()
+    };
     if (useFirebase && db && !firebaseFailed) {
       try {
-        return await db.collection("products").add(product);
+        return await db.collection("products").add(productWithTimestamp);
       } catch (err) {
         console.error("Firestore add failed, falling back to LocalStorage: ", err);
         firebaseFailed = true;
       }
     }
     const prods = getMockProducts();
-    const newProduct = { id: "mock_" + Date.now(), ...product };
+    const newProduct = { id: "mock_" + Date.now(), ...productWithTimestamp };
     prods.push(newProduct);
     saveMockProducts(prods);
     return newProduct;
