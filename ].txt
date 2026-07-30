@@ -1,0 +1,9 @@
+need to make a side menu for dashboard and there will remove nav and need side menu have same content of nav 
+
+on dashboard need to make tab for testimonails to add it as a only text and will appear on main webiste testiomnils sections on home and about
+
+on all pages need to make footer links such hero section nav 4 links
+عمل معرض الاعمال قبل النص
+زر لمعرض الاعمال
+footer
+حجم الموقع ضخم
