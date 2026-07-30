@@ -5056,7 +5056,7 @@
                   display: grid;
                   grid-template-columns: 1fr;
                   gap: 32px;
-                  max-width: 800px;
+                  max-width: 1104px;
                   margin: 0 auto;
                   width: 100%;
                   text-align: right;
@@ -5209,44 +5209,18 @@
 
     /* ─── BOTTOM NAV ─── */
     const BottomNav = () => {
-      const [active, setActive] = useState('home');
-
       const navItems = [
-        { id: 'home', label: 'الرئيسية', icon: Svg.home },
-        { id: 'about', label: 'من أنا', icon: Svg.user },
-        { id: 'projects', label: 'آلية العمل', icon: Svg.briefcase },
-        { id: 'contact', label: 'اتصل بنا', icon: Svg.mail }
+        { id: 'home', label: 'الرئيسية', icon: Svg.home, url: 'index.html#home' },
+        { id: 'about', label: 'من نحن', icon: Svg.user, url: 'about.html' },
+        { id: 'projects', label: 'آلية العمل', icon: Svg.briefcase, url: 'about.html#projects' },
+        { id: 'contact', label: 'اتصل بنا', icon: Svg.mail, url: 'contact.html' }
       ];
-
-      useEffect(() => {
-        const handleScroll = () => {
-          const scrollPos = window.scrollY + window.innerHeight * 0.5;
-          let currentId = 'home';
-          const ids = ['home', 'about', 'projects', 'contact'];
-          for (let i = ids.length - 1; i >= 0; i--) {
-            const section = document.getElementById(ids[i]);
-            if (section && section.offsetTop <= scrollPos) {
-              currentId = ids[i];
-              break;
-            }
-          }
-          setActive(currentId);
-        };
-        window.addEventListener('scroll', handleScroll);
-        handleScroll();
-        return () => window.removeEventListener('scroll', handleScroll);
-      }, []);
 
       return (
         <div className="bottom-nav">
           <div className="bottom-nav-inner">
             {navItems.map(item => (
-              <a
-                key={item.id}
-                href={item.id === 'contact' ? 'contact.html' : `#${item.id}`}
-                className={`b-nav-item ${active === item.id ? 'active' : ''}`}
-                onClick={() => setActive(item.id)}
-              >
+              <a key={item.id} href={item.url} className={`b-nav-item ${item.id === 'home' ? 'active' : ''}`}>
                 <div className="b-nav-icon">{item.icon}</div>
                 <span>{item.label}</span>
               </a>
@@ -5534,6 +5508,14 @@
         return () => unsubscribe();
       }, []);
 
+      React.useEffect(() => {
+        if (isLoading || reviews.length <= 1) return;
+        const timer = setInterval(() => {
+          setCurrentIndex((prev) => (prev + 1) % reviews.length);
+        }, 4000);
+        return () => clearInterval(timer);
+      }, [isLoading, reviews]);
+
       const nextSlide = () => {
         if (reviews.length === 0) return;
         setCurrentIndex((prev) => (prev + 1) % reviews.length);
@@ -5674,6 +5656,7 @@
                     align-items: center;
                     gap: 16px;
                     width: 100%;
+                    position: relative;
                   }
                   .slider-dots {
                     display: flex;
@@ -5718,19 +5701,7 @@
                   }
                 `}} />
 
-                <div className="desktop-arrow-container">
-                  {/* Desktop Right Arrow (Previous in RTL) */}
-                  <button
-                    className="slider-arrow-btn desktop-only"
-                    onClick={prevSlide}
-                    aria-label="Previous Testimonial"
-                  >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                      <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                  </button>
-
+                <div className="desktop-arrow-container" style={{ justifyContent: 'center' }}>
                   <div className="testimonial-card-wrapper">
                     {/* Card 1 */}
                     <div className="testimonial-card card-1" key={`c1-${currentIndex}`}>
@@ -5763,53 +5734,6 @@
                       </div>
                     )}
                   </div>
-
-                  {/* Desktop Left Arrow (Next in RTL) */}
-                  <button
-                    className="slider-arrow-btn desktop-only"
-                    onClick={nextSlide}
-                    aria-label="Next Testimonial"
-                  >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="19" y1="12" x2="5" y2="12"></line>
-                      <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
-                  </button>
-                </div>
-
-                {/* Mobile Controls: Row with Arrow Left, Dots, Arrow Right */}
-                <div className="mobile-only" style={{ marginTop: '20px', alignItems: 'center', gap: '16px' }}>
-                  <button
-                    className="slider-arrow-btn"
-                    onClick={prevSlide}
-                    aria-label="Previous Testimonial"
-                  >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                      <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                  </button>
-
-                  <div className="slider-dots" style={{ margin: 0 }}>
-                    {reviews.map((_, idx) => (
-                      <div
-                        key={idx}
-                        className={`slider-dot ${idx === currentIndex ? 'active' : ''}`}
-                        onClick={() => setCurrentIndex(idx)}
-                      />
-                    ))}
-                  </div>
-
-                  <button
-                    className="slider-arrow-btn"
-                    onClick={nextSlide}
-                    aria-label="Next Testimonial"
-                  >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="19" y1="12" x2="5" y2="12"></line>
-                      <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
-                  </button>
                 </div>
 
                 {/* Desktop Dots */}
