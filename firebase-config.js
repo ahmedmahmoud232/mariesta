@@ -81,9 +81,21 @@ if (typeof firebase !== "undefined" && isFirebaseConfigured()) {
       firebase.initializeApp(firebaseConfig);
     }
     db = firebase.firestore();
+    
+    // Enable offline persistence for faster retrieval
+    db.enablePersistence({ synchronizeTabs: true }).catch((err) => {
+      if (err.code === 'failed-precondition') {
+        console.warn("Firestore persistence failed-precondition: multiple tabs open.");
+      } else if (err.code === 'unimplemented') {
+        console.warn("Firestore persistence is unimplemented in this browser.");
+      } else {
+        console.warn("Firestore persistence could not be enabled:", err);
+      }
+    });
+
     auth = firebase.auth();
     useFirebase = true;
-    console.log("Firebase initialized successfully.");
+    console.log("Firebase initialized successfully with offline persistence.");
   } catch (err) {
     console.warn("Failed to initialize Firebase. Falling back to Mock DB mode.", err);
   }
@@ -175,12 +187,32 @@ window.AppDB = {
       });
     };
 
+    // Load from cache instantly if available
+    let hasLoadedFromCache = false;
+    try {
+      const cached = localStorage.getItem("firebase_cache_products");
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          callback(sortProds(parsed));
+          hasLoadedFromCache = true;
+        }
+      }
+    } catch (e) {
+      console.warn("Failed to read products cache from LocalStorage:", e);
+    }
+
     if (useFirebase && db && !firebaseFailed) {
       return db.collection("products").onSnapshot((snapshot) => {
         const prods = [];
         snapshot.forEach((doc) => {
           prods.push({ id: doc.id, ...doc.data() });
         });
+        try {
+          localStorage.setItem("firebase_cache_products", JSON.stringify(prods));
+        } catch (e) {
+          console.warn("Failed to write products cache to LocalStorage:", e);
+        }
         callback(sortProds(prods));
       }, (error) => {
         console.error("Firestore read error, falling back to LocalStorage: ", error);
@@ -188,7 +220,9 @@ window.AppDB = {
         callback(sortProds(getMockProducts()));
       });
     } else {
-      callback(sortProds(getMockProducts()));
+      if (!hasLoadedFromCache) {
+        callback(sortProds(getMockProducts()));
+      }
       return () => { };
     }
   },
@@ -274,12 +308,32 @@ window.AppDB = {
       });
     };
 
+    // Load from cache instantly if available
+    let hasLoadedFromCache = false;
+    try {
+      const cached = localStorage.getItem("firebase_cache_gallery");
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          callback(sortGallery(parsed));
+          hasLoadedFromCache = true;
+        }
+      }
+    } catch (e) {
+      console.warn("Failed to read gallery cache from LocalStorage:", e);
+    }
+
     if (useFirebase && db && !firebaseFailed) {
       return db.collection("gallery").onSnapshot((snapshot) => {
         const items = [];
         snapshot.forEach((doc) => {
           items.push({ id: doc.id, ...doc.data() });
         });
+        try {
+          localStorage.setItem("firebase_cache_gallery", JSON.stringify(items));
+        } catch (e) {
+          console.warn("Failed to write gallery cache to LocalStorage:", e);
+        }
         callback(sortGallery(items));
       }, (error) => {
         console.error("Firestore read gallery error, falling back to LocalStorage: ", error);
@@ -287,7 +341,9 @@ window.AppDB = {
         callback(sortGallery(getMockGallery()));
       });
     } else {
-      callback(sortGallery(getMockGallery()));
+      if (!hasLoadedFromCache) {
+        callback(sortGallery(getMockGallery()));
+      }
       return () => { };
     }
   },
@@ -354,6 +410,21 @@ window.AppDB = {
       });
     };
 
+    // Load from cache instantly if available
+    let hasLoadedFromCache = false;
+    try {
+      const cached = localStorage.getItem("firebase_cache_testimonials");
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          callback(sortTestimonials(parsed));
+          hasLoadedFromCache = true;
+        }
+      }
+    } catch (e) {
+      console.warn("Failed to read testimonials cache from LocalStorage:", e);
+    }
+
     if (useFirebase && db && !firebaseFailed) {
       return db.collection("testimonials").onSnapshot((snapshot) => {
         const items = [];
@@ -365,6 +436,11 @@ window.AppDB = {
             await db.collection("testimonials").add({ ...t, createdAt: Date.now() - (idx * 60000) });
           });
         }
+        try {
+          localStorage.setItem("firebase_cache_testimonials", JSON.stringify(items));
+        } catch (e) {
+          console.warn("Failed to write testimonials cache to LocalStorage:", e);
+        }
         callback(sortTestimonials(items));
       }, (error) => {
         console.error("Firestore read testimonials error, falling back to LocalStorage: ", error);
@@ -372,7 +448,9 @@ window.AppDB = {
         callback(sortTestimonials(getMockTestimonials()));
       });
     } else {
-      callback(sortTestimonials(getMockTestimonials()));
+      if (!hasLoadedFromCache) {
+        callback(sortTestimonials(getMockTestimonials()));
+      }
       return () => { };
     }
   },
