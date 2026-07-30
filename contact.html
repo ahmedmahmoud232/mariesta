@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تواصل معنا — ماريستا</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+
+  <!-- Firebase SDKs & Custom Configurations -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="firebase-config.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: '#0a0a0f', offwhite: '#f5f4f0', accent: '#e11d48', accentL: '#fb7185', dim: '#6b7280', card: '#ffffff', border: '#e5e7eb' },
+          fontFamily: {
+            sans: ['"Thmanyah Sans"', 'Inter', 'sans-serif'],
+            serif: ['"Thmanyah Serif Text"', '"Thmanyah Serif Display"', 'Georgia', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @font-face {
+      font-family: 'Thmanyah Sans';
+      src: url('woff2/thmanyahsans-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Thmanyah Sans';
+      src: url('woff2/thmanyahsans-Medium.woff2') format('woff2');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Thmanyah Sans';
+      src: url('woff2/thmanyahsans-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Thmanyah Sans';
+      src: url('woff2/thmanyahsans-Black.woff2') format('woff2');
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Thmanyah Serif Display';
+      src: url('woff2/thmanyahserifdisplay-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Thmanyah Serif Display';
+      src: url('woff2/thmanyahserifdisplay-Medium.woff2') format('woff2');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Thmanyah Serif Display';
+      src: url('woff2/thmanyahserifdisplay-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Thmanyah Serif Display';
+      src: url('woff2/thmanyahserifdisplay-Black.woff2') format('woff2');
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Thmanyah Serif Text';
+      src: url('thmanyahseriftext/otf/thmanyahseriftext-Light.otf') format('opentype');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Thmanyah Serif Text';
+      src: url('thmanyahseriftext/otf/thmanyahseriftext-Regular.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Thmanyah Serif Text';
+      src: url('thmanyahseriftext/otf/thmanyahseriftext-Medium.otf') format('opentype');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Thmanyah Serif Text';
+      src: url('thmanyahseriftext/otf/thmanyahseriftext-Bold.otf') format('opentype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Thmanyah Serif Text';
+      src: url('thmanyahseriftext/otf/thmanyahseriftext-Black.otf') format('opentype');
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .section-h2,
+    .hero-h1 {
+      font-family: 'Thmanyah Serif Text', 'Thmanyah Serif Display', 'Georgia', serif !important;
+    }
+
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Thmanyah Sans', 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #0a0a0f;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 16px 48px;
+      pointer-events: none;
+      transition: all .4s ease;
+    }
+
+    nav.scrolled {
+      padding: 12px 48px
+    }
+
+    .nav-pill {
+      width: 100%;
+      max-width: 1104px;
+      margin: 0 auto;
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: 1px solid transparent;
+      border-radius: 16px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px 0 8px;
+      position: relative;
+      pointer-events: all;
+      box-shadow: none;
+      transition: all .3s ease;
+    }
+
+    nav.scrolled .nav-pill {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .nav-logo-img {
+      height: 30px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: -.03em;
+      color: #0a0a0f;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: #6b7280;
+      text-decoration: none;
+      transition: color .2s, background .2s;
+      letter-spacing: .01em;
+      padding: 6px 14px;
+      border-radius: 10px;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active-nav {
+      color: #0a0a0f;
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-cta {
+      display: flex;
+      flex-direction: row !important;
+      gap: 8px;
+      align-items: center;
+      flex-shrink: 0
+    }
+
+    .btn-primary {
+      background: #e11d48;
+      color: #ffffff;
+      padding: 10px 22px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1.5px solid #e11d48;
+      transition: all .25s;
+      letter-spacing: .01em;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 42px;
+      white-space: nowrap;
+      box-shadow: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: #be123c;
+      color: #ffffff;
+      border-color: #be123c;
+      box-shadow: 0 8px 24px rgba(225, 29, 72, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: #ffffff;
+      color: #374151;
+      padding: 10px 22px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1.5px solid #d1d5db;
+      transition: all .25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 42px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .btn-ghost:hover {
+      background: #f3f4f6;
+      color: #0a0a0f;
+      border-color: #9ca3af;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transform: translateY(-1px);
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #0a0a0f;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 90;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(-20px);
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    .m-link {
+      font-size: 22px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .m-link.active-nav {
+      color: #e11d48 !important;
+    }
+
+    .mobile-menu-cta {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+      margin-top: 24px;
+    }
+
+    /* ─── BOTTOM NAV ─── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 8px 16px 12px;
+      z-index: 99;
+      display: none;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .bottom-nav-inner {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .b-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      color: #6b7280;
+      font-size: 11px;
+      font-weight: 700;
+      transition: all 0.25s ease;
+    }
+
+    .b-nav-item.active {
+      color: #e11d48;
+    }
+
+    .b-nav-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ─── RESPONSIVE NAV ─── */
+    @media(max-width:960px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-cta {
+        display: none !important;
+      }
+
+      .nav-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .nav-pill {
+        max-width: calc(100% - 32px);
+        padding: 0 12px 0 16px
+      }
+
+      nav {
+        padding: 12px 16px
+      }
+    }
+
+    @media(max-width:768px) {
+      .bottom-nav {
+        display: block;
+      }
+
+      footer {
+        padding-bottom: 90px !important;
+      }
+    }
+
+    /* ─── SCROLL TO TOP ─── */
+    .scroll-to-top {
+      position: fixed;
+      bottom: 32px;
+      left: 32px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 8px 30px rgba(244, 63, 94, 0.12);
+      color: #f43f5e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(0.8) translateY(10px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      outline: none;
+    }
+
+    .scroll-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1) translateY(0);
+    }
+
+    .scroll-to-top:hover {
+      background: #f43f5e;
+      color: white;
+      transform: scale(1.05) translateY(-3px);
+      box-shadow: 0 12px 35px rgba(244, 63, 94, 0.25);
+      border-color: #f43f5e;
+    }
+
+    .scroll-to-top svg {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .scroll-to-top:hover svg {
+      transform: translateY(-2px);
+    }
+
+    /* ─── FOOTER LINKS ─── */
+    .footer-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 1;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: #6b7280;
+      text-decoration: none;
+      transition: color .2s, background .2s;
+      letter-spacing: .01em;
+      padding: 6px 14px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-links a:hover,
+    .footer-links a.active-nav {
+      color: #0a0a0f;
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    /* ─── CONTACT FORM CSS ─── */
+    .dark-frow {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    @media (min-width: 640px) {
+      .dark-frow {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .dark-input:focus {
+      border-color: #e11d48 !important;
+      box-shadow: 0 0 0 2px rgba(225, 29, 72, 0.1) !important;
+      outline: none;
+    }
+  </style>
+</head>
+
+<body class="bg-white min-h-screen">
+  <div id="contact-root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    const Svg = {
+      home: <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>,
+      user: <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>,
+      briefcase: <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /></svg>,
+      mail: <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
+    };
+
+    /* ─── SCROLL TO TOP ─── */
+    const ScrollToTop = () => {
+      const [visible, setVisible] = useState(false);
+
+      useEffect(() => {
+        const toggleVisibility = () => {
+          if (window.scrollY > 400) {
+            setVisible(true);
+          } else {
+            setVisible(false);
+          }
+        };
+        window.addEventListener('scroll', toggleVisibility);
+        return () => window.removeEventListener('scroll', toggleVisibility);
+      }, []);
+
+      const scrollToTop = () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      };
+
+      return (
+        <button
+          onClick={scrollToTop}
+          className={`scroll-to-top ${visible ? 'visible' : ''}`}
+          aria-label="Back to top"
+        >
+          <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+            <polyline points="18 15 12 9 6 15" />
+          </svg>
+        </button>
+      );
+    };
+
+    const ContactApp = () => {
+      const [name, setName] = useState('');
+      const [email, setEmail] = useState('');
+      const [desc, setDesc] = useState('');
+      const [service, setService] = useState('');
+      const [customService, setCustomService] = useState('');
+      const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+      const [showSuccess, setShowSuccess] = useState(false);
+      const [isMenuOpen, setIsMenuOpen] = useState(false);
+      const [navScrolled, setNavScrolled] = useState(false);
+
+      const serviceOptions = [
+        { value: 'bouquets', label: 'بوكيهات ورد ستان مخصصة' },
+        { value: 'natural_flowers', label: 'تنسيق ورد طبيعي فاخر' },
+        { value: 'events', label: 'تنسيق وديكور مناسبات وحفلات' },
+        { value: 'gifts', label: 'تغليف وتنسيق هدايا استثنائية' },
+        { value: 'another', label: 'طلب أو خدمة أخرى' }
+      ];
+
+      const selectedOption = serviceOptions.find(o => o.value === service);
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        const selectedServiceLabel = service === 'another' ? customService : (selectedOption ? selectedOption.label : '');
+        const subject = encodeURIComponent(`New Project Inquiry from ${name}`);
+        const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nService: ${selectedServiceLabel}\n\nDescription:\n${desc}`);
+        window.location.href = `mailto:mariesta@creatorsflow.org?subject=${subject}&body=${body}`;
+
+        setShowSuccess(true);
+        setTimeout(() => {
+          setShowSuccess(false);
+          setName('');
+          setEmail('');
+          setService('');
+          setCustomService('');
+          setDesc('');
+        }, 3000);
+      };
+
+      useEffect(() => {
+        const handleScroll = () => {
+          if (window.scrollY > 50) {
+            setNavScrolled(true);
+          } else {
+            setNavScrolled(false);
+          }
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, []);
+
+      return (
+        <div className="min-h-screen flex flex-col justify-between">
+          <ScrollToTop />
+
+          {/* Header / Navigation */}
+          <nav className={navScrolled ? 'scrolled' : ''}>
+            <div className="nav-pill" style={{ zIndex: 100 }}>
+              <a href="index.html" className="logo" style={{ zIndex: 101, alignItems: 'center' }}>
+                <img src="images/شعار.png" alt="Logo" className="nav-logo-img" style={{ height: '35px', width: 'auto' }} />
+              </a>
+
+              <div className="nav-links">
+                {[
+                  { label: 'الرئيسية', url: 'index.html', id: 'home' },
+                  { label: 'المنتجات', url: 'products.html', id: 'products' },
+                  { label: 'من نحن', url: 'about.html', id: 'about' },
+                  { label: 'تواصل معنا', url: 'contact.html', id: 'contact' }
+                ].map(l => (
+                  <a key={l.id} href={l.url} className={l.id === 'contact' ? 'active-nav' : ''}>{l.label}</a>
+                ))}
+              </div>
+
+              <div className="nav-cta" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                <a href="index.html#services" className="btn-primary" style={{ textDecoration: 'none' }}>اختار البوكيه</a>
+                <a href="contact.html" className="btn-ghost" style={{ textDecoration: 'none', height: '42px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>تواصل معنا</a>
+              </div>
+
+              <button
+                className={`nav-toggle ${isMenuOpen ? 'open' : ''}`}
+                style={{
+                  zIndex: 101,
+                  width: '32px',
+                  height: '32px',
+                  position: 'relative'
+                }}
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                <span style={{
+                  width: '20px',
+                  height: '2px',
+                  background: 'currentColor',
+                  position: 'absolute',
+                  transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), top 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  top: isMenuOpen ? '15px' : '11px',
+                  transform: isMenuOpen ? 'rotate(45deg)' : 'none'
+                }} />
+                <span style={{
+                  width: '20px',
+                  height: '2px',
+                  background: 'currentColor',
+                  position: 'absolute',
+                  transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), top 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  top: isMenuOpen ? '15px' : '19px',
+                  transform: isMenuOpen ? 'rotate(-45deg)' : 'none'
+                }} />
+              </button>
+            </div>
+          </nav>
+
+          {/* Mobile Menu */}
+          <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`} style={{ background: 'rgba(255, 255, 255, 0.98)' }}>
+            {[
+              { label: 'الرئيسية', url: 'index.html', id: 'home' },
+              { label: 'المنتجات', url: 'products.html', id: 'products' },
+              { label: 'من نحن', url: 'about.html', id: 'about' },
+              { label: 'تواصل معنا', url: 'contact.html', id: 'contact' }
+            ].map(l => (
+              <a key={l.id} href={l.url} className={`m-link ${l.id === 'contact' ? 'active-nav' : ''}`} onClick={() => setIsMenuOpen(false)} style={{ color: '#0a0a0f' }}>{l.label}</a>
+            ))}
+            <div className="mobile-menu-cta" style={{ width: '100%', padding: '0 24px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <a href="index.html#services" className="btn-primary" style={{ textDecoration: 'none', width: '100%', justifyContent: 'center' }} onClick={() => setIsMenuOpen(false)}>اختار البوكيه</a>
+              <a href="contact.html" className="btn-ghost" style={{ textDecoration: 'none', width: '100%', justifyContent: 'center', height: '42px', display: 'inline-flex', alignItems: 'center' }} onClick={() => setIsMenuOpen(false)}>تواصل معنا</a>
+            </div>
+          </div>
+
+          {/* Hero Section with Linear Background Gradient */}
+          <section id="contact-hero" style={{ background: 'linear-gradient(to bottom, #ffe4e6 0%, #fff1f2 60%, #ffffff 100%)', position: 'relative', overflow: 'hidden', padding: '120px 24px 40px' }}>
+            <div className="hero-bg">
+              <div className="hero-line-grid" style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(244, 63, 94, 0.15) 1.5px, transparent 1.5px)', backgroundSize: '32px 32px' }} />
+            </div>
+            <div className="hero-inner" style={{ position: 'relative', zIndex: 1, maxWidth: '1104px', margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(0, 0, 0, 0.12)', borderRadius: '100px', padding: '6px 16px', fontSize: '13px', fontWeight: '500', color: '#0a0a0f', background: 'transparent', marginBottom: '20px' }}>
+                تواصل معنا
+              </span>
+              <h2 style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: '900', color: '#0a0a0f', fontFamily: "'Thmanyah Serif Text', 'Thmanyah Serif Display', Georgia, serif", margin: '0 auto 12px auto', lineHeight: '1.2', maxWidth: '600px' }}>
+                يسعدنا الرد على جميع استفساراتكم
+              </h2>
+              <p style={{ fontSize: '14px', color: '#6b7280', maxWidth: '480px', margin: '0 auto' }}>
+                تواصل معنا لتجهيز تنسيقاتك الخاصة أو للحصول على إجابات حول باقات ماريستا وخدماتنا.
+              </p>
+            </div>
+          </section>
+
+          {/* Main Content: Contact Cards and Form */}
+          <main className="flex-grow max-w-7xl mx-auto px-4 w-full pb-16">
+
+            {/* Contact Cards Grid (Mobile, Facebook, Email) */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1104px] mx-auto mb-12">
+
+              {/* WhatsApp / Phone Card */}
+              <a href="https://wa.me/201062973138" target="_blank" className="flex flex-col items-center justify-center p-8 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all group text-center" style={{ textDecoration: 'none' }}>
+                <div className="w-16 h-16 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <img src="images/3dicons-whatsapp-front-color.png" alt="WhatsApp" className="w-full h-full object-contain" />
+                </div>
+                <h3 className="font-bold text-lg text-slate-900 mb-1">الواتساب والهاتف</h3>
+                <p className="text-slate-500 text-sm mb-3">متواجدون دائماً للمحادثات السريعة والاستفسارات</p>
+                <span className="font-black text-slate-900 text-sm" dir="ltr" style={{ display: 'inline-block', direction: 'ltr' }}>+20 106 297 3138</span>
+              </a>
+
+              {/* Facebook Card */}
+              <a href="https://facebook.com" target="_blank" className="flex flex-col items-center justify-center p-8 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all group text-center" style={{ textDecoration: 'none' }}>
+                <div className="w-16 h-16 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <img src="images/3dicons-facebook-front-color.png" alt="Facebook" className="w-full h-full object-contain" />
+                </div>
+                <h3 className="font-bold text-lg text-slate-900 mb-1">الفيسبوك</h3>
+                <p className="text-slate-500 text-sm mb-3">تابع صفحتنا وتواصل معنا عبر الرسائل</p>
+                <span className="font-black text-slate-900 text-sm">Marista Facebook Page</span>
+              </a>
+
+              {/* Email Card */}
+              <a href="mailto:mariesta@creatorsflow.org" className="flex flex-col items-center justify-center p-8 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all group text-center" style={{ textDecoration: 'none' }}>
+                <div className="w-16 h-16 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <img src="images/3dicons-mail-front-color.png" alt="Email" className="w-full h-full object-contain" />
+                </div>
+                <h3 className="font-bold text-lg text-slate-900 mb-1">البريد الإلكتروني</h3>
+                <p className="text-slate-500 text-sm mb-3">راسلنا بخصوص تفاصيل طلبك أو فكرتك</p>
+                <span className="font-black text-slate-900 text-sm break-all">mariesta@creatorsflow.org</span>
+              </a>
+
+            </div>
+
+            {/* Relocated Contact Form */}
+            <div className="max-w-[1104px] mx-auto w-full">
+              <div
+                className="contact-form-card"
+                style={{
+                  position: 'relative',
+                  background: 'linear-gradient(to bottom, rgba(244, 63, 94, 0.06) 0%, #ffffff 100%)',
+                  border: '1px solid rgba(0, 0, 0, 0.05)',
+                  borderRadius: '32px',
+                  padding: '40px 32px',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.02)',
+                  color: '#0a0a0f',
+                  width: '100%',
+                  textAlign: 'right'
+                }}
+              >
+                {showSuccess ? (
+                  <div style={{ textAlign: 'center', padding: '40px 0', animation: 'fadeIn 0.3s' }}>
+                    <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: '#22c55e20', color: '#22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
+                      <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg>
+                    </div>
+                    <h3 style={{ fontSize: '24px', fontWeight: 800, marginBottom: '8px', color: '#0a0a0f' }}>تم إرسال طلبك بنجاح!</h3>
+                    <p style={{ color: '#6b7280' }}>جاري فتح تطبيق البريد الإلكتروني الخاص بك...</p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="dark-form" style={{ background: 'transparent', padding: 0, border: 'none', boxShadow: 'none' }}>
+                    <div className="dark-frow">
+                      <div>
+                        <label className="dark-label" style={{ fontSize: '14px', fontWeight: '400', textTransform: 'none', color: '#374151', marginBottom: '8px', display: 'block', letterSpacing: 'normal' }}>الاسم الكريم</label>
+                        <input className="dark-input" type="text" required placeholder="اسمك هنا" value={name} onChange={e => setName(e.target.value)} style={{ border: '1px solid #e5e7eb', background: '#ffffff', borderRadius: '10px', height: '42px', padding: '0 12px', fontSize: '14px', color: '#0a0a0f', width: '100%', textAlign: 'right' }} />
+                      </div>
+                      <div>
+                        <label className="dark-label" style={{ fontSize: '14px', fontWeight: '400', textTransform: 'none', color: '#374151', marginBottom: '8px', display: 'block', letterSpacing: 'normal' }}>البريد الإلكتروني</label>
+                        <input className="dark-input" type="email" required placeholder="example@company.com" value={email} onChange={e => setEmail(e.target.value)} style={{ border: '1px solid #e5e7eb', background: '#ffffff', borderRadius: '10px', height: '42px', padding: '0 12px', fontSize: '14px', color: '#0a0a0f', width: '100%', textAlign: 'right' }} />
+                      </div>
+                    </div>
+
+                    <div style={{ marginBottom: '16px' }}>
+                      <label className="dark-label" style={{ fontSize: '14px', fontWeight: '400', textTransform: 'none', color: '#374151', marginBottom: '8px', display: 'block', letterSpacing: 'normal' }}>اختر الخدمة المطلوبة</label>
+                      <div style={{ position: 'relative' }}>
+                        <div
+                          className="dark-input"
+                          style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '1px solid #e5e7eb', background: '#ffffff', borderRadius: '10px', height: '42px', padding: '0 12px', fontSize: '14px', color: '#0a0a0f' }}
+                          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                        >
+                          <span style={{ color: selectedOption ? '#0a0a0f' : '#9ca3af', fontWeight: selectedOption ? '600' : '400' }}>
+                            {selectedOption ? selectedOption.label : 'اختر خدمة...'}
+                          </span>
+                          <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" style={{ transform: isDropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', color: '#6b7280' }}>
+                            <polyline points="6 9 12 15 18 9" />
+                          </svg>
+                        </div>
+
+                        {isDropdownOpen && (
+                          <div style={{
+                            position: 'absolute', top: '100%', left: 0, right: 0, marginTop: '8px',
+                            background: 'white', border: '1px solid #e5e7eb', borderRadius: '12px',
+                            boxShadow: '0 10px 30px rgba(0,0,0,0.08)', zIndex: 10, padding: '8px 0',
+                            animation: 'fadeIn 0.2s ease', textAlign: 'right'
+                          }}>
+                            {serviceOptions.map(o => (
+                              <div
+                                key={o.value}
+                                style={{ padding: '12px 16px', cursor: 'pointer', fontSize: '14px', color: '#0a0a0f', transition: 'background 0.2s', fontWeight: '600' }}
+                                onMouseEnter={e => e.target.style.background = '#f4f6fb'}
+                                onMouseLeave={e => e.target.style.background = 'transparent'}
+                                onClick={() => { setService(o.value); setIsDropdownOpen(false); }}
+                              >
+                                {o.label}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {service === 'another' && (
+                      <div style={{ marginBottom: '16px', animation: 'fadeIn 0.3s ease' }}>
+                        <label className="dark-label" style={{ fontSize: '14px', fontWeight: '400', textTransform: 'none', color: '#374151', marginBottom: '8px', display: 'block', letterSpacing: 'normal' }}>حدد الخدمة الأخرى</label>
+                        <input className="dark-input" type="text" placeholder="يرجى التحديد..." value={customService} onChange={e => setCustomService(e.target.value)} style={{ border: '1px solid #e5e7eb', background: '#ffffff', borderRadius: '10px', height: '42px', padding: '0 12px', fontSize: '14px', color: '#0a0a0f', width: '100%', textAlign: 'right' }} />
+                      </div>
+                    )}
+
+                    <div style={{ marginBottom: '24px' }}>
+                      <label className="dark-label" style={{ fontSize: '14px', fontWeight: '400', textTransform: 'none', color: '#374151', marginBottom: '8px', display: 'block', letterSpacing: 'normal' }}>تفاصيل الطلب</label>
+                      <textarea className="dark-input" rows="5" required placeholder="صف طلبك أو فكرتك بالتفصيل (مثل الألوان المفضلة، الحجم، أو المناسبة)..." value={desc} onChange={e => setDesc(e.target.value)} style={{ border: '1px solid #e5e7eb', background: '#ffffff', borderRadius: '10px', padding: '12px', fontSize: '14px', color: '#0a0a0f', width: '100%', resize: 'none', textAlign: 'right' }} />
+                    </div>
+
+                    <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center', height: '46px', fontSize: '14px' }}>إرسال الرسالة</button>
+                  </form>
+                )}
+              </div>
+            </div>
+
+          </main>
+
+          {/* Footer */}
+          <footer style={{
+            background: 'transparent',
+            padding: '60px 24px 40px',
+            borderTop: '1px solid rgba(0, 0, 0, 0.05)',
+            textAlign: 'center',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+            {/* Dot grid points background */}
+            <div className="footer-grid-bg" style={{
+              position: 'absolute',
+              inset: 0,
+              backgroundImage: 'radial-gradient(rgba(10, 10, 15, 0.12) 1.5px, transparent 1.5px)',
+              backgroundSize: '32px 32px',
+              opacity: 0.8,
+              zIndex: 0,
+              pointerEvents: 'none'
+            }} />
+
+            {/* 2 CTA Buttons */}
+            <div className="footer-cta" style={{ display: 'flex', justifyContent: 'center', gap: '12px', marginBottom: '40px', position: 'relative', zIndex: 1 }}>
+              <a href="index.html#services" className="btn-primary" style={{ textDecoration: 'none' }}>اختار البوكيه</a>
+              <a href="products.html" className="btn-ghost" style={{ textDecoration: 'none' }}>معرض الاعمال</a>
+            </div>
+
+            {/* Footer Navigation Links */}
+            <div className="footer-links">
+              <a href="index.html#home">الرئيسية</a>
+              <a href="products.html">المنتجات</a>
+              <a href="about.html">من نحن</a>
+              <a href="contact.html" className="active-nav">تواصل معنا</a>
+            </div>
+
+            {/* Large Outline text design */}
+            <div style={{
+              position: 'relative',
+              marginBottom: '24px',
+              zIndex: 1,
+              fontFamily: '"Thmanyah Serif Text", "Thmanyah Serif Display", Georgia, serif',
+              fontWeight: '900',
+              fontSize: 'clamp(60px, 12vw, 150px)',
+              color: '#000000',
+              whiteSpace: 'nowrap',
+              userSelect: 'none',
+              lineHeight: '1'
+            }}>
+              مــاريــستا
+            </div>
+
+            {/* Reserved rights sentence */}
+            <p style={{ fontSize: '13px', color: '#6b7280', margin: '0', position: 'relative', zIndex: 1, fontWeight: '500' }}>
+              © ٢٠٢٦ ماريستا. جميع الحقوق محفوظة.
+            </p>
+          </footer>
+
+          {/* Bottom Nav */}
+          <div className="bottom-nav">
+            <div className="bottom-nav-inner">
+              <a href="index.html" className="b-nav-item">
+                <div className="b-nav-icon">{Svg.home}</div>
+                <span>الرئيسية</span>
+              </a>
+              <a href="products.html" className="b-nav-item">
+                <div className="b-nav-icon">{Svg.briefcase}</div>
+                <span>المنتجات</span>
+              </a>
+              <a href="about.html" className="b-nav-item">
+                <div className="b-nav-icon">{Svg.user}</div>
+                <span>من أنا</span>
+              </a>
+              <a href="contact.html" className="b-nav-item active">
+                <div className="b-nav-icon">{Svg.mail}</div>
+                <span>اتصل بنا</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    const container = document.getElementById('contact-root');
+    const root = ReactDOM.createRoot(container);
+    root.render(<ContactApp />);
+  </script>
+</body>
+
+</html>

@@ -120,6 +120,45 @@ const saveMockGallery = (items) => {
   localStorage.setItem("mock_gallery", JSON.stringify(items));
 };
 
+// Seed Data for Testimonials
+const seedTestimonials = [
+  { text: "حرفياً أشطر واحدة تعمل بوكيهات فى الدنيا كفاية ذوقك والله وطريقتك فى التعامل وصاحبتي فرحت بيه اوي اوي ومفيش حد شافه ومعلقش عليه والله مبسوطة اوي اني اتعرفت على حد زيك وان شاء الله مش اخر تعامل بينا" },
+  { text: "البوكيه طلع يجنن بجد والتفاصيل والورد الستان شكله طبيعي جداً وراقي والتقفيل نضيف وممتاز تسلم ايدك وإن شاء الله هطلب منك علطول" },
+  { text: "بجد ذوقك يجنن والتعامل راقي جداً، البوكيه كان مفاجأة حلوة أوي لصحبتي وعجب كل الناس في الحفلة. شكراً ليكي ولسرعة التوصيل والخدمة الممتازة" },
+  { text: "شغل احترافي ومتقن جداً، الورد الستان لونه تحفة وحجم البوكيه مناسب جداً. بجد فخورة إن عندنا حد بيعمل الجمال ده بالدقة دي" },
+  { text: "حرفياً البوكيه تحفة فنية وكل اللي شافوه سألوني عليه، الذوق والتعامل والتغليف بجد فوق الممتاز. مش هيكون آخر تعامل أكيد" }
+];
+
+const getMockTestimonials = () => {
+  let local = localStorage.getItem("mock_testimonials");
+  if (local) {
+    try {
+      const items = JSON.parse(local);
+      if (items.some(item => !item.createdAt)) {
+        localStorage.removeItem("mock_testimonials");
+        local = null;
+      }
+    } catch(e) {
+      localStorage.removeItem("mock_testimonials");
+      local = null;
+    }
+  }
+  if (!local) {
+    const seeded = seedTestimonials.map((t, idx) => ({
+      id: "mock_t_seed_" + idx,
+      ...t,
+      createdAt: Date.now() - (idx * 60000)
+    }));
+    localStorage.setItem("mock_testimonials", JSON.stringify(seeded));
+    return seeded;
+  }
+  return JSON.parse(local);
+};
+
+const saveMockTestimonials = (items) => {
+  localStorage.setItem("mock_testimonials", JSON.stringify(items));
+};
+
 // Global API Helper for Database Operations
 window.AppDB = {
   isFirebase: () => useFirebase && !firebaseFailed,
@@ -303,6 +342,91 @@ window.AppDB = {
     let items = getMockGallery();
     items = items.filter(i => i.id !== id && i.title !== itemKey.title);
     saveMockGallery(items);
+    return true;
+  },
+
+  getTestimonials: (callback) => {
+    const sortTestimonials = (items) => {
+      return [...items].sort((a, b) => {
+        const timeA = a.createdAt !== undefined ? Number(a.createdAt) : 0;
+        const timeB = b.createdAt !== undefined ? Number(b.createdAt) : 0;
+        return timeB - timeA;
+      });
+    };
+
+    if (useFirebase && db && !firebaseFailed) {
+      return db.collection("testimonials").onSnapshot((snapshot) => {
+        const items = [];
+        snapshot.forEach((doc) => {
+          items.push({ id: doc.id, ...doc.data() });
+        });
+        if (items.length === 0) {
+          seedTestimonials.forEach(async (t, idx) => {
+            await db.collection("testimonials").add({ ...t, createdAt: Date.now() - (idx * 60000) });
+          });
+        }
+        callback(sortTestimonials(items));
+      }, (error) => {
+        console.error("Firestore read testimonials error, falling back to LocalStorage: ", error);
+        firebaseFailed = true;
+        callback(sortTestimonials(getMockTestimonials()));
+      });
+    } else {
+      callback(sortTestimonials(getMockTestimonials()));
+      return () => { };
+    }
+  },
+
+  addTestimonial: async (item) => {
+    const itemWithTimestamp = {
+      ...item,
+      createdAt: item.createdAt || Date.now()
+    };
+    if (useFirebase && db && !firebaseFailed) {
+      try {
+        return await db.collection("testimonials").add(itemWithTimestamp);
+      } catch (err) {
+        console.error("Firestore add testimonial failed, falling back to LocalStorage: ", err);
+        firebaseFailed = true;
+      }
+    }
+    const items = getMockTestimonials();
+    const newItem = { id: "mock_t_" + Date.now(), ...itemWithTimestamp };
+    items.push(newItem);
+    saveMockTestimonials(items);
+    return newItem;
+  },
+
+  updateTestimonial: async (id, item) => {
+    if (useFirebase && db && !firebaseFailed) {
+      try {
+        return await db.collection("testimonials").doc(id).update(item);
+      } catch (err) {
+        console.error("Firestore update testimonial failed, falling back to LocalStorage: ", err);
+        firebaseFailed = true;
+      }
+    }
+    const items = getMockTestimonials();
+    const idx = items.findIndex(i => i.id === id || i.text === item.text);
+    if (idx !== -1) {
+      items[idx] = { ...items[idx], ...item };
+      saveMockTestimonials(items);
+    }
+    return true;
+  },
+
+  deleteTestimonial: async (id, itemKey) => {
+    if (useFirebase && db && !firebaseFailed) {
+      try {
+        return await db.collection("testimonials").doc(id).delete();
+      } catch (err) {
+        console.error("Firestore delete testimonial failed, falling back to LocalStorage: ", err);
+        firebaseFailed = true;
+      }
+    }
+    let items = getMockTestimonials();
+    items = items.filter(i => i.id !== id && i.text !== itemKey.text);
+    saveMockTestimonials(items);
     return true;
   }
 };

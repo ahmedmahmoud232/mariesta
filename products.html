@@ -7,8 +7,8 @@
   <title>المعروضات — ماريستا</title>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="compiler-cache.js"></script>
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 
@@ -397,6 +397,29 @@
     .footer-links a.active-nav {
       color: #0a0a0f;
       background: rgba(0, 0, 0, 0.05);
+    }
+
+    /* ─── FOOTER CTA ─── */
+    .footer-cta {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media(max-width:860px) {
+      .footer-cta {
+        flex-direction: column !important;
+        width: 100%;
+        gap: 12px;
+      }
+
+      .footer-cta>* {
+        width: 100%;
+        justify-content: center;
+      }
     }
 
     .nav-cta {
@@ -1105,9 +1128,9 @@
       height: 320px;
       padding: 16px;
       overflow: hidden;
-      box-shadow: inset 0 2px 10px rgba(0,0,0,0.01);
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.01);
     }
-    
+
     @media (max-width: 640px) {
       .modal-container {
         padding: 16px !important;
@@ -1115,26 +1138,32 @@
         max-height: 95vh !important;
         width: 95% !important;
       }
+
       .modal-nav-arrow-left,
       .modal-nav-arrow-right {
         display: none !important;
       }
+
       .modal-image-wrapper {
         height: 220px !important;
         border-radius: 16px !important;
         padding: 10px !important;
       }
+
       .modal-product-name {
         font-size: 18px !important;
       }
+
       .modal-product-price {
         font-size: 20px !important;
       }
-      .modal-thumbnails button {
-        width: 44px !important;
-        height: 44px !important;
-        border-radius: 8px !important;
-      }
+
+    @keyframes goldenCardIn {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .golden-card-animate {
+      animation: goldenCardIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
   </style>
 </head>
@@ -1142,7 +1171,7 @@
 <body class="min-h-screen">
   <div id="products-root"></div>
 
-  <script type="text/babel">
+  <script type="text/custom-babel" id="products-react-script">
     const { useState, useEffect, useRef, useMemo } = React;
 
     const Svg = {
@@ -1218,6 +1247,123 @@
       );
     };
 
+    const GoldenCardModal = ({ product, onClose }) => {
+      const [timeLeft, setTimeLeft] = useState(10);
+
+      useEffect(() => {
+        if (timeLeft <= 0) {
+          window.location.href = product.whatsappUrl;
+          onClose();
+          return;
+        }
+
+        const timer = setTimeout(() => {
+          setTimeLeft(prev => prev - 1);
+        }, 1000);
+
+        return () => clearTimeout(timer);
+      }, [timeLeft, product.whatsappUrl, onClose]);
+
+      const progress = ((10 - timeLeft) / 10) * 100;
+
+      const handleSkip = () => {
+        window.location.href = product.whatsappUrl;
+        onClose();
+      };
+
+      return (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'rgba(10, 10, 15, 0.75)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          zIndex: 9999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          direction: 'rtl',
+          padding: '20px'
+        }}>
+          <div className="golden-card-animate" style={{
+            background: 'linear-gradient(135deg, #ffffff 0%, #fffefc 100%)',
+            border: '2px solid #fbbf24',
+            boxShadow: '0 25px 60px -15px rgba(186, 133, 40, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.9)',
+            borderRadius: '32px',
+            padding: '36px 28px 28px 28px',
+            maxWidth: '440px',
+            width: '100%',
+            textAlign: 'center',
+            position: 'relative',
+            overflow: 'hidden',
+            fontFamily: "'Thmanyah Sans', 'Inter', sans-serif"
+          }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: 'linear-gradient(to right, #fbbf24, #f59e0b, #fbbf24)' }} />
+            
+            <div style={{
+              background: 'linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%)',
+              color: '#451a03',
+              padding: '6px 16px',
+              borderRadius: '100px',
+              fontSize: '11px',
+              fontWeight: '900',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '4px',
+              marginBottom: '20px',
+              boxShadow: '0 4px 12px rgba(186, 133, 40, 0.15)'
+            }}>
+              ✨ كارت الخصم الذهبي الحصري
+            </div>
+
+            <h3 style={{ fontSize: '22px', fontWeight: '900', color: '#0a0a0f', marginBottom: '8px', lineHeight: '1.3' }}>
+              تهانينا! حصلت على خصم 10%
+            </h3>
+            
+            <p style={{ fontSize: '13px', color: '#4b5563', marginBottom: '24px' }}>
+              سيتم توجيهك إلى الواتساب لإكمال طلبك بالخصم تلقائياً...
+            </p>
+
+            <div style={{ background: 'rgba(251, 191, 36, 0.03)', border: '1px solid rgba(251, 191, 36, 0.25)', borderRadius: '20px', padding: '20px', marginBottom: '24px', textAlign: 'center' }}>
+              <div style={{ fontSize: '13px', color: '#6b7280', marginBottom: '4px' }}>المنتج المطلوب:</div>
+              <div style={{ fontSize: '16px', fontWeight: '800', color: '#0a0a0f', marginBottom: '16px' }}>{product.name}</div>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center', justifyContent: 'center' }}>
+                <div>
+                  <span style={{ fontSize: '12px', color: '#6b7280', marginLeft: '6px' }}>السعر الأصلي:</span>
+                  <span style={{ fontSize: '14px', color: '#9ca3af', textDecoration: 'line-through' }}>{product.originalPrice}</span>
+                </div>
+                <div style={{ marginTop: '4px' }}>
+                  <div style={{ fontSize: '11px', color: '#b45309', fontWeight: '700', marginBottom: '2px' }}>السعر بعد الخصم (10%):</div>
+                  <div style={{ fontSize: '24px', color: '#b45309', fontWeight: '900' }}>{product.discountedPrice}</div>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ marginBottom: '20px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px', color: '#b45309', fontWeight: '700', marginBottom: '8px' }}>
+                <span>جاري الانتقال للواتساب...</span>
+                <span>{timeLeft} ثوانٍ</span>
+              </div>
+              <div style={{ width: '100%', height: '8px', background: 'rgba(0, 0, 0, 0.05)', borderRadius: '100px', overflow: 'hidden' }}>
+                <div style={{ width: `${progress}%`, height: '100%', background: 'linear-gradient(to left, #fbbf24, #d97706)', borderRadius: '100px', transition: 'width 1s linear' }} />
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button onClick={handleSkip} className="btn-primary" style={{ flex: 1, background: 'linear-gradient(135deg, #bf953f 0%, #b38728 100%)', borderColor: '#b38728', color: '#ffffff', fontWeight: '900', justifyContent: 'center', height: '46px', fontSize: '14px' }}>
+                اطلب الآن مباشرة 💬
+              </button>
+              <button onClick={onClose} className="btn-ghost" style={{ flex: 0.5, background: 'transparent', borderColor: 'rgba(0, 0, 0, 0.15)', color: '#374151', justifyContent: 'center', height: '46px', fontSize: '14px' }} onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(0, 0, 0, 0.3)'} onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(0, 0, 0, 0.15)'}>
+                إلغاء
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
     const ProductsCatalogApp = () => {
       const [dbProducts, setDbProducts] = useState([]);
       const [isLoading, setIsLoading] = useState(true);
@@ -1228,6 +1374,7 @@
       const [deliveryMethod, setDeliveryMethod] = useState("delivery");
       const [selectedRoseCount, setSelectedRoseCount] = useState(5);
       const [showPromoModal, setShowPromoModal] = useState(false);
+      const [goldenPromoProduct, setGoldenPromoProduct] = useState(null);
       const [isMenuOpen, setIsMenuOpen] = useState(false);
       const [isClosing, setIsClosing] = useState(false);
       const [isNavigating, setIsNavigating] = useState(false);
@@ -1298,6 +1445,34 @@
         }, 200);
       };
 
+      const handleTriggerDiscountCheckout = (prod, roseCount = null, delivery = 'pickup') => {
+        let basePriceStr = prod.price;
+        if ([0, 1, 2, 3, 4, 5].includes(parseInt(prod.category))) {
+          const priceNum = parseFloat(prod.price.toString().replace(/[^\d.]/g, ''));
+          const count = roseCount !== null ? roseCount : (prod.minFlowers || 5);
+          basePriceStr = isNaN(priceNum) ? prod.price : `${Math.round(priceNum * count)} ج.م`;
+        }
+        const priceVal = parseFloat(basePriceStr.replace(/[^\d.]/g, ''));
+        const originalPrice = basePriceStr.toString().includes('ج.م') || basePriceStr.toString().includes('جنيه') ? basePriceStr : `${basePriceStr} ج.م`;
+        const discountedPrice = isNaN(priceVal) ? originalPrice : `${Math.round(priceVal * 0.9)} ج.م`;
+        
+        const flowerText = roseCount !== null ? ` (العدد: ${roseCount})` : '';
+        const whatsappText = encodeURIComponent(
+          `حصلت على خصم 10% على المنتج: ${prod.name}${flowerText}، وأريد طلبه`
+        );
+        const whatsappUrl = `https://wa.me/201062973138?text=${whatsappText}`;
+
+        // Close details modal if open
+        setSelectedProduct(null);
+
+        setGoldenPromoProduct({
+          name: prod.name,
+          originalPrice,
+          discountedPrice,
+          whatsappUrl
+        });
+      };
+
       const filteredProducts = useMemo(() => {
         return dbProducts.filter((p) => {
           const matchesSearch = p.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -1344,6 +1519,12 @@
 
       return (
         <div className="min-h-screen flex flex-col justify-between">
+          {goldenPromoProduct && (
+            <GoldenCardModal
+              product={goldenPromoProduct}
+              onClose={() => setGoldenPromoProduct(null)}
+            />
+          )}
           <ScrollToTop />
           {/* Header */}
           <nav className={navScrolled ? 'scrolled' : ''}>
@@ -1360,7 +1541,7 @@
                   { label: 'الرئيسية', url: 'index.html', id: 'home' },
                   { label: 'المنتجات', url: 'products.html', id: 'products' },
                   { label: 'من نحن', url: 'about.html', id: 'about' },
-                  { label: 'تواصل معنا', url: 'index.html#contact', id: 'contact' }
+                  { label: 'تواصل معنا', url: 'contact.html', id: 'contact' }
                 ].map(l => (
                   <a key={l.id} href={l.url} className={l.id === 'products' ? 'active-nav' : ''}>{l.label}</a>
                 ))}
@@ -1369,7 +1550,7 @@
               {/* CTA */}
               <div className="nav-cta" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                 <a href="index.html#services" className="btn-primary" style={{ textDecoration: 'none' }}>اختار البوكيه</a>
-                <a href="index.html#contact" className="btn-ghost" style={{ textDecoration: 'none', height: '42px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>تواصل معنا</a>
+                <a href="contact.html" className="btn-ghost" style={{ textDecoration: 'none', height: '42px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>تواصل معنا</a>
               </div>
 
               {/* Mobile Toggle */}
@@ -1412,13 +1593,13 @@
               { label: 'الرئيسية', url: 'index.html', id: 'home' },
               { label: 'المنتجات', url: 'products.html', id: 'products' },
               { label: 'من نحن', url: 'about.html', id: 'about' },
-              { label: 'تواصل معنا', url: 'index.html#contact', id: 'contact' }
+              { label: 'تواصل معنا', url: 'contact.html', id: 'contact' }
             ].map(l => (
               <a key={l.id} href={l.url} className={`m-link ${l.id === 'products' ? 'active-nav' : ''}`} onClick={() => setIsMenuOpen(false)} style={{ color: '#0a0a0f' }}>{l.label}</a>
             ))}
             <div className="mobile-menu-cta" style={{ width: '100%', padding: '0 24px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <a href="index.html#services" className="btn-primary" style={{ textDecoration: 'none', width: '100%', justifyContent: 'center' }} onClick={() => setIsMenuOpen(false)}>اختار البوكيه</a>
-              <a href="index.html#contact" className="btn-ghost" style={{ textDecoration: 'none', width: '100%', justifyContent: 'center', height: '42px', display: 'inline-flex', alignItems: 'center' }} onClick={() => setIsMenuOpen(false)}>تواصل معنا</a>
+              <a href="contact.html" className="btn-ghost" style={{ textDecoration: 'none', width: '100%', justifyContent: 'center', height: '42px', display: 'inline-flex', alignItems: 'center' }} onClick={() => setIsMenuOpen(false)}>تواصل معنا</a>
             </div>
           </div>
 
@@ -1522,7 +1703,7 @@
                     عرض كل المعروضات
                   </button>
                   <a
-                    href="index.html#contact"
+                    href="contact.html"
                     className="px-6 py-3 bg-slate-100 text-slate-700 text-xs font-black rounded-xl hover:bg-slate-200 transition-all"
                   >
                     تواصل معنا لتنسيق خاص
@@ -1785,7 +1966,7 @@
                     {[0, 1, 2, 3, 4, 5].includes(parseInt(selectedProduct.category)) && (
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px' }}>
                         <span style={{ fontWeight: '800', color: '#0a0a0f', fontSize: '14px' }}>
-                          عدد الورد (سعر الوردة: {selectedProduct.price ? (selectedProduct.price.toString().includes('ج.م') || selectedProduct.price.toString().includes('جنيه') ? selectedProduct.price : `${selectedProduct.price} ج.م`) : ""}) (من {selectedProduct.minFlowers || 5} إلى {selectedProduct.maxFlowers || 100} وردة):
+                          عدد الورد (من {selectedProduct.minFlowers || 5} إلى {selectedProduct.maxFlowers || 100} وردة):
                         </span>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                           <button
@@ -1897,7 +2078,7 @@
 
                     {/* Order action button */}
                     <button
-                      onClick={() => setShowPromoModal(true)}
+                      onClick={() => handleTriggerDiscountCheckout(selectedProduct, [0, 1, 2, 3, 4, 5].includes(parseInt(selectedProduct.category)) ? selectedRoseCount : null, deliveryMethod)}
                       className="btn-primary"
                       style={{
                         width: '100%',
@@ -1942,12 +2123,18 @@
               pointerEvents: 'none'
             }} />
 
+            {/* 2 CTA Buttons */}
+            <div className="footer-cta" style={{ display: 'flex', justifyContent: 'center', gap: '12px', marginBottom: '40px', position: 'relative', zIndex: 1 }}>
+              <a href="index.html#services" className="btn-primary" style={{ textDecoration: 'none' }}>اختار البوكيه</a>
+              <a href="products.html" className="btn-ghost" style={{ textDecoration: 'none' }}>معرض الاعمال</a>
+            </div>
+
             {/* Footer Navigation Links */}
             <div className="footer-links">
-              <a href="index.html">الرئيسية</a>
+              <a href="index.html#home">الرئيسية</a>
               <a href="products.html" className="active-nav">المنتجات</a>
-              <a href="about.html">من أنا</a>
-              <a href="index.html#contact">اتصل بنا</a>
+              <a href="about.html">من نحن</a>
+              <a href="contact.html">تواصل معنا</a>
             </div>
 
             {/* Large Outline text design */}
@@ -1987,7 +2174,7 @@
                 <div className="b-nav-icon">{Svg.user}</div>
                 <span>من أنا</span>
               </a>
-              <a href="index.html#contact" className="b-nav-item">
+              <a href="contact.html" className="b-nav-item">
                 <div className="b-nav-icon">{Svg.mail}</div>
                 <span>اتصل بنا</span>
               </a>
