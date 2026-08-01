@@ -57,10 +57,38 @@ const seedProducts = [
 
 // Initialize Local Mock DB if needed
 const getMockProducts = () => {
-  const local = localStorage.getItem("mock_products");
+  let local = localStorage.getItem("mock_products");
+  if (local) {
+    try {
+      const items = JSON.parse(local);
+      let updated = false;
+      const now = Date.now();
+      const withCreatedAt = items.map((p, idx) => {
+        if (!p.createdAt) {
+          updated = true;
+          return { ...p, createdAt: now - ((items.length - idx) * 60000) };
+        }
+        return p;
+      });
+      if (updated) {
+        localStorage.setItem("mock_products", JSON.stringify(withCreatedAt));
+      }
+      return withCreatedAt;
+    } catch (e) {
+      console.warn("Error parsing mock_products, resetting:", e);
+      localStorage.removeItem("mock_products");
+      local = null;
+    }
+  }
   if (!local) {
-    localStorage.setItem("mock_products", JSON.stringify(seedProducts));
-    return seedProducts;
+    const now = Date.now();
+    const seeded = seedProducts.map((p, idx) => ({
+      id: "mock_prod_" + idx,
+      ...p,
+      createdAt: now - ((seedProducts.length - idx) * 60000)
+    }));
+    localStorage.setItem("mock_products", JSON.stringify(seeded));
+    return seeded;
   }
   return JSON.parse(local);
 };
@@ -178,8 +206,8 @@ window.AppDB = {
   getProducts: (callback) => {
     const sortProds = (prods) => {
       return [...prods].sort((a, b) => {
-        const timeA = a.createdAt !== undefined ? Number(a.createdAt) : 0;
-        const timeB = b.createdAt !== undefined ? Number(b.createdAt) : 0;
+        const timeA = a.createdAt !== undefined && a.createdAt !== null ? Number(a.createdAt) : 0;
+        const timeB = b.createdAt !== undefined && b.createdAt !== null ? Number(b.createdAt) : 0;
         if (timeA !== timeB) {
           return timeB - timeA;
         }
@@ -242,7 +270,7 @@ window.AppDB = {
     }
     const prods = getMockProducts();
     const newProduct = { id: "mock_" + Date.now(), ...productWithTimestamp };
-    prods.push(newProduct);
+    prods.unshift(newProduct);
     saveMockProducts(prods);
     return newProduct;
   },

@@ -24,7 +24,7 @@
     tailwind.config = {
       theme: {
         extend: {
-          colors: { ink: '#0a0a0f', offwhite: '#f5f4f0', accent: '#5b5bd6', accentL: '#7c7de8', dim: '#6b7280', card: '#ffffff', border: '#e5e7eb' },
+          colors: { ink: '#0a0a0f', offwhite: '#f5f4f0', accent: '#e11d48', accentL: '#f43f5e', dim: '#6b7280', card: '#ffffff', border: '#e5e7eb' },
           fontFamily: {
             sans: ['"Thmanyah Sans"', 'Inter', 'sans-serif'],
             serif: ['"Thmanyah Serif Text"', '"Thmanyah Serif Display"', 'Georgia', 'serif']
@@ -672,7 +672,7 @@
 
               {/* CTA */}
               <div className="nav-cta" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                <a href="index.html#services" className="btn-primary" style={{ textDecoration: 'none' }}>اختار البوكيه</a>
+                <a href="products.html" className="btn-primary" style={{ textDecoration: 'none' }}>اختار البوكيه</a>
                 <a href="contact.html" className="btn-ghost" style={{ textDecoration: 'none', height: '42px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>تواصل معنا</a>
               </div>
 
@@ -721,7 +721,7 @@
               <a key={l.id} href={l.url} className={`m-link ${l.id === 'about' ? 'active-nav' : ''}`} onClick={() => setIsOpen(false)} style={{ color: '#0a0a0f' }}>{l.label}</a>
             ))}
             <div className="mobile-menu-cta" style={{ width: '100%', padding: '0 24px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <a href="index.html#services" className="btn-primary" style={{ textDecoration: 'none', width: '100%', justifyContent: 'center' }} onClick={() => setIsOpen(false)}>اختار البوكيه</a>
+              <a href="products.html" className="btn-primary" style={{ textDecoration: 'none', width: '100%', justifyContent: 'center' }} onClick={() => setIsOpen(false)}>اختار البوكيه</a>
               <a href="contact.html" className="btn-ghost" style={{ textDecoration: 'none', width: '100%', justifyContent: 'center', height: '42px', display: 'inline-flex', alignItems: 'center' }} onClick={() => setIsOpen(false)}>تواصل معنا</a>
             </div>
           </div>
@@ -828,7 +828,7 @@
                 <>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {displayedItems.map((item, index) => {
-                      const whatsappUrl = `https://wa.me/201062973138?text=${encodeURIComponent(`اريد نفس الشكل: ${item.title || 'منتج ماريستا'}`)}`;
+                      const whatsappUrl = `https://wa.me/201036023754?text=${encodeURIComponent(`اريد نفس الشكل: ${item.title || 'منتج ماريستا'}`)}`;
 
                       return (
                         <div key={item.id || index} className="group relative overflow-hidden rounded-2xl bg-white border border-black/5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
@@ -1244,8 +1244,8 @@
 
         {/* 2 CTA Buttons */}
         <div className="footer-cta" style={{ display: 'flex', justifyContent: 'center', gap: '12px', marginBottom: '40px', position: 'relative', zIndex: 1 }}>
-          <a href="index.html#services" className="btn-primary" style={{ textDecoration: 'none' }}>اختار البوكيه</a>
-          <a href="products.html" className="btn-ghost" style={{ textDecoration: 'none' }}>معرض الاعمال</a>
+          <a href="products.html" className="btn-primary" style={{ textDecoration: 'none' }}>اختار البوكيه</a>
+          <a href="about.html" className="btn-ghost" style={{ textDecoration: 'none' }}>معرض الاعمال</a>
         </div>
 
         {/* Footer Navigation Links */}
