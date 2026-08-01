@@ -5,18 +5,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>المعروضات — ماريستا</title>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="preload" href="woff2/thmanyahsans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="woff2/thmanyahseriftext-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://unpkg.com" crossorigin>
-  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 
   <!-- Firebase SDKs & Custom Configurations -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-  <script src="firebase-config.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script defer src="firebase-config.js"></script>
 
   <script>
     tailwind.config = {
@@ -98,7 +100,7 @@
 
     @font-face {
       font-family: 'Thmanyah Serif Text';
-      src: url('thmanyahseriftext/otf/thmanyahseriftext-Light.otf') format('opentype');
+      src: url('woff2/thmanyahseriftext-Light.woff2') format('woff2');
       font-weight: 300;
       font-style: normal;
       font-display: swap;
@@ -106,7 +108,7 @@
 
     @font-face {
       font-family: 'Thmanyah Serif Text';
-      src: url('thmanyahseriftext/otf/thmanyahseriftext-Regular.otf') format('opentype');
+      src: url('woff2/thmanyahseriftext-Regular.woff2') format('woff2');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
@@ -114,7 +116,7 @@
 
     @font-face {
       font-family: 'Thmanyah Serif Text';
-      src: url('thmanyahseriftext/otf/thmanyahseriftext-Medium.otf') format('opentype');
+      src: url('woff2/thmanyahseriftext-Medium.woff2') format('woff2');
       font-weight: 500;
       font-style: normal;
       font-display: swap;
@@ -122,7 +124,7 @@
 
     @font-face {
       font-family: 'Thmanyah Serif Text';
-      src: url('thmanyahseriftext/otf/thmanyahseriftext-Bold.otf') format('opentype');
+      src: url('woff2/thmanyahseriftext-Bold.woff2') format('woff2');
       font-weight: 700;
       font-style: normal;
       font-display: swap;
@@ -130,7 +132,7 @@
 
     @font-face {
       font-family: 'Thmanyah Serif Text';
-      src: url('thmanyahseriftext/otf/thmanyahseriftext-Black.otf') format('opentype');
+      src: url('woff2/thmanyahseriftext-Black.woff2') format('woff2');
       font-weight: 900;
       font-style: normal;
       font-display: swap;
@@ -544,44 +546,50 @@
       bottom: 24px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(0, 0, 0, 0.07);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1.5px solid rgba(0, 0, 0, 0.06);
       border-radius: 100px;
-      padding: 10px 20px;
-      z-index: 95;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      padding: 12px 28px;
+      z-index: 999;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+      width: max-content;
+      max-width: calc(100% - 32px);
     }
 
     .bottom-nav-inner {
       display: flex;
       align-items: center;
-      gap: 32px;
+      justify-content: space-between;
+      gap: 28px;
     }
 
     .b-nav-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
-      color: #9ca3af;
+      gap: 5px;
+      color: #6b7280;
       text-decoration: none;
-      transition: all 0.3s;
+      transition: all 0.25s ease;
       cursor: pointer;
     }
 
     .b-nav-item.active,
     .b-nav-item:hover {
-      color: #0a0a0f;
+      color: #e11d48;
     }
 
     .b-nav-icon {
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .b-nav-item:active .b-nav-icon {
-      transform: scale(0.75);
+      transform: scale(0.85);
     }
 
     .b-nav-icon svg {
@@ -593,8 +601,9 @@
     }
 
     .b-nav-item span {
-      font-size: 10px;
-      font-weight: 600;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
     }
 
     @media(max-width:960px) {
@@ -755,17 +764,24 @@
 
     .products-grid-catalog {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 30px;
-      max-width: 1104px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      max-width: 1280px;
       margin: 15px auto 40px auto;
       width: 100%;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1100px) {
+      .products-grid-catalog {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 850px) {
       .products-grid-catalog {
         grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
+        gap: 16px;
       }
     }
 
@@ -833,6 +849,8 @@
       height: 100%;
       width: 100%;
       object-fit: cover;
+      object-position: center;
+      image-rendering: -webkit-optimize-contrast;
       transition: transform 0.5s ease;
     }
 
@@ -891,14 +909,14 @@
 
     .product-details-modal-grid {
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 30px;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
     }
 
     @media (max-width: 768px) {
       .product-details-modal-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 16px;
       }
     }
 
@@ -1120,13 +1138,15 @@
     /* Responsive modal adjustments for mobile version */
     .modal-image-wrapper {
       background: linear-gradient(to bottom, #fff1f2, #ffffff);
-      border-radius: 20px;
+      border-radius: 18px;
       border: 1px solid rgba(225, 29, 72, 0.05);
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 320px;
-      padding: 16px;
+      height: 220px;
+      max-width: 280px;
+      margin: 0 auto;
+      padding: 8px;
       overflow: hidden;
       box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.01);
     }
@@ -1145,9 +1165,10 @@
       }
 
       .modal-image-wrapper {
-        height: 220px !important;
+        height: 180px !important;
+        max-width: 220px !important;
         border-radius: 16px !important;
-        padding: 10px !important;
+        padding: 6px !important;
       }
 
       .modal-product-name {
@@ -1184,6 +1205,7 @@
 
     const Svg = {
       home: <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" /></svg>,
+      grid: <svg viewBox="0 0 24 24"><path d="M4 11h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1zm10 0h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1zM4 21h6a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1zm10 0h6a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1z"/></svg>,
       user: <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" /></svg>,
       briefcase: <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" /></svg>,
       mail: <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" /></svg>
@@ -1473,12 +1495,8 @@
         // Close details modal if open
         setSelectedProduct(null);
 
-        setGoldenPromoProduct({
-          name: prod.name,
-          originalPrice,
-          discountedPrice,
-          whatsappUrl
-        });
+        // Direct navigation to WhatsApp
+        window.location.href = whatsappUrl;
       };
 
       const filteredProducts = useMemo(() => {
@@ -1914,7 +1932,7 @@
                   {/* Left Column: Images */}
                   <div className="space-y-4">
                     <div className="modal-image-wrapper">
-                      <img src={selectedProduct.images[activeImageIdx]} alt={selectedProduct.name} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain', transition: 'all 0.3s ease' }} />
+                      <img src={selectedProduct.images[activeImageIdx]} alt={selectedProduct.name} style={{ maxHeight: '100%', maxWidth: '100%', width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', imageRendering: '-webkit-optimize-contrast', borderRadius: '12px', transition: 'all 0.3s ease' }} />
                     </div>
                     <div className="modal-thumbnails flex gap-2.5 justify-center overflow-x-auto pb-1.5">
                       {selectedProduct.images.map((img, i) => (
@@ -1935,7 +1953,7 @@
                             boxShadow: activeImageIdx === i ? '0 4px 12px rgba(225, 29, 72, 0.15)' : 'none'
                           }}
                         >
-                          <img src={img} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                          <img src={img} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', imageRendering: '-webkit-optimize-contrast' }} />
                         </button>
                       ))}
                     </div>
@@ -2174,17 +2192,17 @@
                 <div className="b-nav-icon">{Svg.home}</div>
                 <span>الرئيسية</span>
               </a>
+              <a href="products.html" className="b-nav-item active">
+                <div className="b-nav-icon">{Svg.grid}</div>
+                <span>المنتجات</span>
+              </a>
               <a href="about.html" className="b-nav-item">
                 <div className="b-nav-icon">{Svg.user}</div>
                 <span>من نحن</span>
               </a>
-              <a href="about.html#projects" className="b-nav-item">
-                <div className="b-nav-icon">{Svg.briefcase}</div>
-                <span>آلية العمل</span>
-              </a>
               <a href="contact.html" className="b-nav-item">
                 <div className="b-nav-icon">{Svg.mail}</div>
-                <span>اتصل بنا</span>
+                <span>تواصل معنا</span>
               </a>
             </div>
           </div>
